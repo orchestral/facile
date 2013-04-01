@@ -1,0 +1,27 @@
+{
+	"name": "orchestra/facile",
+	"description": "Orchestra Platform Facile Library for Illuminate",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mior Muhammad Zaki",
+			"email": "crynobone@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"require-dev": {
+		"patchwork/utf8": "1.0.*",
+		"mockery/mockery": "dev-master"
+	},
+	"suggest": {
+		"laravel/framework": "Allow using Orchestra Facile Library outside of Orchestra Platform"
+	},
+	"autoload": {
+		"psr-0": { 
+			"Orchestra\\Facile" : "src/" 
+		}
+	},
+	"minimum-stability": "dev"
+}
