@@ -2,6 +2,9 @@
 composer.lock
 vendor/*
 
+# Code Coverage
+build/coverage/*
+
 # always-ignore extensionsalways-ignore extensions
 *.diff
 *.err

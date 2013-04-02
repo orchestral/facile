@@ -74,7 +74,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method.
+	 * Test Orchestra\Facile\TemplateDriver::compose() method.
 	 *
 	 * @test
 	 */
@@ -91,7 +91,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method return response with 
+	 * Test Orchestra\Facile\TemplateDriver::compose() method return response with 
 	 * error 406 when given an invalid format.
 	 *
 	 * @test
@@ -118,7 +118,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Driver::compose() method throws exception 
+	 * Test Orchestra\Facile\TemplateDriver::compose() method throws exception 
 	 * when given method isn't available.
 	 *
 	 * @expectedException \RuntimeException
@@ -133,6 +133,95 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$stub->compose('json', $data);
+	}
+
+	/**
+	 * Test Orchestra\Facile\TemplateDriver::transform() method when item has 
+	 * toArray().
+	 *
+	 * @test
+	 */
+	public function testTransformMethodWhenItemHasToArray()
+	{
+		$mock = \Mockery::mock('\Illuminate\Support\Contracts\ArrayableInterface')
+			->shouldReceive('toArray')
+				->once()
+				->andReturn('foobar');
+
+		$stub   = new TemplateDriverStub;
+		$this->assertEquals('foobar', $stub->transform($mock->getMock()));
+	}
+
+	/**
+	 * Test Orchestra\Facile\TemplateDriver::transform() method when item is 
+	 * instance of Illuminate\Database\Eloquent\Model.
+	 *
+	 * @test
+	 */
+	public function testTransformMethodWhenItemIsInstanceOfEloquent()
+	{
+		$mock = \Mockery::mock('\Illuminate\Database\Eloquent\Model')
+				->shouldReceive('toArray')
+					->once()
+					->andReturn('foobar');
+
+		$stub = new TemplateDriverStub;
+		$this->assertEquals('foobar', $stub->transform($mock->getMock()));
+	}
+
+	/**
+	 * Test Orchestra\Facile\TemplateDriver::transform() method when item is an 
+	 * array.
+	 *
+	 * @test
+	 */
+	public function testTransformMethodWhenItemIsArray()
+	{
+		$mock = \Mockery::mock('\Illuminate\Support\Contracts\ArrayableInterface')
+			->shouldReceive('toArray')
+				->once()
+				->andReturn('foobar');
+
+		$stub = new TemplateDriverStub;
+		$this->assertEquals(array('foobar'), $stub->transform(array($mock->getMock())));
+	}
+
+	/**
+	 * Test Orchestra\Facile\TemplateDriver::transform() method when item has 
+	 * renderable.
+	 *
+	 * @test
+	 */
+	public function testTransformMethodWhenItemIsRenderable()
+	{
+		$mock = \Mockery::mock('\Illuminate\Support\Contracts\RenderableInterface')
+			->shouldReceive('render')
+				->once()
+				->andReturn('<foobar>');
+
+		$stub = new TemplateDriverStub;
+		$this->assertEquals('&lt;foobar&gt;', $stub->transform($mock->getMock()));
+	}
+
+	/**
+	 * Test Orchestra\Facile\TemplateDriver::transform() method when item 
+	 * is instance of Paginator
+	 *
+	 * @test
+	 */
+	public function testTransformMethodWhenItemInstanceOfPaginator()
+	{
+		$mock = \Mockery::mock('Illuminate\Pagination\Paginator', array('results', array('foo' => 'foobar')))
+			->shouldReceive('getItems')
+				->andReturn(array('foo' => 'foobar'))
+			->shouldReceive('links')
+				->once()
+				->andReturn('<foo>');
+
+		$stub = new TemplateDriverStub;
+
+		$this->assertEquals(array('results' => array('foo' => 'foobar'), 'links' => '&lt;foo&gt;'), 
+			$stub->transform($mock->getMock()));
 	}
 }
 

@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use RuntimeException;
+use InvalidArgumentException,
+	RuntimeException;
 
 class Environment {
 
@@ -20,6 +21,49 @@ class Environment {
 	public function __construct() 
 	{
 		$this->templates = array();
+	}
+
+	/**
+	 * Create a new Facile instance.
+	 *
+	 * <code>
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Orchestra\Facile::make('default', array(
+	 * 			'view'   => 'home.index',
+	 * 			'data'   => array(
+	 * 				'eloquent' => $users,
+	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 			),
+	 * 			'status' => 200,
+	 * 		));
+	 *
+	 * 		// Alternatively
+	 * 		$facile = Orchestra\Facile::make('default')
+	 * 			->view('home.index')
+	 * 			->with(array(
+	 * 				'eloquent' => $users,
+	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 			))->status(200)
+	 * 			->format('html');
+	 * 	</code>
+	 *
+	 * @static
+	 * @access public			
+	 * @param  string   $name   Name of template
+	 * @param  array    $data
+	 * @param  string   $format
+	 * @return self
+	 */
+	public function make($name, $data, $format)
+	{
+		if ( ! isset($this->templates[$name]))
+		{
+			throw new InvalidArgumentException(
+				"Template [{$name}] is not available."
+			);
+		}
+
+		return new Response($this->templates[$name], $data, $format);
 	}
 
 	/**
