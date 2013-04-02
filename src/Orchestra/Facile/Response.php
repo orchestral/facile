@@ -37,7 +37,7 @@ class Response implements RenderableInterface {
 	 * @param  array            $data
 	 * @param  string           $format
 	 */
-	public function __construct(TemplateDriver $template, $data, $format)
+	public function __construct(TemplateDriver $template, $data = array(), $format = null)
 	{
 		$this->template = $template;
 		$this->data     = array_merge($this->data, $data);

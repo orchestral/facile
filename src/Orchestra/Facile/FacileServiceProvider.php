@@ -35,7 +35,7 @@ class FacileServiceProvider extends ServiceProvider {
 	 * @access protected
 	 * @return void
 	 */
-	protected function registerEnvironment()
+	protected function registerTemplate()
 	{
 		$this->app['orchestra.facile']->template('default', new Template);
 	}
