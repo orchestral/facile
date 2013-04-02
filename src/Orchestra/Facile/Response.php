@@ -131,14 +131,14 @@ class Response implements RenderableInterface {
 	 */
 	public function __toString()
 	{
-		$facile = $this->render();
+		$content = $this->render();
 
-		if ($facile instanceof RenderableInterface)
+		if ($content instanceof RenderableInterface)
 		{
-			return $facile->render();
+			return $content->render();
 		}
 
-		return $facile;
+		return $content;
 	}
 
 	/**

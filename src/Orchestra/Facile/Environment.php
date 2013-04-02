@@ -54,7 +54,7 @@ class Environment {
 	 * @param  string   $format
 	 * @return self
 	 */
-	public function make($name, $data, $format)
+	public function make($name, $data = array(), $format = null)
 	{
 		if ( ! isset($this->templates[$name]))
 		{
