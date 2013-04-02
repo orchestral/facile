@@ -3,7 +3,7 @@
 class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * Test construct Orchestra\Facile\Environment.
+	 * Test construct an instance of Orchestra\Facile\Environment.
 	 *
 	 * @test
 	 */
