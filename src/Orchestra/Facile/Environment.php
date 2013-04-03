@@ -50,7 +50,6 @@ class Environment {
 	 * 			->format('html');
 	 * </code>
 	 *
-	 * @static
 	 * @access public			
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
