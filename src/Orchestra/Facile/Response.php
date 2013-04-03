@@ -4,10 +4,18 @@ use InvalidArgumentException,
 	Illuminate\Support\Contracts\RenderableInterface;
 
 class Response implements RenderableInterface {
+	
 	/**
-	 * View template.
+	 * Environment instance.
 	 *
-	 * @var Facile\Template
+	 * @var Orchestra\Facile\Environment
+	 */
+	protected $env = null;
+
+	/**
+	 * Template instance.
+	 *
+	 * @var Orchestra\Facile\TemplateDriver
 	 */
 	protected $template = null;
 
@@ -33,12 +41,15 @@ class Response implements RenderableInterface {
 	 * Construct a new Facile\Response instance.
 	 *
 	 * @access public
+	 * @param  Environment      $env
 	 * @param  TemplateDriver   $template
 	 * @param  array            $data
 	 * @param  string           $format
+	 * @return void
 	 */
-	public function __construct(TemplateDriver $template, $data = array(), $format = null)
+	public function __construct(Environment $env, TemplateDriver $template, $data = array(), $format = null)
 	{
+		$this->env      = $env;
 		$this->template = $template;
 		$this->data     = array_merge($this->data, $data);
 
@@ -46,7 +57,7 @@ class Response implements RenderableInterface {
 	}
 
 	/**
-	 * Nest a view to facile.
+	 * Nest a view to Facile.
 	 *
 	 * @access public
 	 * @param  string   $view
@@ -60,7 +71,7 @@ class Response implements RenderableInterface {
 	}
 
 	/**
-	 * Nest a data to facile.
+	 * Nest a data or dataset to Facile.
 	 *
 	 * @access public
 	 * @param  mixed    $key
@@ -77,7 +88,7 @@ class Response implements RenderableInterface {
 	}
 
 	/**
-	 * Set http status to facile.
+	 * Set HTTP status to Facile.
 	 *
 	 * @access public	
 	 * @param  integer  $status
@@ -89,8 +100,29 @@ class Response implements RenderableInterface {
 
 		return $this;
 	}
-	
 
+
+	/**
+	 * Set a template for Facile.
+	 *
+	 * @access public
+	 * @param  mixed    $name
+	 * @return self
+	 */
+	public function template($name)
+	{
+		if ($name instanceof TemplateDriver) 
+		{
+			$this->template = $name;
+		}
+		else
+		{
+			$this->template = $this->env->get($name);
+		}
+
+		return $this;
+	}
+	
 	/**
 	 * Get expected facile format.
 	 *

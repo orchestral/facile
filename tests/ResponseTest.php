@@ -18,6 +18,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testConstructMethod()
 	{
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			new \Orchestra\Facile\Template,
 			array(),
 			'json'
@@ -39,6 +40,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testViewMethod()
 	{
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			new \Orchestra\Facile\Template,
 			array(),
 			'json'
@@ -63,6 +65,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testWithMethod()
 	{
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			new \Orchestra\Facile\Template,
 			array(),
 			'json'
@@ -88,6 +91,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testStatusMethod()
 	{
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			new \Orchestra\Facile\Template,
 			array(),
 			'json'
@@ -105,6 +109,43 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile\Response::template() method.
+	 *
+	 * @test
+	 */
+	public function testTemplateMethod()
+	{
+		$env = new \Orchestra\Facile\Environment;
+		$env->template('foo', function ()
+		{
+			return new \Orchestra\Facile\Template;
+		});
+
+		$stub = new \Orchestra\Facile\Response(
+			$env,
+			new \Orchestra\Facile\Template,
+			array(),
+			'json'
+		);
+
+		$stub->template('foo');
+
+		$refl     = new \ReflectionObject($stub);
+		$template = $refl->getProperty('template');
+		$template->setAccessible(true);
+
+		$this->assertInstanceOf('\Orchestra\Facile\Template', $template->getValue($stub));
+
+		$stub->template(new \Orchestra\Facile\Template);
+
+		$refl     = new \ReflectionObject($stub);
+		$template = $refl->getProperty('template');
+		$template->setAccessible(true);
+
+		$this->assertInstanceOf('\Orchestra\Facile\Template', $template->getValue($stub));
+	}
+
+	/**
 	 * Test Orchestra\Facile\Response::format() method.
 	 *
 	 * @test
@@ -117,6 +158,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 						->andReturn('jsonp');
 
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			$mock->getMock(),
 			array(),
 			null
@@ -142,6 +184,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testGetMethodWithInvalidArgument()
 	{
 		$stub = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			new \Orchestra\Facile\Template,
 			array(
 				'view' => 'foo.bar',
@@ -168,6 +211,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 						->andReturn(json_encode(array('foo' => 'foo is awesome')));
 
 		$stub1 = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			$mock1->getMock(),
 			array(),
 			'json'
@@ -192,6 +236,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 						->andReturn($renderMock->getMock());
 
 		$stub2 = new \Orchestra\Facile\Response(
+			new \Orchestra\Facile\Environment,
 			$mock2->getMock(),
 			array(),
 			'json'

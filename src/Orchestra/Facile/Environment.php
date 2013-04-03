@@ -56,14 +56,7 @@ class Environment {
 	 */
 	public function make($name, $data = array(), $format = null)
 	{
-		if ( ! isset($this->templates[$name]))
-		{
-			throw new InvalidArgumentException(
-				"Template [{$name}] is not available."
-			);
-		}
-
-		return new Response($this->templates[$name], $data, $format);
+		return new Response($this, $this->get($name), $data, $format);
 	}
 
 	/**
@@ -88,5 +81,25 @@ class Environment {
 		}
 
 		$this->templates[$name] = $resolve;
+	}
+
+	/**
+	 * Get the template.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return Orchestra\Facile\TemplateDriver
+	 * @throws InvalidArgumentException     If template is not defined.
+	 */
+	public function get($name)
+	{
+		if ( ! isset($this->templates[$name]))
+		{
+			throw new InvalidArgumentException(
+				"Template [{$name}] is not available."
+			);
+		}
+
+		return $this->templates[$name];
 	}
 }
