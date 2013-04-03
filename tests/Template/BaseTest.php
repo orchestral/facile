@@ -25,7 +25,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 * Test constructing a new Orchestra\Facile\Template.
 	 *
 	 * @test
-	 * @group facile
 	 */
 	public function testConstructMethod()
 	{
@@ -46,7 +45,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Facile\Template::compose_html() method.
 	 *
 	 * @test
-	 * @group facile
 	 */
 	public function testComposeHtmlMethod()
 	{
@@ -71,7 +69,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Facile\Template::compose_html() method throws exception
 	 * when view is not defined
 	 *
-	 * @group facile
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testComposeHtmlMethodThrowsException()
@@ -84,7 +81,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Facile\Template::compose_json() method.
 	 *
 	 * @test
-	 * @group facile
 	 */
 	public function testComposeJsonMethod()
 	{

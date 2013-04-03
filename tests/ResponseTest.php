@@ -178,7 +178,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Test Orchestra\Facile\Response::__get() method with invalid arguments.
 	 *
-	 * @group facile
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testGetMethodWithInvalidArgument()
