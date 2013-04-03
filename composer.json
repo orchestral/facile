@@ -14,7 +14,7 @@
 		"illuminate/support": "4.0.*@dev"
 	},
 	"require-dev": {
-		"mockery/mockery": "dev-master"
+		"mockery/mockery": "0.8.0"
 	},
 	"suggest": {
 		"laravel/framework": "Allow using Orchestra Facile Library outside of Orchestra Platform"
