@@ -20,6 +20,7 @@ class Environment {
 	 */
 	public function __construct() 
 	{
+
 		$this->templates = array();
 	}
 
@@ -45,7 +46,7 @@ class Environment {
 	 * 				'users' => $users,
 	 * 			))
 	 * 			->status(200)
-	 * 			->template(new Orchestra\Facile\Template)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
 	 * 			->format('html');
 	 * </code>
 	 *
@@ -93,19 +94,19 @@ class Environment {
 	 *
 	 * @access public							
 	 * @param  string                           $name
-	 * @param  Orchestra\Facile\TemplateDriver  $callback
+	 * @param  Orchestra\Facile\Template\Driver $callback
 	 * @return void
 	 * @throws RuntimeException     If $callback not instanceof 
-	 *                              Orchestra\Facile\TemplateDriver
+	 *                              Orchestra\Facile\Template\Driver
 	 */
 	public function template($name, $template)
 	{
 		$resolve = value($template);
 
-		if ( ! ($resolve instanceof TemplateDriver))
+		if ( ! ($resolve instanceof Template\Driver))
 		{
 			throw new RuntimeException(
-				"Expected \$template to be instanceof Orchestra\Facile\Driver."
+				"Expected \$template to be instanceof Orchestra\Facile\Template\Driver."
 			);
 		}
 
@@ -117,7 +118,7 @@ class Environment {
 	 *
 	 * @access public
 	 * @param  string   $name
-	 * @return Orchestra\Facile\TemplateDriver
+	 * @return Orchestra\Facile\Template\Driver
 	 * @throws InvalidArgumentException     If template is not defined.
 	 */
 	public function get($name)

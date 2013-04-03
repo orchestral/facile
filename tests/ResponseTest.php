@@ -19,7 +19,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Facile\Response(
 			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(),
 			'json'
 		);
@@ -41,7 +41,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Facile\Response(
 			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(),
 			'json'
 		);
@@ -66,7 +66,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Facile\Response(
 			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(),
 			'json'
 		);
@@ -92,7 +92,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Facile\Response(
 			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(),
 			'json'
 		);
@@ -118,12 +118,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 		$env = new \Orchestra\Facile\Environment;
 		$env->template('foo', function ()
 		{
-			return new \Orchestra\Facile\Template;
+			return new \Orchestra\Facile\Template\Base;
 		});
 
 		$stub = new \Orchestra\Facile\Response(
 			$env,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(),
 			'json'
 		);
@@ -134,15 +134,15 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 		$template = $refl->getProperty('template');
 		$template->setAccessible(true);
 
-		$this->assertInstanceOf('\Orchestra\Facile\Template', $template->getValue($stub));
+		$this->assertInstanceOf('\Orchestra\Facile\Template\Base', $template->getValue($stub));
 
-		$stub->template(new \Orchestra\Facile\Template);
+		$stub->template(new \Orchestra\Facile\Template\Base);
 
 		$refl     = new \ReflectionObject($stub);
 		$template = $refl->getProperty('template');
 		$template->setAccessible(true);
 
-		$this->assertInstanceOf('\Orchestra\Facile\Template', $template->getValue($stub));
+		$this->assertInstanceOf('\Orchestra\Facile\Template\Base', $template->getValue($stub));
 	}
 
 	/**
@@ -152,7 +152,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testFormatMethod()
 	{
-		$mock = \Mockery::mock('\Orchestra\Facile\Template')
+		$mock = \Mockery::mock('\Orchestra\Facile\Template\Base')
 					->shouldReceive('format')
 						->once()
 						->andReturn('jsonp');
@@ -185,7 +185,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new \Orchestra\Facile\Response(
 			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template,
+			new \Orchestra\Facile\Template\Base,
 			array(
 				'view' => 'foo.bar',
 				'data' => array('foo' => 'foo is awesome'),
@@ -204,7 +204,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testToStringMethod()
 	{
-		$mock1 = \Mockery::mock('\Orchestra\Facile\Template')
+		$mock1 = \Mockery::mock('\Orchestra\Facile\Template\Base')
 					->shouldReceive('compose')
 						->with('json', \Mockery::any())
 						->once()
@@ -229,7 +229,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 						->once()
 						->andReturn('foo is awesome');
 
-		$mock2 = \Mockery::mock('\Orchestra\Facile\Template')
+		$mock2 = \Mockery::mock('\Orchestra\Facile\Template\Driver')
 					->shouldReceive('compose')
 						->with('json', \Mockery::any())
 						->once()

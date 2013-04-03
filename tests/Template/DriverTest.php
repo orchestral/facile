@@ -1,6 +1,6 @@
-<?php namespace Orchestra\Facile\Tests;
+<?php namespace Orchestra\Facile\Tests\Template;
 
-class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
+class DriverTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Setup the test environment.
@@ -22,7 +22,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test construct an instance of Orchestra\Facile\TemplateDriver
+	 * Test construct an instance of Orchestra\Facile\Template\Driver
 	 *
 	 * @test
 	 */
@@ -42,7 +42,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::format() method
+	 * Test Orchestra\Facile\Template\Driver::format() method
 	 *
 	 * @test
 	 */
@@ -74,7 +74,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::compose() method.
+	 * Test Orchestra\Facile\Template\Driver::compose() method.
 	 *
 	 * @test
 	 */
@@ -91,7 +91,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::compose() method return response with 
+	 * Test Orchestra\Facile\Template\Driver::compose() method return response with 
 	 * error 406 when given an invalid format.
 	 *
 	 * @test
@@ -118,7 +118,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::compose() method throws exception 
+	 * Test Orchestra\Facile\Template\Driver::compose() method throws exception 
 	 * when given method isn't available.
 	 *
 	 * @expectedException \RuntimeException
@@ -136,7 +136,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
 	 * toArray().
 	 *
 	 * @test
@@ -153,7 +153,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::transform() method when item is 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is 
 	 * instance of Illuminate\Database\Eloquent\Model.
 	 *
 	 * @test
@@ -170,7 +170,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::transform() method when item is an 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is an 
 	 * array.
 	 *
 	 * @test
@@ -187,7 +187,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
 	 * renderable.
 	 *
 	 * @test
@@ -204,7 +204,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\TemplateDriver::transform() method when item 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item 
 	 * is instance of Paginator
 	 *
 	 * @test
@@ -225,7 +225,7 @@ class TemplateDriverTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class TemplateDriverStub extends \Orchestra\Facile\TemplateDriver {
+class TemplateDriverStub extends \Orchestra\Facile\Template\Driver {
 
 	protected $formats = array('html', 'json', 'foo');
 

@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Facile;
+<?php namespace Orchestra\Facile\Template;
 
 use InvalidArgumentException,
 	Illuminate\Support\Facades\Response as ResponseFacade,
 	Illuminate\Support\Facades\View;
 
-class Template extends TemplateDriver {
+class Base extends Driver {
 
 	/**
 	 * List of supported format.
@@ -50,7 +50,7 @@ class Template extends TemplateDriver {
 	 * @param  integer  $status
 	 * @return string
 	 */
-	public function composeJson($view = null, $data = array(), $status = 200)
+	public function composeJson($view, $data = array(), $status = 200)
 	{
 		$data = array_map(array($this, 'transform'), $data);
 

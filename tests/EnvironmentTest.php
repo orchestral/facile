@@ -33,7 +33,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMakeMethod()
 	{
-		$templateMock = \Mockery::mock('\Orchestra\Facile\TemplateDriver')
+		$templateMock = \Mockery::mock('\Orchestra\Facile\Template\Driver')
 			->shouldReceive('compose')
 				->with('json', \Mockery::any())
 				->once()
@@ -82,7 +82,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testViewMethod()
 	{
-		$templateMock = \Mockery::mock('\Orchestra\Facile\TemplateDriver')
+		$templateMock = \Mockery::mock('\Orchestra\Facile\Template\Driver')
 			->shouldReceive('format')
 				->with()
 				->once()
@@ -122,7 +122,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWithMethod()
 	{
-		$templateMock = \Mockery::mock('\Orchestra\Facile\TemplateDriver')
+		$templateMock = \Mockery::mock('\Orchestra\Facile\Template\Driver')
 			->shouldReceive('format')
 				->with()
 				->once()
@@ -175,7 +175,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Facile\Environment::template() method throws exception 
-	 * when template is not instanceof \Orchestra\Facile\TemplateDriver
+	 * when template is not instanceof \Orchestra\Facile\Template\Driver
 	 *
 	 * @test
 	 * @expectedException RuntimeException
@@ -187,6 +187,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class FooTemplateStub extends \Orchestra\Facile\TemplateDriver {}
+class FooTemplateStub extends \Orchestra\Facile\Template\Driver {}
 
 class BadFooTemplateStub {}

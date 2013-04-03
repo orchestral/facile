@@ -15,7 +15,7 @@ class Response implements RenderableInterface {
 	/**
 	 * Template instance.
 	 *
-	 * @var Orchestra\Facile\TemplateDriver
+	 * @var Orchestra\Facile\Template\Driver
 	 */
 	protected $template = null;
 
@@ -40,14 +40,14 @@ class Response implements RenderableInterface {
 	/**
 	 * Construct a new Facile\Response instance.
 	 *
-	 * @access public
-	 * @param  Environment      $env
-	 * @param  TemplateDriver   $template
-	 * @param  array            $data
-	 * @param  string           $format
+	 * @access public							
+	 * @param  Orchestar\Facile\Environment     $env
+	 * @param  Orchestra\Facile\Template\Driver $template
+	 * @param  array                            $data
+	 * @param  string                           $format
 	 * @return void
 	 */
-	public function __construct(Environment $env, TemplateDriver $template, $data = array(), $format = null)
+	public function __construct(Environment $env, Template\Driver $template, $data = array(), $format = null)
 	{
 		$this->env      = $env;
 		$this->template = $template;
@@ -111,7 +111,7 @@ class Response implements RenderableInterface {
 	 */
 	public function template($name)
 	{
-		if ($name instanceof TemplateDriver) 
+		if ($name instanceof Template\Driver) 
 		{
 			$this->template = $name;
 		}

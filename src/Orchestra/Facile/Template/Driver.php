@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Facile;
+<?php namespace Orchestra\Facile\Template;
 
 use RuntimeException,
 	Illuminate\Database\Eloquent\Model,
@@ -9,7 +9,7 @@ use RuntimeException,
 	Illuminate\Support\Facades\Response as ResponseFacade,
 	Illuminate\Support\Facades\View;
 
-abstract class TemplateDriver {
+abstract class Driver {
 
 	/**
 	 * List of supported format.

@@ -1,6 +1,6 @@
-<?php namespace Orchestra\Facile\Tests;
+<?php namespace Orchestra\Facile\Tests\Template;
 
-class TemplateTest extends \PHPUnit_Framework_TestCase {
+class BaseTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Setup the test environment.
@@ -29,7 +29,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructMethod()
 	{
-		$stub = new \Orchestra\Facile\Template;
+		$stub = new \Orchestra\Facile\Template\Base;
 
 		$refl          = new \ReflectionObject($stub);
 		$formats       = $refl->getProperty('formats');
@@ -62,7 +62,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 				->andReturn('foo');
 
 		\Illuminate\Support\Facades\View::swap($viewMock->getMock());
-		$stub = with(new \Orchestra\Facile\Template)->composeHtml('users.index', $data);
+		$stub = with(new \Orchestra\Facile\Template\Base)->composeHtml('users.index', $data);
 
 		$this->assertInstanceOf('\Illuminate\Http\Response', $stub);
 	}
@@ -77,7 +77,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeHtmlMethodThrowsException()
 	{
 		$data = array('foo' => 'foobar is awesome');
-		$stub = with(new \Orchestra\Facile\Template)->composeHtml(null, $data);
+		$stub = with(new \Orchestra\Facile\Template\Base)->composeHtml(null, $data);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeJsonMethod()
 	{
 		$data = array('foo' => 'foobar is awesome');
-		$stub = with(new \Orchestra\Facile\Template)->composeJson(null, $data);
+		$stub = with(new \Orchestra\Facile\Template\Base)->composeJson(null, $data);
 
 		$this->assertInstanceOf('\Symfony\Component\HttpFoundation\JsonResponse', $stub);
 		$this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());

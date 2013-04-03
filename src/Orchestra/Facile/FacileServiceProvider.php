@@ -23,7 +23,7 @@ class FacileServiceProvider extends ServiceProvider {
 	 */
 	protected function registerEnvironment()
 	{
-		$this->app['orchestra.facile'] = $this->app->share(function($app)
+		$this->app['orchestra.facile'] = $this->app->share(function()
 		{
 			return new Environment;
 		});
@@ -37,6 +37,6 @@ class FacileServiceProvider extends ServiceProvider {
 	 */
 	protected function registerTemplate()
 	{
-		$this->app['orchestra.facile']->template('default', new Template);
+		$this->app['orchestra.facile']->template('default', new Template\Base);
 	}
 }
