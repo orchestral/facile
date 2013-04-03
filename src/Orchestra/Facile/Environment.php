@@ -27,22 +27,22 @@ class Environment {
 	 * Create a new Facile instance.
 	 *
 	 * <code>
+	 * 		// Using provided Facile.
+	 * 		
 	 * 		$users  = User::paginate(30);
-	 * 		$facile = Orchestra\Facile::make('default', array(
+	 * 		$facile = Facile::make('default', array(
 	 * 			'view'   => 'home.index',
 	 * 			'data'   => array(
-	 * 				'eloquent' => $users,
-	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 				'users' => $users,
 	 * 			),
 	 * 			'status' => 200,
 	 * 		));
 	 *
 	 * 		// Alternatively
-	 * 		$facile = Orchestra\Facile::make('default')
+	 * 		$facile = Facile::make('default')
 	 * 			->view('home.index')
 	 * 			->with(array(
-	 * 				'eloquent' => $users,
-	 * 				'table'    => Orchestra\Presenter::user($users),
+	 * 				'users' => $users,
 	 * 			))
 	 * 			->status(200)
 	 * 			->template(new Orchestra\Facile\Template)
