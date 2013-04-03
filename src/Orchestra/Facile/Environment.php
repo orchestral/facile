@@ -43,9 +43,11 @@ class Environment {
 	 * 			->with(array(
 	 * 				'eloquent' => $users,
 	 * 				'table'    => Orchestra\Presenter::user($users),
-	 * 			))->status(200)
+	 * 			))
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template)
 	 * 			->format('html');
-	 * 	</code>
+	 * </code>
 	 *
 	 * @static
 	 * @access public			
