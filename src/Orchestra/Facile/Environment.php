@@ -28,7 +28,7 @@ class Environment {
 	 * Create a new Facile instance.
 	 *
 	 * <code>
-	 * 		// Using provided Facile.
+	 * 		// Using provided facade for Facile.
 	 * 		
 	 * 		$users  = User::paginate(30);
 	 * 		$facile = Facile::make('default', array(
@@ -65,6 +65,18 @@ class Environment {
 	/**
 	 * Create a new Facile instance helper via view.
 	 *
+	 * <code>
+	 * 		// Using provided facade for Facile.
+	 * 		
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Facile::view('home.index', array(
+	 * 				'users' => $users,
+	 * 			))
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
+	 * 			->format('html');
+	 * </code>
+	 * 
 	 * @access public
 	 * @return Orchestra\Facile\Response
 	 */
@@ -77,6 +89,19 @@ class Environment {
 
 	/**
 	 * Create a new Facile instance helper via with.
+	 *
+	 * <code>
+	 * 		// Using provided facade for Facile.
+	 * 		
+	 * 		$users  = User::paginate(30);
+	 * 		$facile = Facile::with(array(
+	 * 				'users' => $users,
+	 * 			))
+	 * 			->view('home.index')
+	 * 			->status(200)
+	 * 			->template(new Orchestra\Facile\Template\Driver)
+	 * 			->format('html');
+	 * </code>
 	 *
 	 * @access public
 	 * @param  mixed    $data
