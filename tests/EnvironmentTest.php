@@ -30,7 +30,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Facile\Environment::make() method.
 	 *
 	 * @test
-	 * @group facile
 	 */
 	public function testMakeMethod()
 	{
@@ -46,9 +45,20 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 			return $templateMock->getMock();
 		});
 
-		$response = $stub->make('mock', array('data' => 'foo'), 'json');
+		$response = $stub->make('mock', array('data' => array('foo' => 'foo is awesome')), 'json');
+
+		$refl = new \ReflectionObject($response);
+		$data = $refl->getProperty('data');
+		$data->setAccessible(true);
+
+		$expected = array(
+			'view' => null,
+			'data' => array('foo' => 'foo is awesome'),
+			'status' => 200,
+		);
 
 		$this->assertInstanceOf('\Orchestra\Facile\Response', $response);
+		$this->assertEquals($expected, $data->getValue($response));
 		$this->assertEquals('foo', $response->render());
 	}
 
@@ -63,6 +73,86 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 		$stub = new \Orchestra\Facile\Environment;
 
 		$stub->make('foobar', array('view' => 'error.404'), 'html');
+	}
+
+	/**
+	 * Test Orchestra\Facile\Environment::view() method.
+	 *
+	 * @test
+	 */
+	public function testViewMethod()
+	{
+		$templateMock = \Mockery::mock('\Orchestra\Facile\TemplateDriver')
+			->shouldReceive('format')
+				->with()
+				->once()
+				->andReturn('html')
+			->shouldReceive('compose')
+				->with('html', \Mockery::any())
+				->once()
+				->andReturn('foo');
+
+		$stub = new \Orchestra\Facile\Environment;
+		$stub->template('default', function () use ($templateMock)
+		{
+			return $templateMock->getMock();
+		});
+
+		$response = $stub->view('foo.bar', array('foo' => 'foo is awesome'));
+
+		$refl = new \ReflectionObject($response);
+		$data = $refl->getProperty('data');
+		$data->setAccessible(true);
+
+		$expected = array(
+			'view' => 'foo.bar',
+			'data' => array('foo' => 'foo is awesome'),
+			'status' => 200,
+		);
+
+		$this->assertInstanceOf('\Orchestra\Facile\Response', $response);
+		$this->assertEquals($expected, $data->getValue($response));
+		$this->assertEquals('foo', $response->render());
+	}
+
+	/**
+	 * Test Orchestra\Facile\Environment::with() method.
+	 *
+	 * @test
+	 */
+	public function testWithMethod()
+	{
+		$templateMock = \Mockery::mock('\Orchestra\Facile\TemplateDriver')
+			->shouldReceive('format')
+				->with()
+				->once()
+				->andReturn('html')
+			->shouldReceive('compose')
+				->with('html', \Mockery::any())
+				->once()
+				->andReturn('foo');
+
+		$stub = new \Orchestra\Facile\Environment;
+		$stub->template('default', function () use ($templateMock)
+		{
+			return $templateMock->getMock();
+		});
+
+		$response = $stub->with(array('foo' => 'foo is awesome'));
+
+		$refl = new \ReflectionObject($response);
+		$data = $refl->getProperty('data');
+		$data->setAccessible(true);
+
+		$expected = array(
+			'view' => null,
+			'data' => array('foo' => 'foo is awesome'),
+			'status' => 200,
+		);
+
+		$this->assertInstanceOf('\Orchestra\Facile\Response', $response);
+		$this->assertEquals($expected, $data->getValue($response));
+		$this->assertEquals('foo', $response->render());
 	}
 
 	/**

@@ -54,11 +54,38 @@ class Environment {
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
-	 * @return self
+	 * @return Orchestra\Facile\Response
 	 */
 	public function make($name, $data = array(), $format = null)
 	{
 		return new Response($this, $this->get($name), $data, $format);
+	}
+
+	/**
+	 * Create a new Facile instance helper via view.
+	 *
+	 * @access public
+	 * @return Orchestra\Facile\Response
+	 */
+	public function view($view, $data = array())
+	{
+		return with(new Response($this, $this->get('default')))
+			->view($view)
+			->with($data);
+	}
+
+	/**
+	 * Create a new Facile instance helper via with.
+	 *
+	 * @access public
+	 * @param  mixed    $data
+	 * @return Orchestra\Facile\Response
+	 */
+	public function with($data)
+	{
+		$response = new Response($this, $this->get('default'));
+
+		return call_user_func_array(array($response, 'with'), func_get_args());
 	}
 
 	/**
