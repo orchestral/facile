@@ -13,7 +13,7 @@ class Environment {
 	protected $templates = array();
 	
 	/**
-	 * Construct a new Facile instance.
+	 * Construct a new Facile service.
 	 *
 	 * @access public
 	 * @return void
