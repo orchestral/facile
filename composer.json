@@ -18,7 +18,7 @@
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform",
-		"orchestra/foundation": "Using orchestra/facile with Orchestra Platform"
+		"orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform"
 	},
 	"autoload": {
 		"psr-0": { 
