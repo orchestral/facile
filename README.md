@@ -29,16 +29,20 @@ To install through composer, simply put the following in your `composer.json` fi
     	"minimum-stability": "dev"
 	}
 
-Next add `Orchestra\Facile\FacileServiceProvider` to the list of service providers in `app/config/app.php`.
+Next add the service provider in `app/config/app.php`.
+
+	'providers' => array(
+		
+		// ...
+		
+		'Orchestra\Facile\FacileServiceProvider',
+	),
 
 You might want to add `Orchestra\Facile\Facade` to class aliases in `app/config/app.php`:
 
-	'Facile' => 'Orchestra\Facile\Facade',
-	
-## Usage
+	'aliases' => array(
 
-### Template
+		// ...
 
-`Orchestra\Facile` works by composing the response using Template, using the `FacileServiceProvider`, we setup the default template for normal usage which can compose HTML and JSON response, see `Orchestra\Facile\Template\Base`.
-
-In above example, what actually happen is that the response was generated using `Orchestra\Facile\Template\Base::composeHtml()` method when you hit `/users` (or `/users.html`) and `Orchestra\Facile\Template\Base::composeJson()` when you hit `/users.json`.
+		'Facile' => 'Orchestra\Support\Facades\Facile',
+	),
