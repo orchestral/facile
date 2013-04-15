@@ -5,6 +5,13 @@ use Illuminate\Support\ServiceProvider;
 class FacileServiceProvider extends ServiceProvider {
 
 	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
+
+	/**
 	 * Register the service provider.
 	 *
 	 * @return void
@@ -38,5 +45,15 @@ class FacileServiceProvider extends ServiceProvider {
 	protected function registerTemplate()
 	{
 		$this->app['orchestra.facile']->template('default', new Template\Base);
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array('orchestra.facile');
 	}
 }
