@@ -87,7 +87,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 		$data = array('foo' => 'foobar is awesome');
 		$stub = with(new \Orchestra\Facile\Template\Base)->composeJson(null, $data);
 
-		$this->assertInstanceOf('\Symfony\Component\HttpFoundation\JsonResponse', $stub);
+		$this->assertInstanceOf('\Illuminate\Http\Response', $stub);
 		$this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
 		$this->assertEquals('application/json', $stub->headers->get('content-type'));
 	}
