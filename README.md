@@ -12,7 +12,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/facile": "dev-master"
+		"orchestra/facile": "2.0.*"
 	},
 	"minimum-stability": "dev"
 }
