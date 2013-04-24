@@ -16,7 +16,7 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"illuminate/http": "4.0.*@dev",
+		"illuminate/http": "4.0.*",
 		"orchestra/support": "2.0.*"
 	},
 	"require-dev": {
