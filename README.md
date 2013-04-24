@@ -9,30 +9,36 @@ Orchestra\Facile simplify the need to create API based response in your Laravel 
 
 To install through composer, simply put the following in your `composer.json` file:
 
-	{
-    	"require": {
-    		"orchestra/facile": "dev-master"
-    	},
-    	"minimum-stability": "dev"
-	}
+```json
+{
+	"require": {
+		"orchestra/facile": "dev-master"
+	},
+	"minimum-stability": "dev"
+}
+```
 
 Next add the service provider in `app/config/app.php`.
 
-	'providers' => array(
-		
-		// ...
-		
-		'Orchestra\Facile\FacileServiceProvider',
-	),
+```php
+'providers' => array(
+	
+	// ...
+	
+	'Orchestra\Facile\FacileServiceProvider',
+),
+```
 
 You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `app/config/app.php`:
 
-	'aliases' => array(
+```php
+'aliases' => array(
 
-		// ...
+	// ...
 
-		'Facile' => 'Orchestra\Support\Facades\Facile',
-	),
+	'Facile' => 'Orchestra\Support\Facades\Facile',
+),
+```
 
 ## Resources
 
