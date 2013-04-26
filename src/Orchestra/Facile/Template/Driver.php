@@ -1,13 +1,13 @@
 <?php namespace Orchestra\Facile\Template;
 
-use RuntimeException,
-	Illuminate\Database\Eloquent\Model,
-	Illuminate\Support\Contracts\ArrayableInterface,
-	Illuminate\Support\Contracts\RenderableInterface,
-	Illuminate\Support\Facades\Input,
-	Illuminate\Pagination\Paginator,
-	Illuminate\Support\Facades\Response as ResponseFacade,
-	Illuminate\Support\Facades\View;
+use RuntimeException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Contracts\ArrayableInterface;
+use Illuminate\Support\Contracts\RenderableInterface;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 abstract class Driver {
 
@@ -76,7 +76,7 @@ abstract class Driver {
 
 		if (View::exists("error.{$status}")) $view = View::make("error.{$status}");
 
-		return ResponseFacade::make($view, $status);
+		return Response::make($view, $status);
 	}
 
 	/**

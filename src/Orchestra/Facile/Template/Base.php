@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Facile\Template;
 
-use InvalidArgumentException,
-	Illuminate\Support\Facades\Response as ResponseFacade,
-	Illuminate\Support\Facades\View;
+use InvalidArgumentException;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class Base extends Driver {
 
@@ -38,7 +38,7 @@ class Base extends Driver {
 
 		if ( ! ($view instanceof View)) $view = View::make($view);
 
-		return ResponseFacade::make($view->with($data), $status);
+		return Response::make($view->with($data), $status);
 	}
 
 	/**
@@ -54,6 +54,6 @@ class Base extends Driver {
 	{
 		$data = array_map(array($this, 'transform'), $data);
 
-		return ResponseFacade::json($data, $status);
+		return Response::json($data, $status);
 	}
 }

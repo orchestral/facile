@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use InvalidArgumentException,
-	Illuminate\Support\Contracts\RenderableInterface;
+use InvalidArgumentException;
+use Illuminate\Support\Contracts\RenderableInterface;
 
 class Response implements RenderableInterface {
 	

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use InvalidArgumentException,
-	RuntimeException;
+use InvalidArgumentException;
+use RuntimeException;
 
 class Environment {
 

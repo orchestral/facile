@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Facile\Tests\Template;
 
+use Mockery as m;
+
 class DriverTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,10 +9,10 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$appMock = \Mockery::mock('Application')
-			->shouldReceive('instance')->andReturn(true);
+		$app = m::mock('Application');
+		$app->shouldReceive('instance')->andReturn(true);
 
-		\Illuminate\Support\Facades\View::setFacadeApplication($appMock->getMock());
+		\Illuminate\Support\Facades\View::setFacadeApplication($app);
 	}
 
 	/**
@@ -18,7 +20,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -50,25 +52,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new TemplateDriverStub;
 
-		$inputMock = \Mockery::mock('Request')
-			->shouldReceive('input')
-				->once()
-				->andReturn('html');
-
-		\Illuminate\Support\Facades\Input::setFacadeApplication(array(
-			'request' => $inputMock->getMock(),
-		));
+		$request = m::mock('Request');
+		$request->shouldReceive('input')->once()->andReturn('html');
+		\Illuminate\Support\Facades\Input::setFacadeApplication(array('request' => $request));
 
 		$this->assertEquals('html', $stub->format());
 		
-		$inputMock = \Mockery::mock('Request')
-			->shouldReceive('input')
-				->once()
-				->andReturn('json');
-
-		\Illuminate\Support\Facades\Input::setFacadeApplication(array(
-			'request' => $inputMock->getMock(),
-		));
+		$request->shouldReceive('input')->once()->andReturn('json');
+		\Illuminate\Support\Facades\Input::setFacadeApplication(array('request' => $request));
 
 		$this->assertEquals('json', $stub->format());
 	}
@@ -105,15 +96,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 			'status' => 200,
 		);
 
-		$viewMock = \Mockery::mock('View')
-			->shouldReceive('exists')
-				->once()
-				->andReturn(false);
+		$view = m::mock('View');
+		$view->shouldReceive('exists')->once()->andReturn(false);
 
-		\Illuminate\Support\Facades\View::swap($viewMock->getMock());
+		\Illuminate\Support\Facades\View::swap($view);
 
 		$response = $stub->compose('foobar', $data);
-
 		$this->assertInstanceOf("\Illuminate\Http\Response", $response);
 	}
 
@@ -143,13 +131,11 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemHasToArray()
 	{
-		$mock = \Mockery::mock('\Illuminate\Support\Contracts\ArrayableInterface')
-			->shouldReceive('toArray')
-				->once()
-				->andReturn('foobar');
+		$mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
+		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-		$stub   = new TemplateDriverStub;
-		$this->assertEquals('foobar', $stub->transform($mock->getMock()));
+		$stub = new TemplateDriverStub;
+		$this->assertEquals('foobar', $stub->transform($mock));
 	}
 
 	/**
@@ -160,13 +146,11 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemIsInstanceOfEloquent()
 	{
-		$mock = \Mockery::mock('\Illuminate\Database\Eloquent\Model')
-				->shouldReceive('toArray')
-					->once()
-					->andReturn('foobar');
+		$mock = m::mock('\Illuminate\Database\Eloquent\Model');
+		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
 		$stub = new TemplateDriverStub;
-		$this->assertEquals('foobar', $stub->transform($mock->getMock()));
+		$this->assertEquals('foobar', $stub->transform($mock));
 	}
 
 	/**
@@ -177,13 +161,11 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemIsArray()
 	{
-		$mock = \Mockery::mock('\Illuminate\Support\Contracts\ArrayableInterface')
-			->shouldReceive('toArray')
-				->once()
-				->andReturn('foobar');
+		$mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
+		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
 		$stub = new TemplateDriverStub;
-		$this->assertEquals(array('foobar'), $stub->transform(array($mock->getMock())));
+		$this->assertEquals(array('foobar'), $stub->transform(array($mock)));
 	}
 
 	/**
@@ -194,13 +176,13 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemIsRenderable()
 	{
-		$mock = \Mockery::mock('\Illuminate\Support\Contracts\RenderableInterface')
-			->shouldReceive('render')
+		$mock = m::mock('\Illuminate\Support\Contracts\RenderableInterface');
+		$mock->shouldReceive('render')
 				->once()
 				->andReturn('<foobar>');
 
 		$stub = new TemplateDriverStub;
-		$this->assertEquals('&lt;foobar&gt;', $stub->transform($mock->getMock()));
+		$this->assertEquals('&lt;foobar&gt;', $stub->transform($mock));
 	}
 
 	/**
@@ -211,17 +193,14 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemInstanceOfPaginator()
 	{
-		$mock = \Mockery::mock('Illuminate\Pagination\Paginator', array('results', array('foo' => 'foobar')))
-			->shouldReceive('getItems')
-				->andReturn(array('foo' => 'foobar'))
-			->shouldReceive('links')
-				->once()
-				->andReturn('<foo>');
+		$mock = m::mock('Illuminate\Pagination\Paginator', array('results', array('foo' => 'foobar')));
+		$mock->shouldReceive('getItems')->andReturn(array('foo' => 'foobar'))
+			->shouldReceive('links')->once()->andReturn('<foo>');
 
 		$stub = new TemplateDriverStub;
 
 		$this->assertEquals(array('results' => array('foo' => 'foobar'), 'links' => '&lt;foo&gt;'), 
-			$stub->transform($mock->getMock()));
+			$stub->transform($mock));
 	}
 }
 

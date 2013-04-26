@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Facile\Tests\Template;
 
+use Mockery as m;
+use Orchestra\Facile\Template\Base;
+
 class BaseTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
@@ -7,10 +10,10 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$appMock = \Mockery::mock('Application')
-			->shouldReceive('instance')->andReturn(true);
+		$app = m::mock('Application');
+		$app->shouldReceive('instance')->andReturn(true);
 
-		\Illuminate\Support\Facades\View::setFacadeApplication($appMock->getMock());
+		\Illuminate\Support\Facades\View::setFacadeApplication($app);
 	}
 
 	/**
@@ -18,7 +21,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -28,7 +31,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructMethod()
 	{
-		$stub = new \Orchestra\Facile\Template\Base;
+		$stub = new Base;
 
 		$refl          = new \ReflectionObject($stub);
 		$formats       = $refl->getProperty('formats');
@@ -50,17 +53,12 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	{
 		$data = array('foo' => 'foo is awesome');
 
-		$viewMock = \Mockery::mock('View')
-			->shouldReceive('make')
-				->with('users.index')
-				->once()
-				->andReturn(\Mockery::self())
-			->shouldReceive('with')
-				->with($data)
-				->andReturn('foo');
+		$view = m::mock('View');
+		$view->shouldReceive('make')->with('users.index')->once()->andReturn($view)
+			->shouldReceive('with')->with($data)->andReturn('foo');
 
-		\Illuminate\Support\Facades\View::swap($viewMock->getMock());
-		$stub = with(new \Orchestra\Facile\Template\Base)->composeHtml('users.index', $data);
+		\Illuminate\Support\Facades\View::swap($view);
+		$stub = with(new Base)->composeHtml('users.index', $data);
 
 		$this->assertInstanceOf('\Illuminate\Http\Response', $stub);
 	}
@@ -74,7 +72,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeHtmlMethodThrowsException()
 	{
 		$data = array('foo' => 'foobar is awesome');
-		$stub = with(new \Orchestra\Facile\Template\Base)->composeHtml(null, $data);
+		$stub = with(new Base)->composeHtml(null, $data);
 	}
 
 	/**
@@ -85,7 +83,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 	public function testComposeJsonMethod()
 	{
 		$data = array('foo' => 'foobar is awesome');
-		$stub = with(new \Orchestra\Facile\Template\Base)->composeJson(null, $data);
+		$stub = with(new Base)->composeJson(null, $data);
 
 		$this->assertInstanceOf('\Illuminate\Http\Response', $stub);
 		$this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
