@@ -132,14 +132,44 @@ class Response implements RenderableInterface {
 	 */
 	public function format($format = null)
 	{
-		! empty($format) and $this->format = $format;
+		if ( ! is_null($format) and ! empty($format))
+		{
+			$this->setFormat($format);
+		}
+		else 
+		{
+			$this->getFormat();
+		}
 
+		return $this;
+	}
+
+	/**
+	 * Set Output Format.
+	 *
+	 * @access public
+	 * @param  string   $format
+	 * @return void
+	 */
+	public function setFormat($format)
+	{
+		$this->format = $format;
+	}
+
+	/**
+	 * Get Output Format.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function getFormat()
+	{
 		if (is_null($this->format))
 		{
 			$this->format = $this->template->format();
 		}
 
-		return $this;
+		return $this->format;
 	}
 
 	/**
@@ -183,6 +213,6 @@ class Response implements RenderableInterface {
 	{
 		if (is_null($this->format)) $this->format();
 
-		return $this->template->compose($this->format, $this->data);
+		return $this->template->compose($this->getFormat(), $this->data);
 	}
 }

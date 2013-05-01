@@ -1,5 +1,10 @@
 <?php namespace Orchestra\Facile\Tests;
 
+use Mockery as m;
+use Orchestra\Facile\Response;
+use Orchestra\Facile\Environment;
+use Orchestra\Facile\Template\Base;
+
 class ResponseTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,7 +12,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -17,19 +22,15 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructMethod()
 	{
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template\Base,
-			array(),
-			'json'
-		);
+		$stub = new Response(new Environment, new Base, array(), 'json');
 
 		$refl = new \ReflectionObject($stub);
 		$data = $refl->getProperty('data');
 		$data->setAccessible(true);
 
-		$this->assertEquals(array('view' => null, 'data' => array(), 'status' => 200),
-			$data->getValue($stub));
+		$expected = array('view' => null, 'data' => array(), 'status' => 200);
+
+		$this->assertEquals($expected, $data->getValue($stub));
 	}
 
 	/**
@@ -39,12 +40,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testViewMethod()
 	{
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template\Base,
-			array(),
-			'json'
-		);
+		$stub = new Response(new Environment, new Base, array(), 'json');
 
 		$stub->view('foo.bar');
 
@@ -64,12 +60,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWithMethod()
 	{
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template\Base,
-			array(),
-			'json'
-		);
+		$stub = new Response(new Environment, new Base, array(), 'json');
 
 		$stub->with('foo', 'bar');
 		$stub->with(array('foobar' => 'foo'));
@@ -90,12 +81,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testStatusMethod()
 	{
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template\Base,
-			array(),
-			'json'
-		);
+		$stub = new Response(new Environment, new Base, array(), 'json');
 
 		$stub->status(500);
 
@@ -115,18 +101,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTemplateMethod()
 	{
-		$env = new \Orchestra\Facile\Environment;
+		$env = new Environment;
 		$env->template('foo', function ()
 		{
-			return new \Orchestra\Facile\Template\Base;
+			return new Base;
 		});
 
-		$stub = new \Orchestra\Facile\Response(
-			$env,
-			new \Orchestra\Facile\Template\Base,
-			array(),
-			'json'
-		);
+		$stub = new Response($env, new Base, array(), 'json');
 
 		$stub->template('foo');
 
@@ -136,7 +117,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf('\Orchestra\Facile\Template\Base', $template->getValue($stub));
 
-		$stub->template(new \Orchestra\Facile\Template\Base);
+		$stub->template(new Base);
 
 		$refl     = new \ReflectionObject($stub);
 		$template = $refl->getProperty('template');
@@ -152,17 +133,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testFormatMethod()
 	{
-		$mock = \Mockery::mock('\Orchestra\Facile\Template\Base')
-					->shouldReceive('format')
-						->once()
-						->andReturn('jsonp');
+		$template = m::mock('\Orchestra\Facile\Template\Base');
+		$template->shouldReceive('format')->once()->andReturn('jsonp');
 
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			$mock->getMock(),
-			array(),
-			null
-		);
+		$stub = new Response(new Environment, $template, array(), null);
 
 		$this->assertEquals('jsonp', $stub->format()->format);
 
@@ -182,16 +156,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetMethodWithInvalidArgument()
 	{
-		$stub = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			new \Orchestra\Facile\Template\Base,
-			array(
-				'view' => 'foo.bar',
-				'data' => array('foo' => 'foo is awesome'),
-				'status' => 404,
-			),
-			'json'
+		$data = array(
+			'view' => 'foo.bar',
+			'data' => array('foo' => 'foo is awesome'),
+			'status' => 404,
 		);
+
+		$stub = new Response(new Environment, new Base, $data, 'json');
 
 		$data = $stub->data;
 	}
@@ -203,18 +174,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testToStringMethod()
 	{
-		$mock1 = \Mockery::mock('\Orchestra\Facile\Template\Base')
-					->shouldReceive('compose')
-						->with('json', \Mockery::any())
-						->once()
-						->andReturn(json_encode(array('foo' => 'foo is awesome')));
+		$mock1 = m::mock('\Orchestra\Facile\Template\Base');
+		$mock1->shouldReceive('compose')
+			->with('json', m::any())->once()->andReturn(json_encode(array('foo' => 'foo is awesome')));
 
-		$stub1 = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			$mock1->getMock(),
-			array(),
-			'json'
-		);
+		$stub1 = new Response(new Environment, $mock1, array(), 'json');
 
 		ob_start();
 		echo $stub1;
@@ -223,23 +187,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('{"foo":"foo is awesome"}', $output1);
 
-		$renderMock = \Mockery::mock('\Illuminate\Support\Contracts\RenderableInterface')
-					->shouldReceive('render')
-						->once()
-						->andReturn('foo is awesome');
+		$render = m::mock('\Illuminate\Support\Contracts\RenderableInterface');
+		$render->shouldReceive('render')->once()->andReturn('foo is awesome');
 
-		$mock2 = \Mockery::mock('\Orchestra\Facile\Template\Driver')
-					->shouldReceive('compose')
-						->with('json', \Mockery::any())
-						->once()
-						->andReturn($renderMock->getMock());
+		$mock2 = m::mock('\Orchestra\Facile\Template\Driver');
+		$mock2->shouldReceive('compose')->with('json', m::any())->once()->andReturn($render);
 
-		$stub2 = new \Orchestra\Facile\Response(
-			new \Orchestra\Facile\Environment,
-			$mock2->getMock(),
-			array(),
-			'json'
-		);
+		$stub2 = new Response(new Environment, $mock2, array(), 'json');
 
 		ob_start();
 		echo $stub2;
