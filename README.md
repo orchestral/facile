@@ -42,5 +42,5 @@ You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `ap
 
 ## Resources
 
-* [Documentation](http://docs.orchestraplatform.com/pages/components/facile)
+* [Documentation](http://orchestraplatform.com/docs/2.0/components/facile)
 * [Change Logs](https://github.com/orchestral/facile/wiki/Change-Logs)
