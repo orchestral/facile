@@ -3,7 +3,7 @@ Orchestra Platform Facile Component
  
 Orchestra\Facile simplify the need to create API based response in your Laravel 4 application.
 
-[![Build Status](https://travis-ci.org/orchestral/facile.png?branch=2.0)](https://travis-ci.org/orchestral/facile) [![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=2.0)](https://coveralls.io/r/orchestral/facile?branch=2.0)
+[![Build Status](https://travis-ci.org/orchestral/facile.png?branch=master)](https://travis-ci.org/orchestral/facile) [![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=master)](https://coveralls.io/r/orchestral/facile?branch=master)
 
 ## Quick Installation
 
