@@ -19,7 +19,7 @@ abstract class Driver {
 	protected $formats = array('html');
 
 	/**
-	 * Default format
+	 * Default format.
 	 *
 	 * @var string
 	 */
@@ -40,7 +40,10 @@ abstract class Driver {
 	 * Compose requested format.
 	 *
 	 * @access public
-	 * @return mixedd
+	 * @param  string   $format
+	 * @param  array    $compose
+	 * @return mixed
+	 * @throws \RuntimeException
 	 */
 	public function compose($format, $compose = array())
 	{
@@ -68,7 +71,7 @@ abstract class Driver {
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer 	$status
-	 * @return Response  
+	 * @return \Illuminate\Http\Response  
 	 */
 	public function composeError($view, $data = array(), $status = 404)
 	{
@@ -80,7 +83,7 @@ abstract class Driver {
 	}
 
 	/**
-	 * Transform given data
+	 * Transform given data.
 	 *
 	 * @access public
 	 * @param  array    $data
@@ -91,7 +94,7 @@ abstract class Driver {
 		switch (true)
 		{
 			case ($item instanceof Eloquent) :
-				// passthru
+				# passthru;
 			case ($item instanceof ArrayableInterface) :
 				return $item->toArray();
 
@@ -108,7 +111,6 @@ abstract class Driver {
 					'links'   => e($item->links()),
 				);
 
-						
 			case (is_array($item)) :
 				return array_map(array($this, 'transform'), $item);
 
