@@ -14,20 +14,20 @@ class Base extends Driver {
 	protected $formats = array('html', 'json');
 
 	/**
-	 * Default format
+	 * Default format.
 	 *
 	 * @var string
 	 */
 	protected $defaultFormat = 'html';
 
 	/**
-	 * Compose HTML
+	 * Compose HTML.
 	 *
 	 * @access public
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer  $status
-	 * @return string
+	 * @return \Illuminate\Http\Response
 	 */
 	public function composeHtml($view = null, $data = array(), $status = 200)
 	{
@@ -42,13 +42,13 @@ class Base extends Driver {
 	}
 
 	/**
-	 * Compose json
+	 * Compose JSON.
 	 *
 	 * @access public
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer  $status
-	 * @return string
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function composeJson($view, $data = array(), $status = 200)
 	{

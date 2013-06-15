@@ -8,14 +8,14 @@ class Response implements RenderableInterface {
 	/**
 	 * Environment instance.
 	 *
-	 * @var Orchestra\Facile\Environment
+	 * @var \Orchestra\Facile\Environment
 	 */
 	protected $env = null;
 
 	/**
 	 * Template instance.
 	 *
-	 * @var Orchestra\Facile\Template\Driver
+	 * @var \Orchestra\Facile\Template\Driver
 	 */
 	protected $template = null;
 
@@ -38,13 +38,13 @@ class Response implements RenderableInterface {
 	);
 	
 	/**
-	 * Construct a new Facile\Response instance.
+	 * Construct a new Response instance.
 	 *
-	 * @access public							
-	 * @param  Orchestar\Facile\Environment     $env
-	 * @param  Orchestra\Facile\Template\Driver $template
-	 * @param  array                            $data
-	 * @param  string                           $format
+	 * @access public					
+	 * @param  \Orchestar\Facile\Environment        $env
+	 * @param  \Orchestra\Facile\Template\Driver    $template
+	 * @param  array                                $data
+	 * @param  string                               $format
 	 * @return void
 	 */
 	public function __construct(Environment $env, Template\Driver $template, $data = array(), $format = null)
@@ -128,7 +128,7 @@ class Response implements RenderableInterface {
 	 *
 	 * @access public
 	 * @param  string   $format
-	 * @return string
+	 * @return self
 	 */
 	public function format($format = null)
 	{
@@ -149,18 +149,20 @@ class Response implements RenderableInterface {
 	 *
 	 * @access public
 	 * @param  string   $format
-	 * @return void
+	 * @return self
 	 */
 	public function setFormat($format)
 	{
 		$this->format = $format;
+
+		return $this;
 	}
 
 	/**
 	 * Get Output Format.
 	 *
 	 * @access public
-	 * @return void
+	 * @return string
 	 */
 	public function getFormat()
 	{

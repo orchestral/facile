@@ -53,7 +53,7 @@ class Environment {
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
-	 * @return Orchestra\Facile\Response
+	 * @return \Orchestra\Facile\Response
 	 */
 	public function make($name, $data = array(), $format = null)
 	{
@@ -76,7 +76,9 @@ class Environment {
 	 * </code>
 	 * 
 	 * @access public
-	 * @return Orchestra\Facile\Response
+	 * @param  string   $view
+	 * @param  array    $data
+	 * @return \Orchestra\Facile\Response
 	 */
 	public function view($view, $data = array())
 	{
@@ -103,7 +105,7 @@ class Environment {
 	 *
 	 * @access public
 	 * @param  mixed    $data
-	 * @return Orchestra\Facile\Response
+	 * @return \Orchestra\Facile\Response
 	 */
 	public function with($data)
 	{
@@ -115,11 +117,11 @@ class Environment {
 	/**
 	 * Register a template.
 	 *
-	 * @access public							
-	 * @param  string                           $name
-	 * @param  Orchestra\Facile\Template\Driver $callback
+	 * @access public
+	 * @param  string                               $name
+	 * @param  \Orchestra\Facile\Template\Driver    $callback
 	 * @return void
-	 * @throws RuntimeException     If $callback not instanceof 
+	 * @throws \RuntimeException    If $callback not instanceof 
 	 *                              Orchestra\Facile\Template\Driver
 	 */
 	public function template($name, $template)
@@ -141,8 +143,8 @@ class Environment {
 	 *
 	 * @access public
 	 * @param  string   $name
-	 * @return Orchestra\Facile\Template\Driver
-	 * @throws InvalidArgumentException     If template is not defined.
+	 * @return \Orchestra\Facile\Template\Driver
+	 * @throws \InvalidArgumentException    If template is not defined.
 	 */
 	public function get($name)
 	{
