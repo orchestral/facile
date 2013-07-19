@@ -23,7 +23,6 @@ class Base extends Driver {
 	/**
 	 * Compose HTML.
 	 *
-	 * @access public
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer  $status
@@ -44,7 +43,6 @@ class Base extends Driver {
 	/**
 	 * Compose JSON.
 	 *
-	 * @access public
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer  $status

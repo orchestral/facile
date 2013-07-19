@@ -40,7 +40,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Construct a new Response instance.
 	 *
-	 * @access public					
 	 * @param  \Orchestar\Facile\Environment        $env
 	 * @param  \Orchestra\Facile\Template\Driver    $template
 	 * @param  array                                $data
@@ -59,7 +58,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Nest a view to Facile.
 	 *
-	 * @access public
 	 * @param  string   $view
 	 * @return self
 	 */
@@ -73,7 +71,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Nest a data or dataset to Facile.
 	 *
-	 * @access public
 	 * @param  mixed    $key
 	 * @param  mixed    $value
 	 * @return self
@@ -90,7 +87,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Set HTTP status to Facile.
 	 *
-	 * @access public	
 	 * @param  integer  $status
 	 * @return self
 	 */
@@ -105,7 +101,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Set a template for Facile.
 	 *
-	 * @access public
 	 * @param  mixed    $name
 	 * @return self
 	 */
@@ -126,7 +121,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Get expected facile format.
 	 *
-	 * @access public
 	 * @param  string   $format
 	 * @return self
 	 */
@@ -147,7 +141,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Set Output Format.
 	 *
-	 * @access public
 	 * @param  string   $format
 	 * @return self
 	 */
@@ -161,7 +154,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Get Output Format.
 	 *
-	 * @access public
 	 * @return string
 	 */
 	public function getFormat()
@@ -176,6 +168,9 @@ class Response implements RenderableInterface {
 
 	/**
 	 * Magic method to __get.
+	 * 
+	 * @param  string   $key
+	 * @return mixed
 	 */
 	public function __get($key)
 	{
@@ -190,7 +185,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Render facile by selected format.
 	 *
-	 * @access public
 	 * @return mixed
 	 */
 	public function __toString()
@@ -208,7 +202,6 @@ class Response implements RenderableInterface {
 	/**
 	 * Render facile by selected format.
 	 *
-	 * @access public
 	 * @return mixed
 	 */
 	public function render()
