@@ -25,7 +25,6 @@ class FacileServiceProvider extends ServiceProvider {
 	/**
 	 * Register Facile environment.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function registerEnvironment()
@@ -39,7 +38,6 @@ class FacileServiceProvider extends ServiceProvider {
 	/**
 	 * Register Facile environment.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function registerTemplate()

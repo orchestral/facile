@@ -15,7 +15,6 @@ class Environment {
 	/**
 	 * Construct a new Facile service.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct() 
@@ -49,7 +48,6 @@ class Environment {
 	 * 			->format('html');
 	 * </code>
 	 *
-	 * @access public			
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
@@ -75,7 +73,6 @@ class Environment {
 	 * 			->format('html');
 	 * </code>
 	 * 
-	 * @access public
 	 * @param  string   $view
 	 * @param  array    $data
 	 * @return \Orchestra\Facile\Response
@@ -103,7 +100,6 @@ class Environment {
 	 * 			->format('html');
 	 * </code>
 	 *
-	 * @access public
 	 * @param  mixed    $data
 	 * @return \Orchestra\Facile\Response
 	 */
@@ -117,7 +113,6 @@ class Environment {
 	/**
 	 * Register a template.
 	 *
-	 * @access public
 	 * @param  string                               $name
 	 * @param  \Orchestra\Facile\Template\Driver    $callback
 	 * @return void
@@ -141,7 +136,6 @@ class Environment {
 	/**
 	 * Get the template.
 	 *
-	 * @access public
 	 * @param  string   $name
 	 * @return \Orchestra\Facile\Template\Driver
 	 * @throws \InvalidArgumentException    If template is not defined.

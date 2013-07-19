@@ -28,7 +28,6 @@ abstract class Driver {
 	/**
 	 * Detect current format.
 	 *
-	 * @access public
 	 * @return string
 	 */
 	public function format()
@@ -39,7 +38,6 @@ abstract class Driver {
 	/**
 	 * Compose requested format.
 	 *
-	 * @access public
 	 * @param  string   $format
 	 * @param  array    $compose
 	 * @return mixed
@@ -67,7 +65,6 @@ abstract class Driver {
 	/**
 	 * Compose an error template.
 	 *
-	 * @access public 	
 	 * @param  mixed    $view
 	 * @param  array    $data
 	 * @param  integer 	$status
@@ -85,7 +82,6 @@ abstract class Driver {
 	/**
 	 * Transform given data.
 	 *
-	 * @access public
 	 * @param  array    $data
 	 * @return array
 	 */
