@@ -53,13 +53,13 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 		$stub = new TemplateDriverStub;
 
 		$request = m::mock('Request');
-		$request->shouldReceive('input')->once()->andReturn('html');
-		\Illuminate\Support\Facades\Input::setFacadeApplication(array('request' => $request));
+		$request->shouldReceive('format')->once()->andReturn('html');
+		\Illuminate\Support\Facades\Request::setFacadeApplication(array('request' => $request));
 
 		$this->assertEquals('html', $stub->format());
 		
-		$request->shouldReceive('input')->once()->andReturn('json');
-		\Illuminate\Support\Facades\Input::setFacadeApplication(array('request' => $request));
+		$request->shouldReceive('format')->once()->andReturn('json');
+		\Illuminate\Support\Facades\Request::setFacadeApplication(array('request' => $request));
 
 		$this->assertEquals('json', $stub->format());
 	}

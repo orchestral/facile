@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Contracts\RenderableInterface;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 
@@ -32,7 +32,7 @@ abstract class Driver {
 	 */
 	public function format()
 	{
-		return Input::get('format', $this->defaultFormat);
+		return Request::format($this->defaultFormat);
 	}
 
 	/**
