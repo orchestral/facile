@@ -18,31 +18,13 @@ class FacileServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerEnvironment();
-		$this->registerTemplate();
-	}
-
-	/**
-	 * Register Facile environment.
-	 *
-	 * @return void
-	 */
-	protected function registerEnvironment()
-	{
 		$this->app['orchestra.facile'] = $this->app->share(function()
 		{
-			return new Environment;
-		});
-	}
+			$env = new Environment;
+			$env->template('default', new Template\Base);
 
-	/**
-	 * Register Facile environment.
-	 *
-	 * @return void
-	 */
-	protected function registerTemplate()
-	{
-		$this->app['orchestra.facile']->template('default', new Template\Base);
+			return $env;
+		});
 	}
 
 	/**
