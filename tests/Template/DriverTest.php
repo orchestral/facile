@@ -1,25 +1,31 @@
 <?php namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
+use Illuminate\Container\Container;
+use Illuminate\Pagination\Paginator;
 
 class DriverTest extends \PHPUnit_Framework_TestCase {
+
+	/**
+	 * Application instance.
+	 *
+	 * @var \Illuminate\Foundation\Application
+	 */
+	protected $app;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$app = m::mock('Application');
-		$app->shouldReceive('instance')->andReturn(true);
-
-		\Illuminate\Support\Facades\View::setFacadeApplication($app);
+		$this->app = new Container;
 	}
-
 	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		m::close();
 	}
 
@@ -30,9 +36,9 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testConstructMethod()
 	{
-		$stub = new TemplateDriverStub;
-
-		$refl          = new \ReflectionObject($stub);
+		$stub = new TemplateDriverStub($this->app);
+		$refl = new \ReflectionObject($stub);
+		
 		$formats       = $refl->getProperty('formats');
 		$defaultFormat = $refl->getProperty('defaultFormat');
 
@@ -41,6 +47,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array('html', 'json', 'foo'), $formats->getValue($stub));
 		$this->assertEquals('html', $defaultFormat->getValue($stub));
+		$this->assertEquals($this->app, $stub->getContainer());
 	}
 
 	/**
@@ -50,18 +57,13 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testFormatMethod()
 	{
-		$stub = new TemplateDriverStub;
+		$app = $this->app;
+		$app['request'] = $request = m::mock('Request');
 
-		$request = m::mock('Request');
+		$stub = new TemplateDriverStub($app);
+
 		$request->shouldReceive('format')->once()->andReturn('html');
-		\Illuminate\Support\Facades\Request::setFacadeApplication(array('request' => $request));
-
 		$this->assertEquals('html', $stub->format());
-		
-		$request->shouldReceive('format')->once()->andReturn('json');
-		\Illuminate\Support\Facades\Request::setFacadeApplication(array('request' => $request));
-
-		$this->assertEquals('json', $stub->format());
 	}
 
 	/**
@@ -71,7 +73,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testComposeMethod()
 	{
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$data = array(
 			'view'   => null,
 			'data'   => array(),
@@ -89,20 +91,22 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testComposeMethodReturnResponseError406WhenGivenInvalidFormat()
 	{
-		$stub = new TemplateDriverStub;
+		$app = $this->app;
+		$app['view'] = $view = m::mock('View');
+
+		$view->shouldReceive('exists')->once()->with('error.406')->andReturn(true)
+			->shouldReceive('make')->once()->with('error.406', array())->andReturn('error-406');
+
+		$stub = new TemplateDriverStub($app);
 		$data = array(
 			'view'   => null,
 			'data'   => array(),
 			'status' => 200,
 		);
 
-		$view = m::mock('View');
-		$view->shouldReceive('exists')->once()->andReturn(false);
-
-		\Illuminate\Support\Facades\View::swap($view);
-
 		$response = $stub->compose('foobar', $data);
 		$this->assertInstanceOf("\Illuminate\Http\Response", $response);
+		$this->assertEquals('error-406', $response->getContent());
 	}
 
 	/**
@@ -113,7 +117,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testComposeMethodThrowsExceptionWhenMethodNotAvailable()
 	{
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$data = array(
 			'view'   => null,
 			'data'   => array(),
@@ -134,7 +138,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 		$mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
 		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$this->assertEquals('foobar', $stub->transform($mock));
 	}
 
@@ -149,7 +153,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 		$mock = m::mock('\Illuminate\Database\Eloquent\Model');
 		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$this->assertEquals('foobar', $stub->transform($mock));
 	}
 
@@ -164,7 +168,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 		$mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
 		$mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$this->assertEquals(array('foobar'), $stub->transform(array($mock)));
 	}
 
@@ -181,7 +185,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 				->once()
 				->andReturn('<foobar>');
 
-		$stub = new TemplateDriverStub;
+		$stub = new TemplateDriverStub($this->app);
 		$this->assertEquals('&lt;foobar&gt;', $stub->transform($mock));
 	}
 
@@ -193,14 +197,27 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemInstanceOfPaginator()
 	{
-		$mock = m::mock('Illuminate\Pagination\Paginator', array('results', array('foo' => 'foobar')));
-		$mock->shouldReceive('getItems')->andReturn(array('foo' => 'foobar'))
-			->shouldReceive('links')->once()->andReturn('<foo>');
+		$results = array('foo' => 'foobar');
+		$env     = m::mock('\Illuminate\Pagination\Environment');
 
-		$stub = new TemplateDriverStub;
+		$env->shouldReceive('getCurrentPage')->once()->andReturn(1);
 
-		$this->assertEquals(array('results' => array('foo' => 'foobar'), 'links' => '&lt;foo&gt;'), 
-			$stub->transform($mock));
+		$paginator = new Paginator($env, $results, 3, 1);
+		$paginator->setupPaginationContext();
+
+		$stub = new TemplateDriverStub($this->app);
+
+		$expected = array(
+			'total'        => 3, 
+			'per_page'     => 1, 
+			'current_page' => 1, 
+			'last_page'    => 3,
+			'from'         => 1, 
+			'to'           => 1, 
+			'data'         => $results,
+		);
+
+		$this->assertEquals($expected, $stub->transform($paginator));
 	}
 }
 
@@ -208,7 +225,7 @@ class TemplateDriverStub extends \Orchestra\Facile\Template\Driver {
 
 	protected $formats = array('html', 'json', 'foo');
 
-	public function composeFoo($data)
+	public function composeFoo()
 	{
 		return 'foo';
 	}

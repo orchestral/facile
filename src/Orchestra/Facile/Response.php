@@ -208,6 +208,12 @@ class Response implements RenderableInterface {
 	{
 		if (is_null($this->format)) $this->format();
 
-		return $this->template->compose($this->getFormat(), $this->data);
+		// Set application container before compose the template. This 
+		// would allow to attach registered instance directly without using 
+		// facades.
+		$template = $this->template;
+		$template->setContainer($this->env->getContainer());
+
+		return $template->compose($this->getFormat(), $this->data);
 	}
 }
