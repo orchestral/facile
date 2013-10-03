@@ -1,12 +1,18 @@
 <?php namespace Orchestra\Facile\Template;
 
 use RuntimeException;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
+use Illuminate\Container\Container;
+use Illuminate\Http\Response as IlluminateResponse;
 use Orchestra\Facile\Transformable;
 
 abstract class Driver {
+
+	/**
+	 * Application instance.
+	 *
+	 * @var \Illuminate\Foundation\Application
+	 */
+	protected $app = null;
 
 	/**
 	 * List of supported format.
@@ -23,13 +29,45 @@ abstract class Driver {
 	protected $defaultFormat = 'html';
 
 	/**
+	 * Construct a new Facile service.
+	 * 
+	 * @param  \Illuminate\Container\Container  $app
+	 */
+	public function __construct(Container $app) 
+	{
+		$this->setContainer($app);
+	}
+
+	/**
+	 * Get app container.
+	 *
+	 * @return \Illuminate\Container\Container
+	 */
+	public function getContainer()
+	{
+		return $this->app;
+	}
+
+
+	/**
+	 * Set app container.
+	 * 
+	 * @param  \Illuminate\Container\Container  $app
+	 * @return void
+	 */
+	public function setContainer($app)
+	{
+		$this->app = $app;
+	}
+
+	/**
 	 * Detect current format.
 	 *
 	 * @return string
 	 */
 	public function format()
 	{
-		return Request::format($this->defaultFormat);
+		return $this->app['request']->format($this->defaultFormat);
 	}
 
 	/**
@@ -44,11 +82,11 @@ abstract class Driver {
 	{
 		if ( ! in_array($format, $this->formats))
 		{
-			return call_user_func(array($this, "composeError"), null, null, 406);
+			return $this->composeError(null, null, 406);
 		}
 		elseif ( ! method_exists($this, 'compose'.ucwords($format)))
 		{
-			throw new RuntimeException("Call to undefine method [compose_{$format}].");
+			throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
 		}
 
 		return call_user_func(
@@ -69,11 +107,16 @@ abstract class Driver {
 	 */
 	public function composeError($view, $data = array(), $status = 404)
 	{
+		$engine = $this->app['view'];
+
 		$view = "{$status} Error";
 
-		if (View::exists("error.{$status}")) $view = View::make("error.{$status}", $data);
+		if ($engine->exists("error.{$status}")) 
+		{
+			$view = $engine->make("error.{$status}", $data);
+		}
 
-		return Response::make($view, $status);
+		return new IlluminateResponse($view, $status);
 	}
 
 	/**

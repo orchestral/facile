@@ -53,7 +53,8 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	public function testMakeMethod()
 	{
 		$template = m::mock('\Orchestra\Facile\Template\Driver');
-		$template->shouldReceive('compose')->with('json', m::any())->once()->andReturn('foo');
+		$template->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
+			->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
 		$stub->template('mock', function () use ($template)
@@ -99,8 +100,9 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	public function testViewMethod()
 	{
 		$template = m::mock('\Orchestra\Facile\Template\Driver');
-		$template->shouldReceive('format')->with()->once()->andReturn('html')
-			->shouldReceive('compose')->with('html', m::any())->once()->andReturn('foo');
+		$template->shouldReceive('format')->once()->with()->andReturn('html')
+			->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
+			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
 		$stub->template('default', function () use ($template)
@@ -132,9 +134,10 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWithMethod()
 	{
-		$template = m::mock('\Orchestra\Facile\Template\Driver');
-		$template->shouldReceive('format')->with()->once()->andReturn('html')
-			->shouldReceive('compose')->with('html', m::any())->once()->andReturn('foo');
+		$template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Driver');
+		$template->shouldReceive('format')->once()->with()->andReturn('html')
+			->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
+			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
 		$stub->template('default', function () use ($template)
@@ -173,7 +176,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(is_array($templates->getValue($stub)));
 
-		$stub->template('foo', new FooTemplateStub);
+		$stub->template('foo', new FooTemplateStub($this->app));
 	}
 
 	/**

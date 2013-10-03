@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Facile\Template;
 
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\View\View;
 
 class Base extends Driver {
 
@@ -35,9 +36,9 @@ class Base extends Driver {
 			throw new InvalidArgumentException("Missing [\$view].");
 		}
 
-		if ( ! ($view instanceof View)) $view = View::make($view);
+		if ( ! ($view instanceof View)) $view = $this->app['view']->make($view);
 
-		return Response::make($view->with($data), $status);
+		return new IlluminateResponse($view->with($data), $status);
 	}
 
 	/**
@@ -50,8 +51,10 @@ class Base extends Driver {
 	 */
 	public function composeJson($view, $data = array(), $status = 200)
 	{
+		unset($view);
+
 		$data = array_map(array($this, 'transform'), $data);
 
-		return Response::json($data, $status);
+		return new JsonResponse($data, $status);
 	}
 }

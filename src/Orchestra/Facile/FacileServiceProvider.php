@@ -21,7 +21,11 @@ class FacileServiceProvider extends ServiceProvider {
 		$this->app['orchestra.facile'] = $this->app->share(function($app)
 		{
 			$env = new Environment($app);
-			$env->template('default', new Template\Base);
+
+			$env->template('default', function () use ($app)
+			{
+				return new Template\Base($app);
+			});
 
 			return $env;
 		});
