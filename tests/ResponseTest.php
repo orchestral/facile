@@ -214,8 +214,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testToStringMethod()
 	{
 		$template1 = m::mock('\Orchestra\Facile\Template\Base');
-		$template1->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
-			->shouldReceive('compose')->once()
+		$template1->shouldReceive('compose')->once()
 				->with('json', m::any())->andReturn(json_encode(array('foo' => 'foo is awesome')));
 
 		$stub1 = new Response(new Environment($this->app), $template1, array(), 'json');
@@ -231,8 +230,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 		$render->shouldReceive('render')->once()->andReturn('foo is awesome');
 
 		$template2 = m::mock('\Orchestra\Facile\Template\Driver');
-		$template2->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
-			->shouldReceive('compose')->once()->with('json', m::any())->andReturn($render);
+		$template2->shouldReceive('compose')->once()->with('json', m::any())->andReturn($render);
 
 		$stub2 = new Response(new Environment($this->app), $template2, array(), 'json');
 

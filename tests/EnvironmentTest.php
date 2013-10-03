@@ -53,8 +53,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	public function testMakeMethod()
 	{
 		$template = m::mock('\Orchestra\Facile\Template\Driver');
-		$template->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
-			->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
+		$template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
 		$stub->template('mock', function () use ($template)
@@ -101,7 +100,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	{
 		$template = m::mock('\Orchestra\Facile\Template\Driver');
 		$template->shouldReceive('format')->once()->with()->andReturn('html')
-			->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
 			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
@@ -136,7 +134,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	{
 		$template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Driver');
 		$template->shouldReceive('format')->once()->with()->andReturn('html')
-			->shouldReceive('setContainer')->once()->with($this->app)->andReturn(null)
 			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
