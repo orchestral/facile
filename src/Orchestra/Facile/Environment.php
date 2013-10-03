@@ -2,8 +2,16 @@
 
 use InvalidArgumentException;
 use RuntimeException;
+use Illuminate\Container\Container;
 
 class Environment {
+
+	/**
+	 * Application instance.
+	 *
+	 * @var \Illuminate\Foundation\Application
+	 */
+	protected $app = null;
 
 	/**
 	 * List of templates.
@@ -14,11 +22,12 @@ class Environment {
 	
 	/**
 	 * Construct a new Facile service.
-	 *
-	 * @return void
+	 * 
+	 * @param  \Illuminate\Container\Container  $app
 	 */
-	public function __construct() 
+	public function __construct(Container $app) 
 	{
+		$this->app       = $app;
 		$this->templates = array();
 	}
 
@@ -105,9 +114,10 @@ class Environment {
 	 */
 	public function with($data)
 	{
+		$data     = func_get_args();
 		$response = new Response($this, $this->get('default'));
 
-		return call_user_func_array(array($response, 'with'), func_get_args());
+		return call_user_func_array(array($response, 'with'), $data);
 	}
 
 	/**
@@ -150,5 +160,15 @@ class Environment {
 		}
 
 		return $this->templates[$name];
+	}
+
+	/**
+	 * Get application container.
+	 *
+	 * @return \Illuminate\Container\Container
+	 */
+	public function getContainer()
+	{
+		return $this->app;
 	}
 }

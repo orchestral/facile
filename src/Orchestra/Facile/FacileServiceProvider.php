@@ -18,9 +18,9 @@ class FacileServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['orchestra.facile'] = $this->app->share(function()
+		$this->app['orchestra.facile'] = $this->app->share(function($app)
 		{
-			$env = new Environment;
+			$env = new Environment($app);
 			$env->template('default', new Template\Base);
 
 			return $env;

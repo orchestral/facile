@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
+use Illuminate\Pagination\Paginator;
 
 class DriverTest extends \PHPUnit_Framework_TestCase {
 
@@ -193,14 +194,28 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTransformMethodWhenItemInstanceOfPaginator()
 	{
-		$mock = m::mock('Illuminate\Pagination\Paginator', array('results', array('foo' => 'foobar')));
-		$mock->shouldReceive('getItems')->andReturn(array('foo' => 'foobar'))
-			->shouldReceive('links')->once()->andReturn('<foo>');
+		$results = array('foo' => 'foobar');
+		$env     = m::mock('\Illuminate\Pagination\Environment');
+
+		$env->shouldReceive('getCurrentPage')->once()->andReturn(1);
+
+		$paginator = new Paginator($env, $results, 3, 1);
+		$paginator->setupPaginationContext();
+
 
 		$stub = new TemplateDriverStub;
 
-		$this->assertEquals(array('results' => array('foo' => 'foobar'), 'links' => '&lt;foo&gt;'), 
-			$stub->transform($mock));
+		$expected = array(
+			'total'        => 3, 
+			'per_page'     => 1, 
+			'current_page' => 1, 
+			'last_page'    => 3,
+			'from'         => 1, 
+			'to'           => 1, 
+			'data'         => $results,
+		);
+
+		$this->assertEquals($expected, $stub->transform($paginator));
 	}
 }
 
@@ -208,7 +223,7 @@ class TemplateDriverStub extends \Orchestra\Facile\Template\Driver {
 
 	protected $formats = array('html', 'json', 'foo');
 
-	public function composeFoo($data)
+	public function composeFoo()
 	{
 		return 'foo';
 	}
