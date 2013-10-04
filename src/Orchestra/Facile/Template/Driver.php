@@ -15,6 +15,13 @@ abstract class Driver {
 	protected $app = null;
 
 	/**
+	 * Transformable instance.
+	 *
+	 * @var \Orchestra\Facile\Transformable
+	 */
+	protected $transformable = null;
+
+	/**
 	 * List of supported format.
 	 * 
 	 * @var array
@@ -32,10 +39,12 @@ abstract class Driver {
 	 * Construct a new Facile service.
 	 * 
 	 * @param  \Illuminate\Container\Container  $app
+	 * @param  \Orchestra\Facile\Transformable  $transformable
 	 */
-	public function __construct(Container $app) 
+	public function __construct(Container $app, Transformable $tranformable = null) 
 	{
 		$this->setContainer($app);
+		$this->transformable = $tranformable ?: new Transformable;
 	}
 
 	/**
@@ -127,6 +136,6 @@ abstract class Driver {
 	 */
 	public function transform($data)
 	{
-		return with(new Transformable)->run($data);
+		return $this->transformable->run($data);
 	}
 }
