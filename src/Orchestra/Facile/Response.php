@@ -44,7 +44,6 @@ class Response implements RenderableInterface {
 	 * @param  \Orchestra\Facile\Template\Driver    $template
 	 * @param  array                                $data
 	 * @param  string                               $format
-	 * @return void
 	 */
 	public function __construct(Environment $env, Template\Driver $template, $data = array(), $format = null)
 	{
