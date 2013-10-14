@@ -29,7 +29,7 @@ class Base extends Driver {
 	 * @param  integer  $status
 	 * @return \Illuminate\Http\Response
 	 */
-	public function composeHtml($view = null, $data = array(), $status = 200)
+	public function composeHtml($view = null, array $data = array(), $status = 200)
 	{
 		if ( ! isset($view))
 		{
@@ -49,7 +49,7 @@ class Base extends Driver {
 	 * @param  integer  $status
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function composeJson($view, $data = array(), $status = 200)
+	public function composeJson($view, array $data = array(), $status = 200)
 	{
 		unset($view);
 

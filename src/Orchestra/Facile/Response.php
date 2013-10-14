@@ -4,18 +4,18 @@ use InvalidArgumentException;
 use Illuminate\Support\Contracts\RenderableInterface;
 
 class Response implements RenderableInterface {
-	
+
 	/**
 	 * Environment instance.
 	 *
-	 * @var \Orchestra\Facile\Environment
+	 * @var Environment
 	 */
 	protected $env = null;
 
 	/**
 	 * Template instance.
 	 *
-	 * @var \Orchestra\Facile\Template\Driver
+	 * @var Template\Driver
 	 */
 	protected $template = null;
 
@@ -36,16 +36,16 @@ class Response implements RenderableInterface {
 		'data'   => array(), 
 		'status' => 200,
 	);
-	
+
 	/**
 	 * Construct a new Response instance.
-	 *
-	 * @param  \Orchestar\Facile\Environment        $env
-	 * @param  \Orchestra\Facile\Template\Driver    $template
-	 * @param  array                                $data
-	 * @param  string                               $format
+	 * 
+	 * @param  Environment      $env
+	 * @param  Template\Driver  $template
+	 * @param  array            $data
+	 * @param  string           $format
 	 */
-	public function __construct(Environment $env, Template\Driver $template, $data = array(), $format = null)
+	public function __construct(Environment $env, Template\Driver $template, array $data = array(), $format = null)
 	{
 		$this->env      = $env;
 		$this->template = $template;
@@ -58,7 +58,7 @@ class Response implements RenderableInterface {
 	 * Nest a view to Facile.
 	 *
 	 * @param  string   $view
-	 * @return self
+	 * @return Response
 	 */
 	public function view($view)
 	{
@@ -72,12 +72,12 @@ class Response implements RenderableInterface {
 	 *
 	 * @param  mixed    $key
 	 * @param  mixed    $value
-	 * @return self
+	 * @return Response
 	 */
 	public function with($key, $value = null)
 	{
 		$data = is_array($key) ? $key : array($key => $value);
-		
+
 		$this->data['data'] = array_merge($this->data['data'], $data);
 
 		return $this;
@@ -87,7 +87,7 @@ class Response implements RenderableInterface {
 	 * Set HTTP status to Facile.
 	 *
 	 * @param  integer  $status
-	 * @return self
+	 * @return Response
 	 */
 	public function status($status = 200)
 	{
@@ -96,12 +96,11 @@ class Response implements RenderableInterface {
 		return $this;
 	}
 
-
 	/**
 	 * Set a template for Facile.
 	 *
 	 * @param  mixed    $name
-	 * @return self
+	 * @return Response
 	 */
 	public function template($name)
 	{
@@ -116,12 +115,12 @@ class Response implements RenderableInterface {
 
 		return $this;
 	}
-	
+
 	/**
 	 * Get expected facile format.
 	 *
 	 * @param  string   $format
-	 * @return self
+	 * @return Response
 	 */
 	public function format($format = null)
 	{
@@ -141,7 +140,7 @@ class Response implements RenderableInterface {
 	 * Set Output Format.
 	 *
 	 * @param  string   $format
-	 * @return self
+	 * @return Response
 	 */
 	public function setFormat($format)
 	{
@@ -184,7 +183,7 @@ class Response implements RenderableInterface {
 	/**
 	 * Render facile by selected format.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function __toString()
 	{

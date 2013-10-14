@@ -5,11 +5,11 @@ use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Contracts\RenderableInterface;
 
 class Transformable {
-	
+
 	/**
 	 * Run data transformation.
 	 * 
-	 * @param  array    $data
+	 * @param  mixed    $data
 	 * @return array
 	 */
 	public function run($data)
@@ -26,7 +26,7 @@ class Transformable {
 		{
 			return array_map(array($this, 'run'), $data);
 		}
-		
+
 		return $data;
 	}
 }
