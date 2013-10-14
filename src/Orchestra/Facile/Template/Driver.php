@@ -10,7 +10,7 @@ abstract class Driver {
 	/**
 	 * Application instance.
 	 *
-	 * @var \Illuminate\Foundation\Application
+	 * @var \Illuminate\Container\Container
 	 */
 	protected $app = null;
 
@@ -57,7 +57,6 @@ abstract class Driver {
 		return $this->app;
 	}
 
-
 	/**
 	 * Set app container.
 	 * 
@@ -87,11 +86,11 @@ abstract class Driver {
 	 * @return mixed
 	 * @throws \RuntimeException
 	 */
-	public function compose($format, $compose = array())
+	public function compose($format, array $compose = array())
 	{
 		if ( ! in_array($format, $this->formats))
 		{
-			return $this->composeError(null, null, 406);
+			return $this->composeError(null, array(), 406);
 		}
 		elseif ( ! method_exists($this, 'compose'.ucwords($format)))
 		{
@@ -114,7 +113,7 @@ abstract class Driver {
 	 * @param  integer 	$status
 	 * @return \Illuminate\Http\Response  
 	 */
-	public function composeError($view, $data = array(), $status = 404)
+	public function composeError($view, array $data = array(), $status = 404)
 	{
 		$engine = $this->app['view'];
 
@@ -130,8 +129,8 @@ abstract class Driver {
 
 	/**
 	 * Transform given data.
-	 *
-	 * @param  array    $data
+	 * 
+	 * @param  mixed    $data
 	 * @return array
 	 */
 	public function transform($data)

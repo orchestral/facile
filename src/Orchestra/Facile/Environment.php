@@ -9,7 +9,7 @@ class Environment {
 	/**
 	 * Application instance.
 	 *
-	 * @var \Illuminate\Foundation\Application
+	 * @var \Illuminate\Container\Container
 	 */
 	protected $app = null;
 
@@ -19,7 +19,7 @@ class Environment {
 	 * @var array
 	 */
 	protected $templates = array();
-	
+
 	/**
 	 * Construct a new Facile service.
 	 * 
@@ -60,9 +60,9 @@ class Environment {
 	 * @param  string   $name   Name of template
 	 * @param  array    $data
 	 * @param  string   $format
-	 * @return \Orchestra\Facile\Response
+	 * @return Response
 	 */
-	public function make($name, $data = array(), $format = null)
+	public function make($name, array $data = array(), $format = null)
 	{
 		return new Response($this, $this->get($name), $data, $format);
 	}
@@ -84,9 +84,9 @@ class Environment {
 	 * 
 	 * @param  string   $view
 	 * @param  array    $data
-	 * @return \Orchestra\Facile\Response
+	 * @return Response
 	 */
-	public function view($view, $data = array())
+	public function view($view, array $data = array())
 	{
 		return with(new Response($this, $this->get('default')))
 			->view($view)
@@ -110,7 +110,7 @@ class Environment {
 	 * </code>
 	 *
 	 * @param  mixed    $data
-	 * @return \Orchestra\Facile\Response
+	 * @return Response
 	 */
 	public function with($data)
 	{
@@ -122,12 +122,12 @@ class Environment {
 
 	/**
 	 * Register a template.
-	 *
-	 * @param  string                               $name
-	 * @param  \Orchestra\Facile\Template\Driver    $callback
+	 * 
+	 * @param  string               $name
+	 * @param  Template\Driver      $template
 	 * @return void
-	 * @throws \RuntimeException    If $callback not instanceof 
-	 *                              Orchestra\Facile\Template\Driver
+	 * @throws \RuntimeException if `$template` not instanceof 
+	 *                           `Orchestra\Facile\Template\Driver`.
 	 */
 	public function template($name, $template)
 	{
@@ -147,8 +147,8 @@ class Environment {
 	 * Get the template.
 	 *
 	 * @param  string   $name
-	 * @return \Orchestra\Facile\Template\Driver
-	 * @throws \InvalidArgumentException    If template is not defined.
+	 * @return Template\Driver
+	 * @throws \InvalidArgumentException if template is not defined.
 	 */
 	public function get($name)
 	{
