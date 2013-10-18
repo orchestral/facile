@@ -1,7 +1,7 @@
 Orchestra Platform Facile Component
 ==============
  
-Orchestra\Facile simplify the need to create API based response in your Laravel 4 application.
+`Orchestra\Facile` simplify the need to create API based response in your Laravel 4 application.
 
 [![Latest Stable Version](https://poser.pugx.org/orchestra/facile/v/stable.png)](https://packagist.org/packages/orchestra/facile) 
 [![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads.png)](https://packagist.org/packages/orchestra/facile) 
