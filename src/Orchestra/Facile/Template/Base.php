@@ -5,11 +5,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\View\View;
 
-class Base extends Driver {
-
+class Base extends Driver
+{
 	/**
 	 * List of supported format.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $formats = array('html', 'json');
@@ -31,12 +31,13 @@ class Base extends Driver {
 	 */
 	public function composeHtml($view = null, array $data = array(), $status = 200)
 	{
-		if ( ! isset($view))
-		{
+		if (! isset($view)) {
 			throw new InvalidArgumentException("Missing [\$view].");
 		}
 
-		if ( ! ($view instanceof View)) $view = $this->app['view']->make($view);
+		if (! $view instanceof View) {
+			$view = $this->app['view']->make($view);
+		}
 
 		return new IlluminateResponse($view->with($data), $status);
 	}

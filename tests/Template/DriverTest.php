@@ -4,8 +4,8 @@ use Mockery as m;
 use Illuminate\Container\Container;
 use Illuminate\Pagination\Paginator;
 
-class DriverTest extends \PHPUnit_Framework_TestCase {
-
+class DriverTest extends \PHPUnit_Framework_TestCase
+{
 	/**
 	 * Application instance.
 	 *
@@ -38,7 +38,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	{
 		$stub = new TemplateDriverStub($this->app);
 		$refl = new \ReflectionObject($stub);
-		
+
 		$formats       = $refl->getProperty('formats');
 		$defaultFormat = $refl->getProperty('defaultFormat');
 
@@ -84,7 +84,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::compose() method return response with 
+	 * Test Orchestra\Facile\Template\Driver::compose() method return response with
 	 * error 406 when given an invalid format.
 	 *
 	 * @test
@@ -110,7 +110,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::compose() method throws exception 
+	 * Test Orchestra\Facile\Template\Driver::compose() method throws exception
 	 * when given method isn't available.
 	 *
 	 * @expectedException \RuntimeException
@@ -128,7 +128,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has
 	 * toArray().
 	 *
 	 * @test
@@ -143,7 +143,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::transform() method when item is 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is
 	 * instance of Illuminate\Database\Eloquent\Model.
 	 *
 	 * @test
@@ -158,7 +158,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::transform() method when item is an 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item is an
 	 * array.
 	 *
 	 * @test
@@ -173,7 +173,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::transform() method when item has 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item has
 	 * renderable.
 	 *
 	 * @test
@@ -190,7 +190,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Template\Driver::transform() method when item 
+	 * Test Orchestra\Facile\Template\Driver::transform() method when item
 	 * is instance of Paginator
 	 *
 	 * @test
@@ -208,12 +208,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 		$stub = new TemplateDriverStub($this->app);
 
 		$expected = array(
-			'total'        => 3, 
-			'per_page'     => 1, 
-			'current_page' => 1, 
+			'total'        => 3,
+			'per_page'     => 1,
+			'current_page' => 1,
 			'last_page'    => 3,
-			'from'         => 1, 
-			'to'           => 1, 
+			'from'         => 1,
+			'to'           => 1,
 			'data'         => $results,
 		);
 
@@ -221,13 +221,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
-class TemplateDriverStub extends \Orchestra\Facile\Template\Driver {
-
+class TemplateDriverStub extends \Orchestra\Facile\Template\Driver
+{
 	protected $formats = array('html', 'json', 'foo');
 
 	public function composeFoo()
 	{
 		return 'foo';
 	}
-
 }
