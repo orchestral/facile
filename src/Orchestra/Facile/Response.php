@@ -5,200 +5,200 @@ use Illuminate\Support\Contracts\RenderableInterface;
 
 class Response implements RenderableInterface
 {
-	/**
-	 * Environment instance.
-	 *
-	 * @var Environment
-	 */
-	protected $env = null;
+    /**
+     * Environment instance.
+     *
+     * @var Environment
+     */
+    protected $env = null;
 
-	/**
-	 * Template instance.
-	 *
-	 * @var Template\Driver
-	 */
-	protected $template = null;
+    /**
+     * Template instance.
+     *
+     * @var Template\Driver
+     */
+    protected $template = null;
 
-	/**
-	 * View format.
-	 *
-	 * @var string
-	 */
-	protected $format = null;
+    /**
+     * View format.
+     *
+     * @var string
+     */
+    protected $format = null;
 
-	/**
-	 * View data.
-	 *
-	 * @var array
-	 */
-	protected $data = array(
-		'view'   => null,
-		'data'   => array(),
-		'status' => 200,
-	);
+    /**
+     * View data.
+     *
+     * @var array
+     */
+    protected $data = array(
+        'view'   => null,
+        'data'   => array(),
+        'status' => 200,
+    );
 
-	/**
-	 * Construct a new Response instance.
-	 *
-	 * @param  Environment      $env
-	 * @param  Template\Driver  $template
-	 * @param  array            $data
-	 * @param  string           $format
-	 */
-	public function __construct(Environment $env, Template\Driver $template, array $data = array(), $format = null)
-	{
-		$this->env      = $env;
-		$this->template = $template;
-		$this->data     = array_merge($this->data, $data);
+    /**
+     * Construct a new Response instance.
+     *
+     * @param  Environment      $env
+     * @param  Template\Driver  $template
+     * @param  array            $data
+     * @param  string           $format
+     */
+    public function __construct(Environment $env, Template\Driver $template, array $data = array(), $format = null)
+    {
+        $this->env      = $env;
+        $this->template = $template;
+        $this->data     = array_merge($this->data, $data);
 
-		$this->setFormat($format);
-	}
+        $this->setFormat($format);
+    }
 
-	/**
-	 * Nest a view to Facile.
-	 *
-	 * @param  string   $view
-	 * @return Response
-	 */
-	public function view($view)
-	{
-		$this->data['view'] = $view;
+    /**
+     * Nest a view to Facile.
+     *
+     * @param  string   $view
+     * @return Response
+     */
+    public function view($view)
+    {
+        $this->data['view'] = $view;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Nest a data or dataset to Facile.
-	 *
-	 * @param  mixed    $key
-	 * @param  mixed    $value
-	 * @return Response
-	 */
-	public function with($key, $value = null)
-	{
-		$data = is_array($key) ? $key : array($key => $value);
+    /**
+     * Nest a data or dataset to Facile.
+     *
+     * @param  mixed    $key
+     * @param  mixed    $value
+     * @return Response
+     */
+    public function with($key, $value = null)
+    {
+        $data = is_array($key) ? $key : array($key => $value);
 
-		$this->data['data'] = array_merge($this->data['data'], $data);
+        $this->data['data'] = array_merge($this->data['data'], $data);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set HTTP status to Facile.
-	 *
-	 * @param  integer  $status
-	 * @return Response
-	 */
-	public function status($status = 200)
-	{
-		$this->data['status'] = $status;
+    /**
+     * Set HTTP status to Facile.
+     *
+     * @param  integer  $status
+     * @return Response
+     */
+    public function status($status = 200)
+    {
+        $this->data['status'] = $status;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set a template for Facile.
-	 *
-	 * @param  mixed    $name
-	 * @return Response
-	 */
-	public function template($name)
-	{
-		if ($name instanceof Template\Driver) {
-			$this->template = $name;
-		} else {
-			$this->template = $this->env->get($name);
-		}
+    /**
+     * Set a template for Facile.
+     *
+     * @param  mixed    $name
+     * @return Response
+     */
+    public function template($name)
+    {
+        if ($name instanceof Template\Driver) {
+            $this->template = $name;
+        } else {
+            $this->template = $this->env->get($name);
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get expected facile format.
-	 *
-	 * @param  string   $format
-	 * @return Response
-	 */
-	public function format($format = null)
-	{
-		if (! is_null($format) and ! empty($format)) {
-			$this->setFormat($format);
-		} else {
-			$this->getFormat();
-		}
+    /**
+     * Get expected facile format.
+     *
+     * @param  string   $format
+     * @return Response
+     */
+    public function format($format = null)
+    {
+        if (! is_null($format) and ! empty($format)) {
+            $this->setFormat($format);
+        } else {
+            $this->getFormat();
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set Output Format.
-	 *
-	 * @param  string   $format
-	 * @return Response
-	 */
-	public function setFormat($format)
-	{
-		$this->format = $format;
+    /**
+     * Set Output Format.
+     *
+     * @param  string   $format
+     * @return Response
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get Output Format.
-	 *
-	 * @return string
-	 */
-	public function getFormat()
-	{
-		if (is_null($this->format)) {
-			$this->format = $this->template->format();
-		}
+    /**
+     * Get Output Format.
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        if (is_null($this->format)) {
+            $this->format = $this->template->format();
+        }
 
-		return $this->format;
-	}
+        return $this->format;
+    }
 
-	/**
-	 * Magic method to __get.
-	 *
-	 * @param  string   $key
-	 * @return mixed
-	 */
-	public function __get($key)
-	{
-		if (! in_array($key, array('template', 'format'))) {
-			throw new InvalidArgumentException("Invalid request to [{$key}].");
-		}
+    /**
+     * Magic method to __get.
+     *
+     * @param  string   $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (! in_array($key, array('template', 'format'))) {
+            throw new InvalidArgumentException("Invalid request to [{$key}].");
+        }
 
-		return $this->{$key};
-	}
+        return $this->{$key};
+    }
 
-	/**
-	 * Render facile by selected format.
-	 *
-	 * @return string
-	 */
-	public function __toString()
-	{
-		$content = $this->render();
+    /**
+     * Render facile by selected format.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $content = $this->render();
 
-		if ($content instanceof RenderableInterface) {
-			return $content->render();
-		}
+        if ($content instanceof RenderableInterface) {
+            return $content->render();
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * Render facile by selected format.
-	 *
-	 * @return mixed
-	 */
-	public function render()
-	{
-		if (is_null($this->format)) {
-			$this->format();
-		}
+    /**
+     * Render facile by selected format.
+     *
+     * @return mixed
+     */
+    public function render()
+    {
+        if (is_null($this->format)) {
+            $this->format();
+        }
 
-		return $this->template->compose($this->getFormat(), $this->data);
-	}
+        return $this->template->compose($this->getFormat(), $this->data);
+    }
 }
