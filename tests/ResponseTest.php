@@ -6,8 +6,9 @@ use Orchestra\Facile\Response;
 use Orchestra\Facile\Environment;
 use Orchestra\Facile\Template\Base;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase {
-/**
+class ResponseTest extends \PHPUnit_Framework_TestCase
+{
+	/**
 	 * Application instance.
 	 *
 	 * @var \Illuminate\Foundation\Application
@@ -38,12 +39,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testConstructMethod()
 	{
 		$stub = new Response(
-			new Environment($this->app), 
+			new Environment($this->app),
 			new Base($this->app),
 			array(),
 			'json'
 		);
-		
+
 		$refl = new \ReflectionObject($stub);
 		$data = $refl->getProperty('data');
 		$data->setAccessible(true);
@@ -61,7 +62,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testViewMethod()
 	{
 		$stub = new Response(
-			new Environment($this->app), 
+			new Environment($this->app),
 			new Base($this->app),
 			array(),
 			'json'
@@ -86,7 +87,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testWithMethod()
 	{
 		$stub = new Response(
-			new Environment($this->app), 
+			new Environment($this->app),
 			new Base($this->app),
 			array(),
 			'json'
@@ -112,7 +113,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	public function testStatusMethod()
 	{
 		$stub = new Response(
-			new Environment($this->app), 
+			new Environment($this->app),
 			new Base($this->app),
 			array(),
 			'json'
@@ -184,6 +185,22 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Facile\Response::render() method.
+	 *
+	 * @test
+	 */
+	public function testRenderMethod()
+	{
+		$template = m::mock('\Orchestra\Facile\Template\Base');
+		$template->shouldReceive('compose')->once()->andReturn('foo')
+			->shouldReceive('format')->once()->andReturn('jsonp');
+
+		$stub = new Response(new Environment($this->app), $template, array());
+
+		$this->assertEquals('foo', $stub->render());
+	}
+
+	/**
 	 * Test Orchestra\Facile\Response::__get() method with invalid arguments.
 	 *
 	 * @expectedException \InvalidArgumentException
@@ -197,9 +214,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$stub = new Response(
-			new Environment($this->app), 
-			new Base($this->app), 
-			$data, 
+			new Environment($this->app),
+			new Base($this->app),
+			$data,
 			'json'
 		);
 

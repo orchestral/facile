@@ -4,8 +4,8 @@ use Mockery as m;
 use Illuminate\Container\Container;
 use Orchestra\Facile\Environment;
 
-class EnvironmentTest extends \PHPUnit_Framework_TestCase {
-
+class EnvironmentTest extends \PHPUnit_Framework_TestCase
+{
 	/**
 	 * Application instance.
 	 *
@@ -28,7 +28,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 		unset($this->app);
 		m::close();
 	}
-	
+
 	/**
 	 * Test construct an instance of Orchestra\Facile\Environment.
 	 *
@@ -56,8 +56,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 		$template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
-		$stub->template('mock', function () use ($template)
-		{
+		$stub->template('mock', function () use ($template) {
 			return $template;
 		});
 
@@ -79,7 +78,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Facile\Environment::make() throws exception when using 
+	 * Test Orchestra\Facile\Environment::make() throws exception when using
 	 * an invalid template.
 	 *
 	 * @expectedException \InvalidArgumentException
@@ -103,8 +102,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
-		$stub->template('default', function () use ($template)
-		{
+		$stub->template('default', function () use ($template) {
 			return $template;
 		});
 
@@ -137,8 +135,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
 		$stub = new Environment($this->app);
-		$stub->template('default', function () use ($template)
-		{
+		$stub->template('default', function () use ($template) {
 			return $template;
 		});
 
@@ -173,11 +170,12 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(is_array($templates->getValue($stub)));
 
-		$stub->template('foo', new FooTemplateStub($this->app));
+		$template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Driver');
+		$stub->template('foo', $template);
 	}
 
 	/**
-	 * Test Orchestra\Facile\Environment::template() method throws exception 
+	 * Test Orchestra\Facile\Environment::template() method throws exception
 	 * when template is not instanceof \Orchestra\Facile\Template\Driver
 	 *
 	 * @test
@@ -185,11 +183,8 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testTemplateMethodThrowsException()
 	{
+		$template = m::mock('BadFooTemplateStub');
 		$stub = new Environment($this->app);
-		$stub->template('badFoo', new BadFooTemplateStub);
+		$stub->template('badFoo', $template);
 	}
 }
-
-class FooTemplateStub extends \Orchestra\Facile\Template\Driver {}
-
-class BadFooTemplateStub {}

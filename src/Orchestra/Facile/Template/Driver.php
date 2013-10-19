@@ -5,8 +5,8 @@ use Illuminate\Container\Container;
 use Illuminate\Http\Response as IlluminateResponse;
 use Orchestra\Facile\Transformable;
 
-abstract class Driver {
-
+abstract class Driver
+{
 	/**
 	 * Application instance.
 	 *
@@ -23,7 +23,7 @@ abstract class Driver {
 
 	/**
 	 * List of supported format.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $formats = array('html');
@@ -37,11 +37,11 @@ abstract class Driver {
 
 	/**
 	 * Construct a new Facile service.
-	 * 
+	 *
 	 * @param  \Illuminate\Container\Container  $app
 	 * @param  \Orchestra\Facile\Transformable  $transformable
 	 */
-	public function __construct(Container $app, Transformable $tranformable = null) 
+	public function __construct(Container $app, Transformable $tranformable = null)
 	{
 		$this->setContainer($app);
 		$this->transformable = $tranformable ?: new Transformable;
@@ -59,7 +59,7 @@ abstract class Driver {
 
 	/**
 	 * Set app container.
-	 * 
+	 *
 	 * @param  \Illuminate\Container\Container  $app
 	 * @return void
 	 */
@@ -88,19 +88,16 @@ abstract class Driver {
 	 */
 	public function compose($format, array $compose = array())
 	{
-		if ( ! in_array($format, $this->formats))
-		{
+		if (! in_array($format, $this->formats)) {
 			return $this->composeError(null, array(), 406);
-		}
-		elseif ( ! method_exists($this, 'compose'.ucwords($format)))
-		{
+		} elseif (! method_exists($this, 'compose'.ucwords($format))) {
 			throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
 		}
 
 		return call_user_func(
-			array($this, 'compose'.ucwords($format)), 
-			$compose['view'], 
-			$compose['data'], 
+			array($this, 'compose'.ucwords($format)),
+			$compose['view'],
+			$compose['data'],
 			$compose['status']
 		);
 	}
@@ -110,8 +107,8 @@ abstract class Driver {
 	 *
 	 * @param  mixed    $view
 	 * @param  array    $data
-	 * @param  integer 	$status
-	 * @return \Illuminate\Http\Response  
+	 * @param  integer  $status
+	 * @return \Illuminate\Http\Response
 	 */
 	public function composeError($view, array $data = array(), $status = 404)
 	{
@@ -119,8 +116,7 @@ abstract class Driver {
 
 		$view = "{$status} Error";
 
-		if ($engine->exists("error.{$status}")) 
-		{
+		if ($engine->exists("error.{$status}")) {
 			$view = $engine->make("error.{$status}", $data);
 		}
 
@@ -129,7 +125,7 @@ abstract class Driver {
 
 	/**
 	 * Transform given data.
-	 * 
+	 *
 	 * @param  mixed    $data
 	 * @return array
 	 */

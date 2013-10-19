@@ -3,8 +3,8 @@
 use InvalidArgumentException;
 use Illuminate\Support\Contracts\RenderableInterface;
 
-class Response implements RenderableInterface {
-
+class Response implements RenderableInterface
+{
 	/**
 	 * Environment instance.
 	 *
@@ -32,14 +32,14 @@ class Response implements RenderableInterface {
 	 * @var array
 	 */
 	protected $data = array(
-		'view'   => null, 
-		'data'   => array(), 
+		'view'   => null,
+		'data'   => array(),
 		'status' => 200,
 	);
 
 	/**
 	 * Construct a new Response instance.
-	 * 
+	 *
 	 * @param  Environment      $env
 	 * @param  Template\Driver  $template
 	 * @param  array            $data
@@ -51,7 +51,7 @@ class Response implements RenderableInterface {
 		$this->template = $template;
 		$this->data     = array_merge($this->data, $data);
 
-		$this->format($format);
+		$this->setFormat($format);
 	}
 
 	/**
@@ -104,12 +104,9 @@ class Response implements RenderableInterface {
 	 */
 	public function template($name)
 	{
-		if ($name instanceof Template\Driver) 
-		{
+		if ($name instanceof Template\Driver) {
 			$this->template = $name;
-		}
-		else
-		{
+		} else {
 			$this->template = $this->env->get($name);
 		}
 
@@ -124,12 +121,9 @@ class Response implements RenderableInterface {
 	 */
 	public function format($format = null)
 	{
-		if ( ! is_null($format) and ! empty($format))
-		{
+		if (! is_null($format) and ! empty($format)) {
 			$this->setFormat($format);
-		}
-		else 
-		{
+		} else {
 			$this->getFormat();
 		}
 
@@ -156,8 +150,7 @@ class Response implements RenderableInterface {
 	 */
 	public function getFormat()
 	{
-		if (is_null($this->format))
-		{
+		if (is_null($this->format)) {
 			$this->format = $this->template->format();
 		}
 
@@ -166,14 +159,13 @@ class Response implements RenderableInterface {
 
 	/**
 	 * Magic method to __get.
-	 * 
+	 *
 	 * @param  string   $key
 	 * @return mixed
 	 */
 	public function __get($key)
 	{
-		if ( ! in_array($key, array('template', 'format')))
-		{
+		if (! in_array($key, array('template', 'format'))) {
 			throw new InvalidArgumentException("Invalid request to [{$key}].");
 		}
 
@@ -189,8 +181,7 @@ class Response implements RenderableInterface {
 	{
 		$content = $this->render();
 
-		if ($content instanceof RenderableInterface)
-		{
+		if ($content instanceof RenderableInterface) {
 			return $content->render();
 		}
 
@@ -204,8 +195,10 @@ class Response implements RenderableInterface {
 	 */
 	public function render()
 	{
-		if (is_null($this->format)) $this->format();
-		
+		if (is_null($this->format)) {
+			$this->format();
+		}
+
 		return $this->template->compose($this->getFormat(), $this->data);
 	}
 }

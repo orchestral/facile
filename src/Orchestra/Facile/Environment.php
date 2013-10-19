@@ -4,8 +4,8 @@ use InvalidArgumentException;
 use RuntimeException;
 use Illuminate\Container\Container;
 
-class Environment {
-
+class Environment
+{
 	/**
 	 * Application instance.
 	 *
@@ -22,10 +22,10 @@ class Environment {
 
 	/**
 	 * Construct a new Facile service.
-	 * 
+	 *
 	 * @param  \Illuminate\Container\Container  $app
 	 */
-	public function __construct(Container $app) 
+	public function __construct(Container $app)
 	{
 		$this->app       = $app;
 		$this->templates = array();
@@ -35,26 +35,26 @@ class Environment {
 	 * Create a new Facile instance.
 	 *
 	 * <code>
-	 * 		// Using provided facade for Facile.
-	 * 		
-	 * 		$users  = User::paginate(30);
-	 * 		$facile = Facile::make('default', array(
-	 * 			'view'   => 'home.index',
-	 * 			'data'   => array(
-	 * 				'users' => $users,
-	 * 			),
-	 * 			'status' => 200,
-	 * 		));
+	 *      // Using provided facade for Facile.
 	 *
-	 * 		// Alternatively
-	 * 		$facile = Facile::make('default')
-	 * 			->view('home.index')
-	 * 			->with(array(
-	 * 				'users' => $users,
-	 * 			))
-	 * 			->status(200)
-	 * 			->template(new Orchestra\Facile\Template\Driver)
-	 * 			->format('html');
+	 *      $users  = User::paginate(30);
+	 *      $facile = Facile::make('default', array(
+	 *          'view'   => 'home.index',
+	 *          'data'   => array(
+	 *              'users' => $users,
+	 *          ),
+	 *          'status' => 200,
+	 *      ));
+	 *
+	 *      // Alternatively
+	 *      $facile = Facile::make('default')
+	 *          ->view('home.index')
+	 *          ->with(array(
+	 *              'users' => $users,
+	 *          ))
+	 *          ->status(200)
+	 *          ->template(new Orchestra\Facile\Template\Driver)
+	 *          ->format('html');
 	 * </code>
 	 *
 	 * @param  string   $name   Name of template
@@ -71,17 +71,17 @@ class Environment {
 	 * Create a new Facile instance helper via view.
 	 *
 	 * <code>
-	 * 		// Using provided facade for Facile.
-	 * 		
-	 * 		$users  = User::paginate(30);
-	 * 		$facile = Facile::view('home.index', array(
-	 * 				'users' => $users,
-	 * 			))
-	 * 			->status(200)
-	 * 			->template(new Orchestra\Facile\Template\Driver)
-	 * 			->format('html');
+	 *      // Using provided facade for Facile.
+	 *
+	 *      $users  = User::paginate(30);
+	 *      $facile = Facile::view('home.index', array(
+	 *              'users' => $users,
+	 *          ))
+	 *          ->status(200)
+	 *          ->template(new Orchestra\Facile\Template\Driver)
+	 *          ->format('html');
 	 * </code>
-	 * 
+	 *
 	 * @param  string   $view
 	 * @param  array    $data
 	 * @return Response
@@ -97,16 +97,16 @@ class Environment {
 	 * Create a new Facile instance helper via with.
 	 *
 	 * <code>
-	 * 		// Using provided facade for Facile.
-	 * 		
-	 * 		$users  = User::paginate(30);
-	 * 		$facile = Facile::with(array(
-	 * 				'users' => $users,
-	 * 			))
-	 * 			->view('home.index')
-	 * 			->status(200)
-	 * 			->template(new Orchestra\Facile\Template\Driver)
-	 * 			->format('html');
+	 *      // Using provided facade for Facile.
+	 *
+	 *      $users  = User::paginate(30);
+	 *      $facile = Facile::with(array(
+	 *              'users' => $users,
+	 *          ))
+	 *          ->view('home.index')
+	 *          ->status(200)
+	 *          ->template(new Orchestra\Facile\Template\Driver)
+	 *          ->format('html');
 	 * </code>
 	 *
 	 * @param  mixed    $data
@@ -122,19 +122,18 @@ class Environment {
 
 	/**
 	 * Register a template.
-	 * 
+	 *
 	 * @param  string               $name
 	 * @param  Template\Driver      $template
 	 * @return void
-	 * @throws \RuntimeException if `$template` not instanceof 
+	 * @throws \RuntimeException if `$template` not instanceof
 	 *                           `Orchestra\Facile\Template\Driver`.
 	 */
 	public function template($name, $template)
 	{
 		$resolve = value($template);
 
-		if ( ! ($resolve instanceof Template\Driver))
-		{
+		if (! ($resolve instanceof Template\Driver)) {
 			throw new RuntimeException(
 				"Expected \$template to be instanceof Orchestra\Facile\Template\Driver."
 			);
@@ -152,11 +151,8 @@ class Environment {
 	 */
 	public function get($name)
 	{
-		if ( ! isset($this->templates[$name]))
-		{
-			throw new InvalidArgumentException(
-				"Template [{$name}] is not available."
-			);
+		if (! isset($this->templates[$name])) {
+			throw new InvalidArgumentException("Template [{$name}] is not available.");
 		}
 
 		return $this->templates[$name];

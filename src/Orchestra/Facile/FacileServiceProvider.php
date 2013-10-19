@@ -2,8 +2,8 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class FacileServiceProvider extends ServiceProvider {
-
+class FacileServiceProvider extends ServiceProvider
+{
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
@@ -18,12 +18,10 @@ class FacileServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['orchestra.facile'] = $this->app->share(function($app)
-		{
+		$this->app['orchestra.facile'] = $this->app->share(function ($app) {
 			$env = new Environment($app);
 
-			$env->template('default', function () use ($app)
-			{
+			$env->template('default', function () use ($app) {
 				return new Template\Base($app);
 			});
 
