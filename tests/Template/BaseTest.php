@@ -4,96 +4,96 @@ use Mockery as m;
 use Illuminate\Container\Container;
 use Orchestra\Facile\Template\Base;
 
-class BaseTest extends \PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Application instance.
-	 *
-	 * @var \Illuminate\Foundation\Application
-	 */
-	protected $app;
+class BaseTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app = new Container;
-	}
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		unset($this->app);
-		m::close();
-	}
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $this->app = new Container;
+    }
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        unset($this->app);
+        m::close();
+    }
 
-	/**
-	 * Test constructing a new Orchestra\Facile\Template.
-	 *
-	 * @test
-	 */
-	public function testConstructMethod()
-	{
-		$stub = new Base($this->app);
-		$refl = new \ReflectionObject($stub);
-		
-		$formats       = $refl->getProperty('formats');
-		$defaultFormat = $refl->getProperty('defaultFormat');
+    /**
+     * Test constructing a new Orchestra\Facile\Template.
+     *
+     * @test
+     */
+    public function testConstructMethod()
+    {
+        $stub = new Base($this->app);
+        $refl = new \ReflectionObject($stub);
 
-		$formats->setAccessible(true);
-		$defaultFormat->setAccessible(true);
+        $formats       = $refl->getProperty('formats');
+        $defaultFormat = $refl->getProperty('defaultFormat');
 
-		$this->assertEquals(array('html', 'json'), $formats->getValue($stub));
-		$this->assertEquals('html', $defaultFormat->getValue($stub));
-	}
+        $formats->setAccessible(true);
+        $defaultFormat->setAccessible(true);
 
-	/**
-	 * Test Orchestra\Facile\Template::compose_html() method.
-	 *
-	 * @test
-	 */
-	public function testComposeHtmlMethod()
-	{
-		$app = $this->app;
-		$app['view'] = $view = m::mock('View');
+        $this->assertEquals(array('html', 'json'), $formats->getValue($stub));
+        $this->assertEquals('html', $defaultFormat->getValue($stub));
+    }
 
-		$data = array('foo' => 'foo is awesome');
+    /**
+     * Test Orchestra\Facile\Template::compose_html() method.
+     *
+     * @test
+     */
+    public function testComposeHtmlMethod()
+    {
+        $app = $this->app;
+        $app['view'] = $view = m::mock('View');
 
-		$view->shouldReceive('make')->with('users.index')->once()->andReturn($view)
-			->shouldReceive('with')->with($data)->andReturn('foo');
+        $data = array('foo' => 'foo is awesome');
 
-		$stub = new Base($app);
+        $view->shouldReceive('make')->with('users.index')->once()->andReturn($view)
+            ->shouldReceive('with')->with($data)->andReturn('foo');
 
-		$this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
-	}
+        $stub = new Base($app);
 
-	/**
-	 * Test Orchestra\Facile\Template::compose_html() method throws exception
-	 * when view is not defined
-	 *
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testComposeHtmlMethodThrowsException()
-	{
-		$data = array('foo' => 'foobar is awesome');
-		
-		with(new Base($this->app))->composeHtml(null, $data);
-	}
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
+    }
 
-	/**
-	 * Test Orchestra\Facile\Template::compose_json() method.
-	 *
-	 * @test
-	 */
-	public function testComposeJsonMethod()
-	{
-		$data = array('foo' => 'foobar is awesome');
-		$stub = with(new Base($this->app))->composeJson(null, $data);
+    /**
+     * Test Orchestra\Facile\Template::compose_html() method throws exception
+     * when view is not defined
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testComposeHtmlMethodThrowsException()
+    {
+        $data = array('foo' => 'foobar is awesome');
 
-		$this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
-		$this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
-		$this->assertEquals('application/json', $stub->headers->get('content-type'));
-	}
+        with(new Base($this->app))->composeHtml(null, $data);
+    }
+
+    /**
+     * Test Orchestra\Facile\Template::compose_json() method.
+     *
+     * @test
+     */
+    public function testComposeJsonMethod()
+    {
+        $data = array('foo' => 'foobar is awesome');
+        $stub = with(new Base($this->app))->composeJson(null, $data);
+
+        $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
+        $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
+        $this->assertEquals('application/json', $stub->headers->get('content-type'));
+    }
 }

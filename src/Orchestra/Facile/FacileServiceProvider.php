@@ -4,38 +4,38 @@ use Illuminate\Support\ServiceProvider;
 
 class FacileServiceProvider extends ServiceProvider
 {
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var boolean
-	 */
-	protected $defer = true;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var boolean
+     */
+    protected $defer = true;
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app['orchestra.facile'] = $this->app->share(function ($app) {
-			$env = new Environment($app);
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app['orchestra.facile'] = $this->app->share(function ($app) {
+            $env = new Environment($app);
 
-			$env->template('default', function () use ($app) {
-				return new Template\Base($app);
-			});
+            $env->template('default', function () use ($app) {
+                return new Template\Base($app);
+            });
 
-			return $env;
-		});
-	}
+            return $env;
+        });
+    }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('orchestra.facile');
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array('orchestra.facile');
+    }
 }
