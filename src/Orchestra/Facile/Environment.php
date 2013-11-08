@@ -82,7 +82,7 @@ class Environment
      *          ->format('html');
      * </code>
      *
-     * @param  string   $view
+     * @param  mixed    $view
      * @param  array    $data
      * @return Response
      */
