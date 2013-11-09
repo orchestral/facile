@@ -47,10 +47,10 @@ class Response implements RenderableInterface
      */
     public function __construct(Environment $env, Template\Driver $template, array $data = array(), $format = null)
     {
-        $this->env      = $env;
-        $this->template = $template;
-        $this->data     = array_merge($this->data, $data);
+        $this->env  = $env;
+        $this->data = array_merge($this->data, $data);
 
+        $this->template($template);
         $this->setFormat($format);
     }
 
