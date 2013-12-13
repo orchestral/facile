@@ -5,8 +5,8 @@ Orchestra Platform Facile Component
 
 [![Latest Stable Version](https://poser.pugx.org/orchestra/facile/v/stable.png)](https://packagist.org/packages/orchestra/facile) 
 [![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads.png)](https://packagist.org/packages/orchestra/facile) 
-[![Build Status](https://travis-ci.org/orchestral/facile.png?branch=2.1)](https://travis-ci.org/orchestral/facile) 
-[![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=2.1)](https://coveralls.io/r/orchestral/facile?branch=2.1) 
+[![Build Status](https://travis-ci.org/orchestral/facile.png?branch=master)](https://travis-ci.org/orchestral/facile) 
+[![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=master)](https://coveralls.io/r/orchestral/facile?branch=master) 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/facile/badges/quality-score.png?s=db660b406a7b1000f0431048d26f161793cb4b29)](https://scrutinizer-ci.com/g/orchestral/facile/) 
 
 ## Quick Installation
