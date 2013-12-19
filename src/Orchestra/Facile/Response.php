@@ -2,6 +2,7 @@
 
 use InvalidArgumentException;
 use Illuminate\Support\Contracts\RenderableInterface;
+use Orchestra\Support\Str;
 
 class Response implements RenderableInterface
 {
@@ -15,9 +16,9 @@ class Response implements RenderableInterface
     /**
      * Template instance.
      *
-     * @var Template\Driver
+     * @var string
      */
-    protected $template = null;
+    protected $template = 'default';
 
     /**
      * View format.
@@ -40,18 +41,18 @@ class Response implements RenderableInterface
     /**
      * Construct a new Response instance.
      *
-     * @param  Environment      $env
-     * @param  Template\Driver  $template
-     * @param  array            $data
-     * @param  string           $format
+     * @param  Environment $env
+     * @param  string      $template
+     * @param  array       $data
+     * @param  string      $format
      */
-    public function __construct(Environment $env, Template\Driver $template, array $data = array(), $format = null)
+    public function __construct(Environment $env, $template, array $data = array(), $format = null)
     {
-        $this->env  = $env;
-        $this->data = array_merge($this->data, $data);
+        $this->env    = $env;
+        $this->data   = array_merge($this->data, $data);
+        $this->format = $format;
 
         $this->template($template);
-        $this->format($format);
     }
 
     /**
@@ -105,16 +106,19 @@ class Response implements RenderableInterface
     public function template($name)
     {
         if ($name instanceof Template\Driver) {
-            $this->template = $name;
-        } else {
-            $this->template = $this->env->get($name);
+            $template = $name;
+            $name = sprintf('template-%d-%s', time(), Str::random());
+
+            $this->env->template($name, $template);
         }
+
+        $this->template = $name;
 
         return $this;
     }
 
     /**
-     * Get expected facile format.
+     * Get or set facile format.
      *
      * @param  string   $format
      * @return Response
@@ -123,8 +127,6 @@ class Response implements RenderableInterface
     {
         if (! is_null($format) and ! empty($format)) {
             $this->setFormat($format);
-        } else {
-            $this->getFormat();
         }
 
         return $this;
@@ -151,25 +153,10 @@ class Response implements RenderableInterface
     public function getFormat()
     {
         if (is_null($this->format)) {
-            $this->format = $this->template->format();
+            $this->format = $this->env->getRequestFormat($this->template);
         }
 
         return $this->format;
-    }
-
-    /**
-     * Magic method to __get.
-     *
-     * @param  string   $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        if (! in_array($key, array('template', 'format'))) {
-            throw new InvalidArgumentException("Invalid request to [{$key}].");
-        }
-
-        return $this->{$key};
     }
 
     /**
@@ -195,8 +182,8 @@ class Response implements RenderableInterface
      */
     public function render()
     {
-        is_null($this->format) and $this->format();
+        $renderer = $this->env->getTemplate($this->template);
 
-        return $this->template->compose($this->getFormat(), $this->data);
+        return $renderer->compose($this->getFormat(), $this->data);
     }
 }

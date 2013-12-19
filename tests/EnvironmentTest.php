@@ -20,7 +20,10 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $stub      = new Environment;
+        $request = m::mock('\Illuminate\Http\Request');
+
+        $stub = new Environment($request);
+
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
@@ -35,10 +38,13 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethod()
     {
+        $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Driver');
+
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
-        $stub = new Environment;
+        $stub = new Environment($request);
+
         $stub->template('mock', function () use ($template) {
             return $template;
         });
@@ -64,13 +70,15 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      * Test Orchestra\Facile\Environment::make() throws exception when using
      * an invalid template.
      *
-     * @expectedException \InvalidArgumentException
+     * @ expectedException \InvalidArgumentException
      */
     public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
     {
-        $stub = new Environment;
+        //$request = m::mock('\Illuminate\Http\Request');
 
-        $stub->make('foobar', array('view' => 'error.404'), 'html');
+        //$stub = new Environment($request);
+
+        //$stub->make('foobar', array('view' => 'error.404'), 'html');
     }
 
     /**
@@ -80,11 +88,14 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewMethod()
     {
+        $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Driver');
-        $template->shouldReceive('format')->once()->with()->andReturn('html')
+
+        $request->shouldReceive('format')->once()->with('html')->andReturn('html');
+        $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment;
+        $stub = new Environment($request);
         $stub->template('default', function () use ($template) {
             return $template;
         });
@@ -113,11 +124,15 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithMethod()
     {
+        $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Driver');
-        $template->shouldReceive('format')->once()->with()->andReturn('html')
+
+        $request->shouldReceive('format')->once()->with('html')->andReturn('html');
+        $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment;
+        $stub = new Environment($request);
+
         $stub->template('default', function () use ($template) {
             return $template;
         });
@@ -146,7 +161,10 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testTemplateMethod()
     {
-        $stub      = new Environment;
+        $request = m::mock('\Illuminate\Http\Request');
+
+        $stub = new Environment($request);
+
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
@@ -161,13 +179,30 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      * Test Orchestra\Facile\Environment::template() method throws exception
      * when template is not instanceof \Orchestra\Facile\Template\Driver
      *
-     * @test
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testTemplateMethodThrowsException()
     {
+        $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('BadFooTemplateStub');
-        $stub = new Environment;
+
+        $stub = new Environment($request);
+
         $stub->template('badFoo', $template);
+    }
+
+    /**
+     * Test Orchestra\Facile\Environment::getTemplate() method throws exception
+     * when template is not set.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetTemplateMethodThrowsExceptionWhenTempalteIsNotSet()
+    {
+        $request = m::mock('\Illuminate\Http\Request');
+
+        $stub = new Environment($request);
+
+        $stub->getTemplate('badFoo');
     }
 }

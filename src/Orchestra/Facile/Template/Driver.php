@@ -1,20 +1,12 @@
 <?php namespace Orchestra\Facile\Template;
 
 use RuntimeException;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\View\Environment;
 use Orchestra\Facile\Transformable;
 
 abstract class Driver
 {
-    /**
-     * Request instance.
-     *
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
     /**
      * View instance.
      *
@@ -46,25 +38,23 @@ abstract class Driver
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\Http\Request         $request
      * @param  \Illuminate\View\Environment     $view
      * @param  \Orchestra\Facile\Transformable  $transformable
      */
-    public function __construct(Request $request, Environment $view, Transformable $tranformable = null)
+    public function __construct(Environment $view, Transformable $tranformable = null)
     {
-        $this->request = $request;
         $this->view = $view;
         $this->transformable = $tranformable ?: new Transformable;
     }
 
     /**
-     * Detect current format.
+     * Get default format.
      *
      * @return string
      */
-    public function format()
+    public function getDefaultFormat()
     {
-        return $this->request->format($this->defaultFormat);
+        return $this->defaultFormat;
     }
 
     /**
