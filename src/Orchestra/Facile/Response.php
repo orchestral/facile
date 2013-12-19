@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Facile;
 
-use InvalidArgumentException;
 use Illuminate\Support\Contracts\RenderableInterface;
 use Orchestra\Support\Str;
 
