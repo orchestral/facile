@@ -36,7 +36,7 @@ class Base extends Driver
         }
 
         if (! $view instanceof View) {
-            $view = $this->app['view']->make($view);
+            $view = $this->view->make($view);
         }
 
         return new IlluminateResponse($view->with($data), $status);

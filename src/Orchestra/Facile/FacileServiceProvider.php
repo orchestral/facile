@@ -19,7 +19,7 @@ class FacileServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bindShared('orchestra.facile', function ($app) {
-            $env = new Environment($app);
+            $env = new Environment;
 
             $env->template('default', function () use ($app) {
                 return new Template\Base($app);

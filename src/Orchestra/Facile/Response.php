@@ -10,7 +10,7 @@ class Response implements RenderableInterface
      *
      * @var Environment
      */
-    protected $env = null;
+    protected $env;
 
     /**
      * Template instance.
@@ -51,7 +51,7 @@ class Response implements RenderableInterface
         $this->data = array_merge($this->data, $data);
 
         $this->template($template);
-        $this->setFormat($format);
+        $this->format($format);
     }
 
     /**
@@ -195,9 +195,7 @@ class Response implements RenderableInterface
      */
     public function render()
     {
-        if (is_null($this->format)) {
-            $this->format();
-        }
+        is_null($this->format) and $this->format();
 
         return $this->template->compose($this->getFormat(), $this->data);
     }
