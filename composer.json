@@ -22,9 +22,9 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.*",
-		"illuminate/container": "4.1.*",
 		"illuminate/http": "4.1.*",
-		"illuminate/pagination": "4.1.*"
+		"illuminate/pagination": "4.1.*",
+		"illuminate/view": "4.1.*"
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform 2",
