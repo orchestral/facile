@@ -20,10 +20,9 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Environment');
 
-        $stub = new Base($request, $view);
+        $stub = new Base($view);
         $refl = new \ReflectionObject($stub);
 
         $formats       = $refl->getProperty('formats');
@@ -43,15 +42,13 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeHtmlMethod()
     {
-        $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Environment');
-
+        $view = m::mock('\Illuminate\View\Environment');
         $data = array('foo' => 'foo is awesome');
 
         $view->shouldReceive('make')->once()->with('users.index')->andReturn($view)
             ->shouldReceive('with')->with($data)->andReturn('foo');
 
-        $stub = new Base($request, $view);
+        $stub = new Base($view);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
     }
@@ -64,11 +61,10 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeHtmlMethodThrowsException()
     {
-        $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Environment');
-        $data    = array('foo' => 'foobar is awesome');
+        $view = m::mock('\Illuminate\View\Environment');
+        $data = array('foo' => 'foobar is awesome');
 
-        with(new Base($request, $view))->composeHtml(null, $data);
+        with(new Base($view))->composeHtml(null, $data);
     }
 
     /**
@@ -78,11 +74,10 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeJsonMethod()
     {
-        $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Environment');
-        $data    = array('foo' => 'foobar is awesome');
+        $view = m::mock('\Illuminate\View\Environment');
+        $data = array('foo' => 'foobar is awesome');
 
-        $stub = with(new Base($request, $view))->composeJson(null, $data);
+        $stub = with(new Base($view))->composeJson(null, $data);
 
         $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());

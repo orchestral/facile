@@ -2,10 +2,17 @@
 
 use InvalidArgumentException;
 use RuntimeException;
-use Illuminate\Container\Container;
+use Illuminate\Http\Request;
 
 class Environment
 {
+    /**
+     * Request instance.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
     /**
      * List of templates.
      *
@@ -15,9 +22,12 @@ class Environment
 
     /**
      * Construct a new Facile service.
+     *
+     * @param  \Illuminate\Http\Request    $request
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $this->request = $request;
         $this->templates = array();
     }
 
@@ -54,7 +64,7 @@ class Environment
      */
     public function make($name, array $data = array(), $format = null)
     {
-        return new Response($this, $this->get($name), $data, $format);
+        return new Response($this, $name, $data, $format);
     }
 
     /**
@@ -78,7 +88,7 @@ class Environment
      */
     public function view($view, array $data = array())
     {
-        return with(new Response($this, $this->get('default')))
+        return with(new Response($this, 'default'))
             ->view($view)
             ->with($data);
     }
@@ -105,7 +115,7 @@ class Environment
     public function with($data)
     {
         $data     = func_get_args();
-        $response = new Response($this, $this->get('default'));
+        $response = new Response($this, 'default');
 
         return call_user_func_array(array($response, 'with'), $data);
     }
@@ -133,13 +143,26 @@ class Environment
     }
 
     /**
+     * Get request format.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    public function getRequestFormat($name)
+    {
+        return $this->request->format(
+            $this->getTemplate($name)->getDefaultFormat()
+        );
+    }
+
+    /**
      * Get the template.
      *
      * @param  string   $name
      * @return Template\Driver
      * @throws \InvalidArgumentException if template is not defined.
      */
-    public function get($name)
+    public function getTemplate($name)
     {
         if (! isset($this->templates[$name])) {
             throw new InvalidArgumentException("Template [{$name}] is not available.");
