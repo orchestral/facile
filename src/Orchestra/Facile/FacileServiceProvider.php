@@ -22,7 +22,7 @@ class FacileServiceProvider extends ServiceProvider
             $env = new Environment;
 
             $env->template('default', function () use ($app) {
-                return new Template\Base($app);
+                return new Template\Base($app['request'], $app['view']);
             });
 
             return $env;
