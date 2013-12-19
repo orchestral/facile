@@ -7,13 +7,6 @@ use Illuminate\Container\Container;
 class Environment
 {
     /**
-     * Application instance.
-     *
-     * @var \Illuminate\Container\Container
-     */
-    protected $app = null;
-
-    /**
      * List of templates.
      *
      * @var array
@@ -22,12 +15,9 @@ class Environment
 
     /**
      * Construct a new Facile service.
-     *
-     * @param  \Illuminate\Container\Container  $app
      */
-    public function __construct(Container $app)
+    public function __construct()
     {
-        $this->app       = $app;
         $this->templates = array();
     }
 
@@ -156,15 +146,5 @@ class Environment
         }
 
         return $this->templates[$name];
-    }
-
-    /**
-     * Get application container.
-     *
-     * @return \Illuminate\Container\Container
-     */
-    public function getContainer()
-    {
-        return $this->app;
     }
 }

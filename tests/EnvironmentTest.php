@@ -1,31 +1,15 @@
 <?php namespace Orchestra\Facile\Tests;
 
 use Mockery as m;
-use Illuminate\Container\Container;
 use Orchestra\Facile\Environment;
 
 class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Application instance.
-     *
-     * @var \Illuminate\Foundation\Application
-     */
-    protected $app;
-
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        $this->app = new Container;
-    }
-    /**
      * Teardown the test environment.
      */
     public function tearDown()
     {
-        unset($this->app);
         m::close();
     }
 
@@ -36,13 +20,12 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $stub      = new Environment($this->app);
+        $stub      = new Environment;
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
 
         $this->assertTrue(is_array($templates->getValue($stub)));
-        $this->assertInstanceOf('\Illuminate\Container\Container', $stub->getContainer());
     }
 
     /**
@@ -55,7 +38,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $template = m::mock('\Orchestra\Facile\Template\Driver');
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
-        $stub = new Environment($this->app);
+        $stub = new Environment;
         $stub->template('mock', function () use ($template) {
             return $template;
         });
@@ -85,7 +68,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
     {
-        $stub = new Environment($this->app);
+        $stub = new Environment;
 
         $stub->make('foobar', array('view' => 'error.404'), 'html');
     }
@@ -101,7 +84,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('format')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment($this->app);
+        $stub = new Environment;
         $stub->template('default', function () use ($template) {
             return $template;
         });
@@ -134,7 +117,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('format')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment($this->app);
+        $stub = new Environment;
         $stub->template('default', function () use ($template) {
             return $template;
         });
@@ -163,7 +146,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     public function testTemplateMethod()
     {
-        $stub      = new Environment($this->app);
+        $stub      = new Environment;
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
@@ -184,7 +167,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     public function testTemplateMethodThrowsException()
     {
         $template = m::mock('BadFooTemplateStub');
-        $stub = new Environment($this->app);
+        $stub = new Environment;
         $stub->template('badFoo', $template);
     }
 }

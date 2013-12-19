@@ -1,25 +1,33 @@
 <?php namespace Orchestra\Facile\Template;
 
 use RuntimeException;
-use Illuminate\Container\Container;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\View\Environment;
 use Orchestra\Facile\Transformable;
 
 abstract class Driver
 {
     /**
-     * Application instance.
+     * Request instance.
      *
-     * @var \Illuminate\Container\Container
+     * @var \Illuminate\Http\Request
      */
-    protected $app = null;
+    protected $request;
+
+    /**
+     * View instance.
+     *
+     * @var \Illuminate\View\Environment
+     */
+    protected $view;
 
     /**
      * Transformable instance.
      *
      * @var \Orchestra\Facile\Transformable
      */
-    protected $transformable = null;
+    protected $transformable;
 
     /**
      * List of supported format.
@@ -38,34 +46,15 @@ abstract class Driver
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\Container\Container  $app
+     * @param  \Illuminate\Http\Request         $request
+     * @param  \Illuminate\View\Environment     $view
      * @param  \Orchestra\Facile\Transformable  $transformable
      */
-    public function __construct(Container $app, Transformable $tranformable = null)
+    public function __construct(Request $request, Environment $view, Transformable $tranformable = null)
     {
-        $this->setContainer($app);
+        $this->request = $request;
+        $this->view = $view;
         $this->transformable = $tranformable ?: new Transformable;
-    }
-
-    /**
-     * Get app container.
-     *
-     * @return \Illuminate\Container\Container
-     */
-    public function getContainer()
-    {
-        return $this->app;
-    }
-
-    /**
-     * Set app container.
-     *
-     * @param  \Illuminate\Container\Container  $app
-     * @return void
-     */
-    public function setContainer($app)
-    {
-        $this->app = $app;
     }
 
     /**
@@ -75,7 +64,7 @@ abstract class Driver
      */
     public function format()
     {
-        return $this->app['request']->format($this->defaultFormat);
+        return $this->request->format($this->defaultFormat);
     }
 
     /**
@@ -112,7 +101,7 @@ abstract class Driver
      */
     public function composeError($view, array $data = array(), $status = 404)
     {
-        $engine = $this->app['view'];
+        $engine = $this->view;
 
         $view = "{$status} Error";
 
