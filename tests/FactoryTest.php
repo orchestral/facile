@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Facile\Tests;
 
 use Mockery as m;
-use Orchestra\Facile\Environment;
+use Orchestra\Facile\Factory;
 
-class EnvironmentTest extends \PHPUnit_Framework_TestCase
+class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -14,7 +14,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test construct an instance of Orchestra\Facile\Environment.
+     * Test construct an instance of Orchestra\Facile\Factory.
      *
      * @test
      */
@@ -22,7 +22,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
@@ -32,7 +32,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Environment::make() method.
+     * Test Orchestra\Facile\Factory::make() method.
      *
      * @test
      */
@@ -43,7 +43,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $stub->template('mock', function () use ($template) {
             return $template;
@@ -67,7 +67,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Environment::make() throws exception when using
+     * Test Orchestra\Facile\Factory::make() throws exception when using
      * an invalid template.
      *
      * @ expectedException \InvalidArgumentException
@@ -76,13 +76,13 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         //$request = m::mock('\Illuminate\Http\Request');
 
-        //$stub = new Environment($request);
+        //$stub = new Factory($request);
 
         //$stub->make('foobar', array('view' => 'error.404'), 'html');
     }
 
     /**
-     * Test Orchestra\Facile\Environment::view() method.
+     * Test Orchestra\Facile\Factory::view() method.
      *
      * @test
      */
@@ -95,7 +95,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
         $stub->template('default', function () use ($template) {
             return $template;
         });
@@ -118,7 +118,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Environment::with() method.
+     * Test Orchestra\Facile\Factory::with() method.
      *
      * @test
      */
@@ -131,7 +131,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $stub->template('default', function () use ($template) {
             return $template;
@@ -155,7 +155,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Environment::template() method.
+     * Test Orchestra\Facile\Factory::template() method.
      *
      * @test
      */
@@ -163,7 +163,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $refl      = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
@@ -176,7 +176,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Environment::template() method throws exception
+     * Test Orchestra\Facile\Factory::template() method throws exception
      * when template is not instanceof \Orchestra\Facile\Template\Driver
      *
      * @expectedException \RuntimeException
@@ -186,13 +186,13 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('BadFooTemplateStub');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $stub->template('badFoo', $template);
     }
 
     /**
-     * Test Orchestra\Facile\Environment::getTemplate() method throws exception
+     * Test Orchestra\Facile\Factory::getTemplate() method throws exception
      * when template is not set.
      *
      * @expectedException \InvalidArgumentException
@@ -201,7 +201,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Environment($request);
+        $stub = new Factory($request);
 
         $stub->getTemplate('badFoo');
     }

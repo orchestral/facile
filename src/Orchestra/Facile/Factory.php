@@ -4,7 +4,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use Illuminate\Http\Request;
 
-class Environment
+class Factory
 {
     /**
      * Request instance.

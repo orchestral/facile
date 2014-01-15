@@ -6,11 +6,11 @@ use Orchestra\Support\Str;
 class Response implements RenderableInterface
 {
     /**
-     * Environment instance.
+     * Factory instance.
      *
-     * @var Environment
+     * @var Factory
      */
-    protected $env;
+    protected $factory;
 
     /**
      * Template instance.
@@ -40,16 +40,16 @@ class Response implements RenderableInterface
     /**
      * Construct a new Response instance.
      *
-     * @param  Environment $env
-     * @param  string      $template
-     * @param  array       $data
-     * @param  string      $format
+     * @param  Factory $factory
+     * @param  string  $template
+     * @param  array   $data
+     * @param  string  $format
      */
-    public function __construct(Environment $env, $template, array $data = array(), $format = null)
+    public function __construct(Factory $factory, $template, array $data = array(), $format = null)
     {
-        $this->env    = $env;
-        $this->data   = array_merge($this->data, $data);
-        $this->format = $format;
+        $this->factory = $factory;
+        $this->data    = array_merge($this->data, $data);
+        $this->format  = $format;
 
         $this->template($template);
     }
@@ -108,7 +108,7 @@ class Response implements RenderableInterface
             $template = $name;
             $name = sprintf('template-%d-%s', time(), Str::random());
 
-            $this->env->template($name, $template);
+            $this->factory->template($name, $template);
         }
 
         $this->template = $name;
@@ -152,7 +152,7 @@ class Response implements RenderableInterface
     public function getFormat()
     {
         if (is_null($this->format)) {
-            $this->format = $this->env->getRequestFormat($this->template);
+            $this->format = $this->factory->getRequestFormat($this->template);
         }
 
         return $this->format;
@@ -181,7 +181,7 @@ class Response implements RenderableInterface
      */
     public function render()
     {
-        $renderer = $this->env->getTemplate($this->template);
+        $renderer = $this->factory->getTemplate($this->template);
 
         return $renderer->compose($this->getFormat(), $this->data);
     }

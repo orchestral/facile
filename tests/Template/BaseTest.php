@@ -20,7 +20,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $stub = new Base($view);
         $refl = new \ReflectionObject($stub);
@@ -42,7 +42,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeHtmlMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $data = array('foo' => 'foo is awesome');
 
         $view->shouldReceive('make')->once()->with('users.index')->andReturn($view)
@@ -61,7 +61,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeHtmlMethodThrowsException()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $data = array('foo' => 'foobar is awesome');
 
         with(new Base($view))->composeHtml(null, $data);
@@ -74,7 +74,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeJsonMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $data = array('foo' => 'foobar is awesome');
 
         $stub = with(new Base($view))->composeJson(null, $data);

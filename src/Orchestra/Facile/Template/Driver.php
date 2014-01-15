@@ -2,7 +2,7 @@
 
 use RuntimeException;
 use Illuminate\Http\Response as IlluminateResponse;
-use Illuminate\View\Environment;
+use Illuminate\View\Factory;
 use Orchestra\Facile\Transformable;
 
 abstract class Driver
@@ -38,10 +38,10 @@ abstract class Driver
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\View\Environment     $view
-     * @param  \Orchestra\Facile\Transformable  $transformable
+     * @param  \Illuminate\View\Factory        $view
+     * @param  \Orchestra\Facile\Transformable $transformable
      */
-    public function __construct(Environment $view, Transformable $tranformable = null)
+    public function __construct(Factory $view, Transformable $tranformable = null)
     {
         $this->view = $view;
         $this->transformable = $tranformable ?: new Transformable;

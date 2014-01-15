@@ -20,7 +20,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $refl = new \ReflectionObject($stub);
@@ -42,7 +42,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultFormatMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $stub = new TemplateDriverStub($view);
 
@@ -56,7 +56,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethod()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $data = array(
@@ -76,7 +76,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethodReturnResponseError406WhenGivenInvalidFormat()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $view->shouldReceive('exists')->once()->with('error.406')->andReturn(true)
             ->shouldReceive('make')->once()->with('error.406', array())->andReturn('error-406');
@@ -101,7 +101,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethodThrowsExceptionWhenMethodNotAvailable()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $data = array(
@@ -121,7 +121,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformMethodWhenItemHasToArray()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -138,7 +138,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformMethodWhenItemIsInstanceOfEloquent()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $mock = m::mock('\Illuminate\Database\Eloquent\Model');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -155,7 +155,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformMethodWhenItemIsArray()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -172,7 +172,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformMethodWhenItemIsRenderable()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $mock = m::mock('\Illuminate\Support\Contracts\RenderableInterface');
 
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
@@ -189,8 +189,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformMethodWhenItemInstanceOfPaginator()
     {
-        $view    = m::mock('\Illuminate\View\Environment');
-        $env     = m::mock('\Illuminate\Pagination\Environment');
+        $view    = m::mock('\Illuminate\View\Factory');
+        $env     = m::mock('\Illuminate\Pagination\Factory');
         $results = array('foo' => 'foobar');
 
         $env->shouldReceive('getCurrentPage')->once()->andReturn(1);
