@@ -14,7 +14,7 @@ class Transformable
      */
     public function run($data)
     {
-        if (($data instanceof Eloquent) or ($data instanceof ArrayableInterface)) {
+        if (($data instanceof Eloquent) || ($data instanceof ArrayableInterface)) {
             return $data->toArray();
         } elseif ($data instanceof RenderableInterface) {
             return e($data->render());
