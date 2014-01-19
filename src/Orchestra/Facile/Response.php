@@ -124,7 +124,7 @@ class Response implements RenderableInterface
      */
     public function format($format = null)
     {
-        if (! is_null($format) and ! empty($format)) {
+        if (! is_null($format) && ! empty($format)) {
             $this->setFormat($format);
         }
 
