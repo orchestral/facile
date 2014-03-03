@@ -12,8 +12,8 @@
 		}
 	],
 	"autoload": {
-		"psr-0": {
-			"Orchestra\\Facile" : "src/"
+		"psr-4": {
+			"Orchestra\\Facile\\" : "src/Facile/"
 		}
 	},
 	"require": {
