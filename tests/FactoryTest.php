@@ -59,26 +59,16 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'view' => null,
             'data' => array('foo' => 'foo is awesome'),
             'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+            ),
         );
 
         $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
         $this->assertEquals($expected, $data->getValue($container));
         $this->assertEquals('foo', $container->render());
-    }
-
-    /**
-     * Test Orchestra\Facile\Factory::make() throws exception when using
-     * an invalid template.
-     *
-     * @ expectedException \InvalidArgumentException
-     */
-    public function testMakeMethodThrowsExceptionUsingInvalidTemplate()
-    {
-        //$request = m::mock('\Illuminate\Http\Request');
-
-        //$stub = new Factory($request);
-
-        //$stub->make('foobar', array('view' => 'error.404'), 'html');
     }
 
     /**
@@ -110,6 +100,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'view'   => 'foo.bar',
             'data'   => array('foo' => 'foo is awesome'),
             'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+            ),
         );
 
         $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
@@ -147,6 +142,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'view' => null,
             'data' => array('foo' => 'foo is awesome'),
             'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+            ),
         );
 
         $this->assertInstanceOf('\Orchestra\Facile\Container', $container);

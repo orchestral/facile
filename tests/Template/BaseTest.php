@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use Orchestra\Facile\Template\Base;
+use Orchestra\Support\Collection;
 
 class BaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,12 +32,12 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $formats->setAccessible(true);
         $defaultFormat->setAccessible(true);
 
-        $this->assertEquals(array('html', 'json'), $formats->getValue($stub));
+        $this->assertEquals(array('html', 'json', 'csv'), $formats->getValue($stub));
         $this->assertEquals('html', $defaultFormat->getValue($stub));
     }
 
     /**
-     * Test Orchestra\Facile\Template::compose_html() method.
+     * Test Orchestra\Facile\Template::composeHtml() method.
      *
      * @test
      */
@@ -54,7 +55,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template::compose_html() method throws exception
+     * Test Orchestra\Facile\Template::composeHtml() method throws exception
      * when view is not defined
      *
      * @expectedException \InvalidArgumentException
@@ -68,7 +69,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template::compose_json() method.
+     * Test Orchestra\Facile\Template::composeJson() method.
      *
      * @test
      */
@@ -82,5 +83,35 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
         $this->assertEquals('application/json', $stub->headers->get('content-type'));
+    }
+
+    /**
+     * Test Orchestra\Facile\Template::composeCsv() method.
+     *
+     * @test
+     */
+    public function testComposeCsvMethod()
+    {
+        $view = m::mock('\Illuminate\View\Factory');
+
+        $data = array(
+            'data' => new Collection(array(
+                array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
+                array('id' => 2, 'name' => 'Taylor Otwell'),
+            )),
+        );
+
+        $expected = <<<EXPECTED
+id,name
+1,"Mior Muhammad Zaki"
+2,"Taylor Otwell"
+
+EXPECTED;
+
+        $stub = with(new Base($view))->composeCsv(null, $data);
+
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
+        $this->assertEquals($expected, $stub->getContent());
+        $this->assertEquals('text/csv', $stub->headers->get('content-type'));
     }
 }

@@ -34,6 +34,11 @@ class Container implements RenderableInterface
     protected $data = array(
         'view'   => null,
         'data'   => array(),
+        'on'     => array(
+            'html' => array('only' => null, 'except' => null),
+            'json' => array('only' => null, 'except' => null),
+            'csv'  => array('uses' => 'data'),
+        ),
         'status' => 200,
     );
 
@@ -58,7 +63,7 @@ class Container implements RenderableInterface
      * Nest a view to Facile.
      *
      * @param  string   $view
-     * @return Response
+     * @return Container
      */
     public function view($view)
     {
@@ -72,7 +77,7 @@ class Container implements RenderableInterface
      *
      * @param  mixed    $key
      * @param  mixed    $value
-     * @return Response
+     * @return Container
      */
     public function with($key, $value = null)
     {
@@ -84,10 +89,28 @@ class Container implements RenderableInterface
     }
 
     /**
+     * Setup on format configuration.
+     *
+     * @param  string  $type
+     * @param  array   $config
+     * @return Container
+     */
+    public function on($type, array $config = array())
+    {
+        if (! isset($this->data['on'][$type])) {
+            $this->data['on'][$type] = array();
+        }
+
+        $this->data['on'][$type] = array_merge($this->data['on'][$type], $config);
+
+        return $this;
+    }
+
+    /**
      * Set HTTP status to Facile.
      *
      * @param  integer  $status
-     * @return Response
+     * @return Container
      */
     public function status($status = 200)
     {
@@ -100,7 +123,7 @@ class Container implements RenderableInterface
      * Set a template for Facile.
      *
      * @param  mixed    $name
-     * @return Response
+     * @return Container
      */
     public function template($name)
     {
@@ -120,7 +143,7 @@ class Container implements RenderableInterface
      * Get or set facile format.
      *
      * @param  string   $format
-     * @return Response
+     * @return Container
      */
     public function format($format = null)
     {
@@ -135,7 +158,7 @@ class Container implements RenderableInterface
      * Set Output Format.
      *
      * @param  string   $format
-     * @return Response
+     * @return Container
      */
     public function setFormat($format)
     {
