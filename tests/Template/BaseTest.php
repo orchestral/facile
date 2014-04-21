@@ -31,7 +31,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $formats->setAccessible(true);
         $defaultFormat->setAccessible(true);
 
-        $this->assertEquals(array('html', 'json'), $formats->getValue($stub));
+        $this->assertEquals(array('html', 'json', 'csv'), $formats->getValue($stub));
         $this->assertEquals('html', $defaultFormat->getValue($stub));
     }
 
