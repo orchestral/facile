@@ -27,9 +27,10 @@ class Base extends Driver
      * @param  mixed    $view
      * @param  array    $data
      * @param  integer  $status
+     * @param  array    $config
      * @return \Illuminate\Http\Response
      */
-    public function composeHtml($view = null, array $data = array(), $status = 200)
+    public function composeHtml($view = null, array $data = array(), $status = 200, array $config = array())
     {
         if (! isset($view)) {
             throw new InvalidArgumentException("Missing [\$view].");
@@ -48,14 +49,50 @@ class Base extends Driver
      * @param  mixed    $view
      * @param  array    $data
      * @param  integer  $status
+     * @param  array    $config
      * @return \Illuminate\Http\JsonResponse
      */
-    public function composeJson($view, array $data = array(), $status = 200)
+    public function composeJson($view, array $data = array(), $status = 200, array $config = array())
     {
         unset($view);
 
         $data = array_map(array($this, 'transform'), $data);
 
         return new JsonResponse($data, $status);
+    }
+
+    /**
+     * Compose CSV.
+     *
+     * @param  mixed    $view
+     * @param  array    $data
+     * @param  integer  $status
+     * @param  array    $config
+     * @return \Illuminate\Http\Response
+     */
+    public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
+    {
+        $filename = array_get($config, 'filename', 'export');
+        $uses     = array_get($config, 'uses', 'data');
+        $content  = array_get($data, $uses, array());
+
+        $row = max($content);
+        $header = array_keys(array_dot($row));
+
+        ob_start();
+        $instance = fopen('php://output', 'r+');
+        fputcsv($instance, $header, ',', '"');
+        foreach ($content as $key => $line) {
+            fputcsv($instance, array_dot($line), ',', '"');
+        }
+
+        $response = ob_get_clean();
+
+        return new IlluminateResponse($response, $status, array(
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
+            'Cache-Control'       => 'private',
+            'pragma'              => 'cache'
+        ));
     }
 }

@@ -73,11 +73,14 @@ abstract class Driver
             throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
         }
 
+        $config = array_get($compose, "on.{$format}", array());
+
         return call_user_func(
             array($this, 'compose'.ucwords($format)),
             $compose['view'],
-            $compose['data'],
-            $compose['status']
+            $this->prepareDataValue($config, $compose['data']),
+            $compose['status'],
+            $config
         );
     }
 
@@ -111,5 +114,30 @@ abstract class Driver
     public function transform($data)
     {
         return $this->transformable->run($data);
+    }
+
+    /**
+     * Prepare data to be seen to template.
+     *
+     * @param  array   $config
+     * @param  array   $data
+     * @return mixed
+     */
+    protected function prepareDataValue($config, $data)
+    {
+        if (! isset($config)) {
+            return $data;
+        }
+
+        $only   = array_get($config, 'only');
+        $except = array_get($config, 'except');
+
+        if (! is_null($only)) {
+            return array_only($data, $only);
+        } elseif (! is_null($except)) {
+            return array_except($data, $except);
+        }
+
+        return $data;
     }
 }
