@@ -111,7 +111,7 @@ abstract class Driver
      * @param  mixed    $data
      * @return array
      */
-    public function transform($data)
+    public function transformToArray($data)
     {
         return $this->transformable->run($data);
     }

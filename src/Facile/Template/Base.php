@@ -4,6 +4,7 @@ use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\View\View;
+use Orchestra\Support\Collection;
 
 class Base extends Driver
 {
@@ -56,7 +57,7 @@ class Base extends Driver
     {
         unset($view);
 
-        $data = array_map(array($this, 'transform'), $data);
+        $data = array_map(array($this, 'transformToArray'), $data);
 
         return new JsonResponse($data, $status);
     }
@@ -72,22 +73,11 @@ class Base extends Driver
      */
     public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
     {
-        $data     = array_map(array($this, 'transform'), $data);
         $filename = array_get($config, 'filename', 'export');
         $uses     = array_get($config, 'uses', 'data');
         $content  = array_get($data, $uses, array());
 
-        $row = max($content);
-        $header = array_keys(array_dot($row));
-
-        ob_start();
-        $instance = fopen('php://output', 'r+');
-        fputcsv($instance, $header, ',', '"');
-        foreach ($content as $key => $line) {
-            fputcsv($instance, array_dot($line), ',', '"');
-        }
-
-        $response = ob_get_clean();
+        $response = with(new Collection(array($this, 'transformToArray'), $content))->toCsv();
 
         return new IlluminateResponse($response, $status, array(
             'Content-Type'        => 'text/csv',

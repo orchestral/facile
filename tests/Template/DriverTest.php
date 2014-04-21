@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Pagination\Paginator;
+use Orchestra\Facile\Template\Base;
 
 class DriverTest extends \PHPUnit_Framework_TestCase
 {
@@ -110,16 +111,16 @@ class DriverTest extends \PHPUnit_Framework_TestCase
             'status' => 200,
         );
 
-        $stub->compose('json', $data);
+        $stub->compose('html', $data);
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::transform() method when item has
-     * toArray().
+     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
+     * item has toArray().
      *
      * @test
      */
-    public function testTransformMethodWhenItemHasToArray()
+    public function testTransformToArrayMethodWhenItemHasToArray()
     {
         $view = m::mock('\Illuminate\View\Environment');
         $mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
@@ -127,16 +128,16 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
         $stub = new TemplateDriverStub($view);
-        $this->assertEquals('foobar', $stub->transform($mock));
+        $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::transform() method when item is
-     * instance of Illuminate\Database\Eloquent\Model.
+     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
+     * item is instance of Illuminate\Database\Eloquent\Model.
      *
      * @test
      */
-    public function testTransformMethodWhenItemIsInstanceOfEloquent()
+    public function testTransformToArrayMethodWhenItemIsInstanceOfEloquent()
     {
         $view = m::mock('\Illuminate\View\Environment');
         $mock = m::mock('\Illuminate\Database\Eloquent\Model');
@@ -144,16 +145,16 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
         $stub = new TemplateDriverStub($view);
-        $this->assertEquals('foobar', $stub->transform($mock));
+        $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::transform() method when item is an
-     * array.
+     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
+     * item is an array.
      *
      * @test
      */
-    public function testTransformMethodWhenItemIsArray()
+    public function testTransformToArrayMethodWhenItemIsArray()
     {
         $view = m::mock('\Illuminate\View\Environment');
         $mock = m::mock('\Illuminate\Support\Contracts\ArrayableInterface');
@@ -161,16 +162,16 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
         $stub = new TemplateDriverStub($view);
-        $this->assertEquals(array('foobar'), $stub->transform(array($mock)));
+        $this->assertEquals(array('foobar'), $stub->transformToArray(array($mock)));
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::transform() method when item has
-     * renderable.
+     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
+     * item has renderable.
      *
      * @test
      */
-    public function testTransformMethodWhenItemIsRenderable()
+    public function testTransformToArrayMethodWhenItemIsRenderable()
     {
         $view = m::mock('\Illuminate\View\Environment');
         $mock = m::mock('\Illuminate\Support\Contracts\RenderableInterface');
@@ -178,16 +179,16 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
 
         $stub = new TemplateDriverStub($view);
-        $this->assertEquals('&lt;foobar&gt;', $stub->transform($mock));
+        $this->assertEquals('&lt;foobar&gt;', $stub->transformToArray($mock));
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::transform() method when item
-     * is instance of Paginator
+     * Test Orchestra\Facile\Template\Driver::transformToArray() method
+     * when item is instance of Paginator
      *
      * @test
      */
-    public function testTransformMethodWhenItemInstanceOfPaginator()
+    public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
     {
         $view    = m::mock('\Illuminate\View\Environment');
         $env     = m::mock('\Illuminate\Pagination\Environment');
@@ -210,7 +211,57 @@ class DriverTest extends \PHPUnit_Framework_TestCase
             'data'         => $results,
         );
 
-        $this->assertEquals($expected, $stub->transform($paginator));
+        $this->assertEquals($expected, $stub->transformToArray($paginator));
+    }
+
+    /**
+     * Test Orchestra\Facile\Template\Driver::prepareDataValue() method.
+     *
+     * @test
+     * @dataProvider dataProviderForPrepareDataValue
+     */
+    public function testPrepareDataValueMethod($data, $expected)
+    {
+        $view = m::mock('\Illuminate\View\Environment');
+        $env  = m::mock('\Illuminate\Pagination\Environment');
+
+        $stub = new Base($view);
+
+        $response = $stub->compose('json', $data);
+        $this->assertEquals($expected, $response->getContent());
+    }
+
+    /**
+     * Data provider for prepare data value test.
+     */
+    public function dataProviderForPrepareDataValue()
+    {
+        $data = array('foo' => 'foobar', 'hello' => 'world', 'laravel' => 'awesome');
+
+        return array(
+            array(
+                array(
+                    'view'   => null,
+                    'data'   => $data,
+                    'on'     => array(
+                        'json' => array('only' => array('foo')),
+                    ),
+                    'status' => 200,
+                ),
+                '{"foo":"foobar"}',
+            ),
+            array(
+                array(
+                    'view'   => null,
+                    'data'   => $data,
+                    'on'     => array(
+                        'json' => array('except' => array('foo')),
+                    ),
+                    'status' => 200,
+                ),
+                '{"hello":"world","laravel":"awesome"}',
+            ),
+        );
     }
 }
 
