@@ -31,7 +31,16 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array('view' => null, 'data' => array(), 'status' => 200);
+        $expected = array(
+            'view'   => null,
+            'data'   => array(),
+            'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+            ),
+        );
 
         $this->assertEquals($expected, $data->getValue($stub));
     }
@@ -57,6 +66,52 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $result = $data->getValue($stub);
 
         $this->assertEquals('foo.bar', $result['view']);
+    }
+
+    /**
+     * Test Orchestra\Facile\Container::on() method.
+     *
+     * @test
+     */
+    public function testOnMethod()
+    {
+        $request = m::mock('\Illuminate\Http\Request');
+        $view    = m::mock('\Illuminate\View\Environment');
+
+        $stub = new Container(new Environment($request), new Base($view), array(), 'json');
+
+        $refl = new \ReflectionObject($stub);
+        $data = $refl->getProperty('data');
+        $data->setAccessible(true);
+
+        $expected = array(
+            'view'   => null,
+            'data'   => array(),
+            'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+            ),
+        );
+
+        $this->assertEquals($expected, $data->getValue($stub));
+
+        $stub->on('foo', array('uses' => 'foobar'));
+
+        $expected = array(
+            'view'   => null,
+            'data'   => array(),
+            'status' => 200,
+            'on'     => array(
+                'html' => array('only' => null, 'except' => null),
+                'json' => array('only' => null, 'except' => null),
+                'csv'  => array('uses' => 'data'),
+                'foo'  => array('uses' => 'foobar'),
+            ),
+        );
+
+        $this->assertEquals($expected, $data->getValue($stub));
     }
 
     /**

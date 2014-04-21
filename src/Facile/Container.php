@@ -34,6 +34,11 @@ class Container implements RenderableInterface
     protected $data = array(
         'view'   => null,
         'data'   => array(),
+        'on'     => array(
+            'html' => array('only' => null, 'except' => null),
+            'json' => array('only' => null, 'except' => null),
+            'csv'  => array('uses' => 'data'),
+        ),
         'status' => 200,
     );
 
@@ -81,6 +86,22 @@ class Container implements RenderableInterface
         $this->data['data'] = array_merge($this->data['data'], $data);
 
         return $this;
+    }
+
+    /**
+     * Setup on format configuration.
+     *
+     * @param  string  $type
+     * @param  array   $config
+     * @return void
+     */
+    public function on($type, array $config = array())
+    {
+        if (! isset($this->data['on'][$type])) {
+            $this->data['on'][$type] = array();
+        }
+
+        $this->data['on'][$type] = array_merge($this->data['on'][$type], $config);
     }
 
     /**
