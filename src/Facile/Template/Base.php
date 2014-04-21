@@ -12,7 +12,7 @@ class Base extends Driver
      *
      * @var array
      */
-    protected $formats = array('html', 'json');
+    protected $formats = array('html', 'json', 'csv');
 
     /**
      * Default format.
@@ -72,6 +72,7 @@ class Base extends Driver
      */
     public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
     {
+        $data     = array_map(array($this, 'transform'), $data);
         $filename = array_get($config, 'filename', 'export');
         $uses     = array_get($config, 'uses', 'data');
         $content  = array_get($data, $uses, array());
@@ -92,7 +93,7 @@ class Base extends Driver
             'Content-Type'        => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
             'Cache-Control'       => 'private',
-            'pragma'              => 'cache'
+            'pragma'              => 'cache',
         ));
     }
 }

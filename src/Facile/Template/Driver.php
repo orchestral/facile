@@ -123,12 +123,8 @@ abstract class Driver
      * @param  array   $data
      * @return mixed
      */
-    protected function prepareDataValue($config, $data)
+    protected function prepareDataValue(array $config, array $data)
     {
-        if (! isset($config)) {
-            return $data;
-        }
-
         $only   = array_get($config, 'only');
         $except = array_get($config, 'except');
 
