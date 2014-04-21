@@ -3,7 +3,7 @@
 use Illuminate\Support\Contracts\RenderableInterface;
 use Orchestra\Support\Str;
 
-class Response implements RenderableInterface
+class Container implements RenderableInterface
 {
     /**
      * Environment instance.

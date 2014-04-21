@@ -60,11 +60,11 @@ class Environment
      * @param  string   $name   Name of template
      * @param  array    $data
      * @param  string   $format
-     * @return Response
+     * @return Container
      */
     public function make($name, array $data = array(), $format = null)
     {
-        return new Response($this, $name, $data, $format);
+        return new Container($this, $name, $data, $format);
     }
 
     /**
@@ -84,11 +84,11 @@ class Environment
      *
      * @param  string   $view
      * @param  array    $data
-     * @return Response
+     * @return Container
      */
     public function view($view, array $data = array())
     {
-        return with(new Response($this, 'default'))
+        return with(new Container($this, 'default'))
             ->view($view)
             ->with($data);
     }
@@ -110,14 +110,14 @@ class Environment
      * </code>
      *
      * @param  mixed    $data
-     * @return Response
+     * @return Container
      */
     public function with($data)
     {
-        $data     = func_get_args();
-        $response = new Response($this, 'default');
+        $data = func_get_args();
+        $container = new Container($this, 'default');
 
-        return call_user_func_array(array($response, 'with'), $data);
+        return call_user_func_array(array($container, 'with'), $data);
     }
 
     /**
