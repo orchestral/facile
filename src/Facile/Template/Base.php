@@ -72,9 +72,10 @@ class Base extends Driver
      * @param  array    $config
      * @return \Illuminate\Http\Response
      */
-    public function composeCsv($view = null,
-        array $data = array(), $status = 200, array $config = array())
+    public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
     {
+        unset($view);
+
         $filename = array_get($config, 'filename', 'export');
         $uses     = array_get($config, 'uses', 'data');
         $content  = array_get($data, $uses, array());
