@@ -49,9 +49,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $response = $stub->make('mock', array('data' => array('foo' => 'foo is awesome')), 'json');
+        $container = $stub->make('mock', array('data' => array('foo' => 'foo is awesome')), 'json');
 
-        $refl = new \ReflectionObject($response);
+        $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
@@ -61,9 +61,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'status' => 200,
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Response', $response);
-        $this->assertEquals($expected, $data->getValue($response));
-        $this->assertEquals('foo', $response->render());
+        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertEquals($expected, $data->getValue($container));
+        $this->assertEquals('foo', $container->render());
     }
 
     /**
@@ -100,9 +100,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $response = $stub->view('foo.bar', array('foo' => 'foo is awesome'));
+        $container = $stub->view('foo.bar', array('foo' => 'foo is awesome'));
 
-        $refl = new \ReflectionObject($response);
+        $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
@@ -112,9 +112,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'status' => 200,
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Response', $response);
-        $this->assertEquals($expected, $data->getValue($response));
-        $this->assertEquals('foo', $response->render());
+        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertEquals($expected, $data->getValue($container));
+        $this->assertEquals('foo', $container->render());
     }
 
     /**
@@ -137,9 +137,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $response = $stub->with(array('foo' => 'foo is awesome'));
+        $container = $stub->with(array('foo' => 'foo is awesome'));
 
-        $refl = new \ReflectionObject($response);
+        $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
@@ -149,9 +149,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             'status' => 200,
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Response', $response);
-        $this->assertEquals($expected, $data->getValue($response));
-        $this->assertEquals('foo', $response->render());
+        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertEquals($expected, $data->getValue($container));
+        $this->assertEquals('foo', $container->render());
     }
 
     /**
