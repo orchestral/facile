@@ -3,6 +3,7 @@
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\View\View;
 use Orchestra\Support\Collection;
 
@@ -71,15 +72,22 @@ class Base extends Driver
      * @param  array    $config
      * @return \Illuminate\Http\Response
      */
-    public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
+    public function composeCsv($view = null,
+        array $data = array(), $status = 200, array $config = array())
     {
         $filename = array_get($config, 'filename', 'export');
         $uses     = array_get($config, 'uses', 'data');
         $content  = array_get($data, $uses, array());
 
-        $response = with(new Collection(array($this, 'transformToArray'), $content))->toCsv();
+        if (! $content instanceof CsvableInterface) {
+            if ($content instanceof ArrayableInterface) {
+                $content = $content->toArray();
+            }
 
-        return new IlluminateResponse($response, $status, array(
+            $content = with(new Collection(array_map(array($this, 'transformToArray'), $content)));
+        }
+
+        return new IlluminateResponse($content->toCsv(), $status, array(
             'Content-Type'        => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
             'Cache-Control'       => 'private',
