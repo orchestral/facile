@@ -101,9 +101,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testOnMethod($before, $after)
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Environment');
+        $view    = m::mock('\Illuminate\View\Factory');
 
-        $stub = new Container(new Environment($request), new Base($view), array(), 'json');
+        $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
