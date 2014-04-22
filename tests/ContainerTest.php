@@ -69,11 +69,12 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Container::on() method.
+     * Test Orchestra\Facile\Container::when() method.
      *
      * @test
+     * @dataProvider dataProviderForWhenTest
      */
-    public function testOnMethod()
+    public function testWhenMethod($before, $after)
     {
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\View\Environment');
@@ -84,34 +85,35 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array(
-            'view'   => null,
-            'data'   => array(),
-            'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-            ),
-        );
+        $this->assertEquals($before, $data->getValue($stub));
 
-        $this->assertEquals($expected, $data->getValue($stub));
+        $stub->when('foo', array('uses' => 'foobar'));
+
+        $this->assertEquals($after, $data->getValue($stub));
+    }
+
+    /**
+     * Test Orchestra\Facile\Container::on() method.
+     *
+     * @test
+     * @dataProvider dataProviderForWhenTest
+     */
+    public function testOnMethod($before, $after)
+    {
+        $request = m::mock('\Illuminate\Http\Request');
+        $view    = m::mock('\Illuminate\View\Environment');
+
+        $stub = new Container(new Environment($request), new Base($view), array(), 'json');
+
+        $refl = new \ReflectionObject($stub);
+        $data = $refl->getProperty('data');
+        $data->setAccessible(true);
+
+        $this->assertEquals($before, $data->getValue($stub));
 
         $stub->on('foo', array('uses' => 'foobar'));
 
-        $expected = array(
-            'view'   => null,
-            'data'   => array(),
-            'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-                'foo'  => array('uses' => 'foobar'),
-            ),
-        );
-
-        $this->assertEquals($expected, $data->getValue($stub));
+        $this->assertEquals($after, $data->getValue($stub));
     }
 
     /**
@@ -276,5 +278,38 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         ob_end_clean();
 
         $this->assertEquals('foo is awesome', $output2);
+    }
+
+    /**
+     * Data provider for prepare data value test.
+     */
+    public function dataProviderForWhenTest()
+    {
+        return array(
+            array(
+                array(
+                    'view'   => null,
+                    'data'   => array(),
+                    'status' => 200,
+                    'on'     => array(
+                        'html' => array('only' => null, 'except' => null),
+                        'json' => array('only' => null, 'except' => null),
+                        'csv'  => array('uses' => 'data'),
+                    ),
+                ),
+                array(
+                    'view'   => null,
+                    'data'   => array(),
+                    'status' => 200,
+                    'on'     => array(
+                        'html' => array('only' => null, 'except' => null),
+                        'json' => array('only' => null, 'except' => null),
+                        'csv'  => array('uses' => 'data'),
+                        'foo'  => array('uses' => 'foobar'),
+                    ),
+                ),
+            ),
+        );
+
     }
 }

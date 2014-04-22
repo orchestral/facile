@@ -95,7 +95,7 @@ class Container implements RenderableInterface
      * @param  array   $config
      * @return Container
      */
-    public function on($type, array $config = array())
+    public function when($type, array $config = array())
     {
         if (! isset($this->data['on'][$type])) {
             $this->data['on'][$type] = array();
@@ -104,6 +104,19 @@ class Container implements RenderableInterface
         $this->data['on'][$type] = array_merge($this->data['on'][$type], $config);
 
         return $this;
+    }
+
+    /**
+     * Setup on format configuration.
+     *
+     * @deprecated
+     * @param  string  $type
+     * @param  array   $config
+     * @return Container
+     */
+    public function on($type, array $config = array())
+    {
+        return $this->when($type, $config);
     }
 
     /**
