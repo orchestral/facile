@@ -156,12 +156,15 @@ class Container implements RenderableInterface
      * Get or set facile format.
      *
      * @param  string   $format
+     * @param  array    $config
      * @return Container
      */
-    public function format($format = null)
+    public function format($format = null, array $config = array())
     {
         if (! is_null($format) && ! empty($format)) {
             $this->setFormat($format);
+
+            ! empty($config) && $this->when($format, $config);
         }
 
         return $this;
