@@ -86,19 +86,50 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template::composeCsv() method.
+     * Test Orchestra\Facile\Template::composeCsv() method
+     * given as Illuminate\Support\Contracts\ArrayableInterface.
      *
      * @test
      */
-    public function testComposeCsvMethod()
+    public function testComposeCsvMethodAsArrayableInterface()
     {
         $view = m::mock('\Illuminate\View\Factory');
 
         $data = array(
-            'data' => new Collection(array(
+            'data' => new \Illuminate\Support\Collection(array(
                 array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
                 array('id' => 2, 'name' => 'Taylor Otwell'),
             )),
+        );
+
+        $expected = <<<EXPECTED
+id,name
+1,"Mior Muhammad Zaki"
+2,"Taylor Otwell"
+
+EXPECTED;
+
+        $stub = with(new Base($view))->composeCsv(null, $data);
+
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
+        $this->assertEquals($expected, $stub->getContent());
+        $this->assertEquals('text/csv', $stub->headers->get('content-type'));
+    }
+
+    /**
+     * Test Orchestra\Facile\Template::composeCsv() method
+     * given as Orchestra\Support\Contracts\CsvableInterface.
+     *
+     * @test
+     */
+    public function testComposeCsvMethodAsCsvableInterface()
+    {
+        $view = m::mock('\Illuminate\View\Factory');
+        $data = array(
+            'data' => new Collection(array(
+                    array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
+                    array('id' => 2, 'name' => 'Taylor Otwell'),
+                )),
         );
 
         $expected = <<<EXPECTED
