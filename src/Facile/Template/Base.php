@@ -6,6 +6,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\View\View;
 use Orchestra\Support\Collection;
+use Orchestra\Support\Contracts\CsvableInterface;
 
 class Base extends Driver
 {
@@ -57,6 +58,7 @@ class Base extends Driver
     public function composeJson($view, array $data = array(), $status = 200, array $config = array())
     {
         unset($view);
+        unset($config);
 
         $data = array_map(array($this, 'transformToArray'), $data);
 
