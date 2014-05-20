@@ -124,7 +124,7 @@ EXPECTED;
      */
     public function testComposeCsvMethodAsCsvableInterface()
     {
-        $view = m::mock('\Illuminate\View\Environment');
+        $view = m::mock('\Illuminate\View\Factory');
         $data = array(
             'data' => new Collection(array(
                     array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
