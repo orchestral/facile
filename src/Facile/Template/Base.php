@@ -3,6 +3,7 @@
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\View\View;
 use Orchestra\Support\Collection;
@@ -27,11 +28,12 @@ class Base extends Driver
     /**
      * Compose HTML.
      *
-     * @param  mixed    $view
-     * @param  array    $data
-     * @param  integer  $status
-     * @param  array    $config
+     * @param  mixed|null   $view
+     * @param  array        $data
+     * @param  integer      $status
+     * @param  array        $config
      * @return \Illuminate\Http\Response
+     * @throws \InvalidArgumentException
      */
     public function composeHtml($view = null, array $data = array(), $status = 200, array $config = array())
     {
@@ -78,9 +80,9 @@ class Base extends Driver
     {
         unset($view);
 
-        $filename = array_get($config, 'filename', 'export');
-        $uses     = array_get($config, 'uses', 'data');
-        $content  = array_get($data, $uses, array());
+        $filename = Arr::get($config, 'filename', 'export');
+        $uses     = Arr::get($config, 'uses', 'data');
+        $content  = Arr::get($data, $uses, array());
 
         if (! $content instanceof CsvableInterface) {
             if ($content instanceof ArrayableInterface) {

@@ -2,6 +2,7 @@
 
 use RuntimeException;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Arr;
 use Illuminate\View\Factory;
 use Orchestra\Facile\Transformable;
 
@@ -41,10 +42,10 @@ abstract class Driver
      * @param  \Illuminate\View\Factory        $view
      * @param  \Orchestra\Facile\Transformable $transformable
      */
-    public function __construct(Factory $view, Transformable $tranformable = null)
+    public function __construct(Factory $view, Transformable $transformable = null)
     {
         $this->view = $view;
-        $this->transformable = $tranformable ?: new Transformable;
+        $this->transformable = $transformable ?: new Transformable;
     }
 
     /**
@@ -73,7 +74,7 @@ abstract class Driver
             throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
         }
 
-        $config = array_get($compose, "on.{$format}", array());
+        $config = Arr::get($compose, "on.{$format}", array());
 
         return call_user_func(
             array($this, 'compose'.ucwords($format)),
@@ -125,13 +126,13 @@ abstract class Driver
      */
     protected function prepareDataValue(array $config, array $data)
     {
-        $only   = array_get($config, 'only');
-        $except = array_get($config, 'except');
+        $only   = Arr::get($config, 'only');
+        $except = Arr::get($config, 'except');
 
         if (! is_null($only)) {
-            return array_only($data, $only);
+            return Arr::only($data, $only);
         } elseif (! is_null($except)) {
-            return array_except($data, $except);
+            return Arr::except($data, $except);
         }
 
         return $data;
