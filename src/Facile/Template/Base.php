@@ -27,11 +27,12 @@ class Base extends Driver
     /**
      * Compose HTML.
      *
-     * @param  mixed    $view
-     * @param  array    $data
-     * @param  integer  $status
-     * @param  array    $config
+     * @param  mixed|null   $view
+     * @param  array        $data
+     * @param  integer      $status
+     * @param  array        $config
      * @return \Illuminate\Http\Response
+     * @throws \InvalidArgumentException
      */
     public function composeHtml($view = null, array $data = array(), $status = 200, array $config = array())
     {

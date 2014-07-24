@@ -41,10 +41,10 @@ abstract class Driver
      * @param  \Illuminate\View\Factory        $view
      * @param  \Orchestra\Facile\Transformable $transformable
      */
-    public function __construct(Factory $view, Transformable $tranformable = null)
+    public function __construct(Factory $view, Transformable $transformable = null)
     {
         $this->view = $view;
-        $this->transformable = $tranformable ?: new Transformable;
+        $this->transformable = $transformable ?: new Transformable;
     }
 
     /**
