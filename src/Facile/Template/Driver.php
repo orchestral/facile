@@ -38,13 +38,13 @@ abstract class Driver
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\View\Environment     $view
-     * @param  \Orchestra\Facile\Transformable  $transformable
+     * @param  \Illuminate\View\Environment         $view
+     * @param  \Orchestra\Facile\Transformable|null $transformable
      */
-    public function __construct(Environment $view, Transformable $tranformable = null)
+    public function __construct(Environment $view, Transformable $transformable = null)
     {
         $this->view = $view;
-        $this->transformable = $tranformable ?: new Transformable;
+        $this->transformable = $transformable ?: new Transformable;
     }
 
     /**

@@ -3,6 +3,7 @@
 use InvalidArgumentException;
 use RuntimeException;
 use Illuminate\Http\Request;
+use Orchestra\Facile\Template\Driver as Template;
 
 class Environment
 {
@@ -123,8 +124,8 @@ class Environment
     /**
      * Register a template.
      *
-     * @param  string               $name
-     * @param  Template\Driver      $template
+     * @param  string                                       $name
+     * @param  \Orchestra\Facile\Template\Driver|\Closure   $template
      * @return void
      * @throws \RuntimeException if `$template` not instanceof
      *                           `Orchestra\Facile\Template\Driver`.
@@ -133,7 +134,7 @@ class Environment
     {
         $resolve = value($template);
 
-        if (! ($resolve instanceof Template\Driver)) {
+        if (! ($resolve instanceof Template)) {
             throw new RuntimeException(
                 "Expected \$template to be instanceof Orchestra\Facile\Template\Driver."
             );
@@ -159,7 +160,7 @@ class Environment
      * Get the template.
      *
      * @param  string   $name
-     * @return Template\Driver
+     * @return \Orchestra\Facile\Template\Driver
      * @throws \InvalidArgumentException if template is not defined.
      */
     public function getTemplate($name)
