@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Facile;
 
+use Illuminate\Contracts\Support\ArrayableInterface;
+use Illuminate\Contracts\Support\RenderableInterface;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Support\Contracts\ArrayableInterface;
-use Illuminate\Support\Contracts\RenderableInterface;
 
 class Transformable
 {

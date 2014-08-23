@@ -264,7 +264,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('{"foo":"foo is awesome"}', $output1);
 
-        $render = m::mock('\Illuminate\Support\Contracts\RenderableInterface');
+        $render = m::mock('\Illuminate\Contracts\Support\RenderableInterface');
         $render->shouldReceive('render')->once()->andReturn('foo is awesome');
 
         $template2 = m::mock('\Orchestra\Facile\Template\Driver');
