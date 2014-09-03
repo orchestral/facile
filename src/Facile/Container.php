@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Facile;
 
 use Illuminate\Contracts\Support\RenderableInterface;
+use Orchestra\Facile\Template\Driver as Template;
 use Orchestra\Support\Str;
 
 class Container implements RenderableInterface
@@ -63,7 +64,7 @@ class Container implements RenderableInterface
      * Nest a view to Facile.
      *
      * @param  string   $view
-     * @return Container
+     * @return $this
      */
     public function view($view)
     {
@@ -73,11 +74,11 @@ class Container implements RenderableInterface
     }
 
     /**
-     * Nest a data or dataset to Facile.
+     * Nest a data or data-set to Facile.
      *
      * @param  mixed    $key
      * @param  mixed    $value
-     * @return Container
+     * @return $this
      */
     public function with($key, $value = null)
     {
@@ -93,7 +94,7 @@ class Container implements RenderableInterface
      *
      * @param  string  $type
      * @param  array   $config
-     * @return Container
+     * @return $this
      */
     public function when($type, array $config = array())
     {
@@ -112,7 +113,8 @@ class Container implements RenderableInterface
      * @deprecated
      * @param  string  $type
      * @param  array   $config
-     * @return Container
+     * @return $this
+     * @see    self::when()
      */
     public function on($type, array $config = array())
     {
@@ -123,7 +125,7 @@ class Container implements RenderableInterface
      * Set HTTP status to Facile.
      *
      * @param  integer  $status
-     * @return Container
+     * @return $this
      */
     public function status($status = 200)
     {
@@ -136,11 +138,11 @@ class Container implements RenderableInterface
      * Set a template for Facile.
      *
      * @param  mixed    $name
-     * @return Container
+     * @return $this
      */
     public function template($name)
     {
-        if ($name instanceof Template\Driver) {
+        if ($name instanceof Template) {
             $template = $name;
             $name = sprintf('template-%d-%s', time(), Str::random());
 
@@ -157,7 +159,7 @@ class Container implements RenderableInterface
      *
      * @param  string   $format
      * @param  array    $config
-     * @return Container
+     * @return $this
      */
     public function format($format = null, array $config = array())
     {
@@ -174,7 +176,7 @@ class Container implements RenderableInterface
      * Set Output Format.
      *
      * @param  string   $format
-     * @return Container
+     * @return $this
      */
     public function setFormat($format)
     {

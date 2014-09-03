@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Facile\Template;
 
 use RuntimeException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
-use Illuminate\View\Factory;
 use Orchestra\Facile\Transformable;
 
 abstract class Driver
@@ -11,7 +11,7 @@ abstract class Driver
     /**
      * View instance.
      *
-     * @var \Illuminate\View\Environment
+     * @var \Illuminate\Contracts\View\Factory
      */
     protected $view;
 
@@ -39,8 +39,8 @@ abstract class Driver
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\View\Factory        $view
-     * @param  \Orchestra\Facile\Transformable $transformable
+     * @param  \Illuminate\Contracts\View\Factory   $view
+     * @param  \Orchestra\Facile\Transformable      $transformable
      */
     public function __construct(Factory $view, Transformable $transformable = null)
     {

@@ -21,7 +21,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $refl = new \ReflectionObject($stub);
@@ -43,7 +43,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultFormatMethod()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateDriverStub($view);
 
@@ -57,7 +57,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethod()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $data = array(
@@ -77,7 +77,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethodReturnResponseError406WhenGivenInvalidFormat()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $view->shouldReceive('exists')->once()->with('error.406')->andReturn(true)
             ->shouldReceive('make')->once()->with('error.406', array())->andReturn('error-406');
@@ -102,7 +102,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testComposeMethodThrowsExceptionWhenMethodNotAvailable()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateDriverStub($view);
         $data = array(
@@ -122,7 +122,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemHasToArray()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\ArrayableInterface');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -139,7 +139,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemIsInstanceOfEloquent()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Database\Eloquent\Model');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -156,7 +156,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemIsArray()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\ArrayableInterface');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
@@ -173,7 +173,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemIsRenderable()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\RenderableInterface');
 
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
@@ -190,7 +190,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
     {
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
         $env     = m::mock('\Illuminate\Pagination\Factory');
         $results = array('foo' => 'foobar');
 
@@ -222,7 +222,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
      */
     public function testPrepareDataValueMethod($data, $expected)
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $env  = m::mock('\Illuminate\Pagination\Factory');
 
         $stub = new Base($view);

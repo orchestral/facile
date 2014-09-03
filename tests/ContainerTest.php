@@ -23,7 +23,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testConstructMethod()
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -53,7 +53,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testViewMethod()
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -77,7 +77,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testWhenMethod($before, $after)
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -101,7 +101,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testOnMethod($before, $after)
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -124,7 +124,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testWithMethod()
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -148,7 +148,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testStatusMethod()
     {
         $request = m::mock('\Illuminate\Http\Request');
-        $view    = m::mock('\Illuminate\View\Factory');
+        $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Container(new Factory($request), new Base($view), array(), 'json');
 
@@ -171,7 +171,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testTemplateMethod()
     {
         $request  = m::mock('\Illuminate\Http\Request');
-        $view     = m::mock('\Illuminate\View\Factory');
+        $view     = m::mock('\Illuminate\Contracts\View\Factory');
 
         $env      = new Factory($request);
         $template = new Base($view);

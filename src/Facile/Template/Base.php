@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Facile\Template;
 
 use InvalidArgumentException;
+use Illuminate\Contracts\Support\ArrayableInterface;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Contracts\Support\ArrayableInterface;
-use Illuminate\View\View;
 use Orchestra\Support\Collection;
 use Orchestra\Support\Contracts\CsvableInterface;
 
