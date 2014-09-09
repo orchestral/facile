@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Facile;
 
-use Illuminate\Contracts\Support\RenderableInterface;
+use Illuminate\Contracts\Support\Renderable;
 use Orchestra\Facile\Template\Driver as Template;
 use Orchestra\Support\Str;
 
-class Container implements RenderableInterface
+class Container implements Renderable
 {
     /**
      * Factory instance.
@@ -208,7 +208,7 @@ class Container implements RenderableInterface
     {
         $content = $this->render();
 
-        if ($content instanceof RenderableInterface) {
+        if ($content instanceof Renderable) {
             return $content->render();
         }
 

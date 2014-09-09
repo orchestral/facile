@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile\Template;
 
 use InvalidArgumentException;
-use Illuminate\Contracts\Support\ArrayableInterface;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response as IlluminateResponse;
@@ -85,7 +85,7 @@ class Base extends Driver
         $content  = Arr::get($data, $uses, array());
 
         if (! $content instanceof CsvableInterface) {
-            if ($content instanceof ArrayableInterface) {
+            if ($content instanceof Arrayable) {
                 $content = $content->toArray();
             }
 

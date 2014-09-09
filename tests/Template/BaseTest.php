@@ -87,7 +87,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test Orchestra\Facile\Template::composeCsv() method
-     * given as Illuminate\Contracts\Support\ArrayableInterface.
+     * given as Illuminate\Contracts\Support\Arrayable.
      *
      * @test
      */
