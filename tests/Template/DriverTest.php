@@ -123,7 +123,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     public function testTransformToArrayMethodWhenItemHasToArray()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $mock = m::mock('\Illuminate\Contracts\Support\ArrayableInterface');
+        $mock = m::mock('\Illuminate\Contracts\Support\Arrayable');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
@@ -157,7 +157,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     public function testTransformToArrayMethodWhenItemIsArray()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $mock = m::mock('\Illuminate\Contracts\Support\ArrayableInterface');
+        $mock = m::mock('\Illuminate\Contracts\Support\Arrayable');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
@@ -174,7 +174,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     public function testTransformToArrayMethodWhenItemIsRenderable()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $mock = m::mock('\Illuminate\Contracts\Support\RenderableInterface');
+        $mock = m::mock('\Illuminate\Contracts\Support\Renderable');
 
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
 
@@ -223,7 +223,6 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     public function testPrepareDataValueMethod($data, $expected)
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $env  = m::mock('\Illuminate\Pagination\Factory');
 
         $stub = new Base($view);
 

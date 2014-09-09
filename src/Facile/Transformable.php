@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use Illuminate\Contracts\Support\ArrayableInterface;
-use Illuminate\Contracts\Support\RenderableInterface;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Transformable
@@ -14,9 +14,9 @@ class Transformable
      */
     public function run($data)
     {
-        if (($data instanceof Eloquent) || ($data instanceof ArrayableInterface)) {
+        if (($data instanceof Eloquent) || ($data instanceof Arrayable)) {
             return $data->toArray();
-        } elseif ($data instanceof RenderableInterface) {
+        } elseif ($data instanceof Renderable) {
             return e($data->render());
         } elseif (is_array($data)) {
             return array_map(array($this, 'run'), $data);
