@@ -23,9 +23,9 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
-		"illuminate/database": "3.0.*",
-		"illuminate/http": "3.0.*",
-		"illuminate/pagination": "3.0.*"
+		"illuminate/database": "5.0.*",
+		"illuminate/http": "5.0.*",
+		"illuminate/pagination": "5.0.*"
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform",
