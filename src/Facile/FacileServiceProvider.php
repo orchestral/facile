@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use Illuminate\Support\ServiceProvider;
 use Orchestra\Facile\Template\Base;
+use Illuminate\Support\ServiceProvider;
 
 class FacileServiceProvider extends ServiceProvider
 {
