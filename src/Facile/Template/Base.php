@@ -1,13 +1,13 @@
 <?php namespace Orchestra\Facile\Template;
 
-use InvalidArgumentException;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
+use Illuminate\Http\JsonResponse;
 use Orchestra\Support\Collection;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Support\Contracts\CsvableInterface;
+use Illuminate\Http\Response as IlluminateResponse;
 
 class Base extends Driver
 {

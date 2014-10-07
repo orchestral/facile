@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Facile;
 
-use InvalidArgumentException;
 use RuntimeException;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use Orchestra\Facile\Template\Driver as Template;
 
 class Factory

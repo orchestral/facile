@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Facile\Template;
 
 use RuntimeException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
 use Orchestra\Facile\Transformable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Response as IlluminateResponse;
 
 abstract class Driver
 {
