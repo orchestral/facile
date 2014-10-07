@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Facile;
 
-use Illuminate\Support\Contracts\RenderableInterface;
 use Orchestra\Support\Str;
+use Illuminate\Support\Contracts\RenderableInterface;
 
 class Container implements RenderableInterface
 {
