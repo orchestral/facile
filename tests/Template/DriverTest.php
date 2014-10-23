@@ -191,24 +191,20 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
     {
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
-        $env     = m::mock('\Illuminate\Pagination\Factory');
         $results = array('foo' => 'foobar');
 
-        $env->shouldReceive('getCurrentPage')->once()->andReturn(1);
-
-        $paginator = new Paginator($env, $results, 3, 1);
-        $paginator->setupPaginationContext();
+        $paginator = new Paginator($results, 3, 1);
 
         $stub = new TemplateDriverStub($view);
 
         $expected = array(
-            'total'        => 3,
-            'per_page'     => 1,
-            'current_page' => 1,
-            'last_page'    => 3,
-            'from'         => 1,
-            'to'           => 1,
-            'data'         => $results,
+            'per_page'      => 3,
+            'current_page'  => 1,
+            'from'          => 1,
+            'to'            => 1,
+            'data'          => $results,
+            'next_page_url' => null,
+            'prev_page_url' => null,
         );
 
         $this->assertEquals($expected, $stub->transformToArray($paginator));
