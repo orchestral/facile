@@ -4,7 +4,7 @@ use Orchestra\Support\Str;
 use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Support\Renderable;
 
-class Container implements Renderable
+class Facile implements Renderable
 {
     /**
      * Factory instance.

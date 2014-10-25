@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Facile\TestCase;
 
 use Mockery as m;
-use Orchestra\Facile\Container;
+use Orchestra\Facile\Facile;
 use Orchestra\Facile\Factory;
 use Orchestra\Facile\Template\Simple;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class FacileTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -25,7 +25,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -55,7 +55,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $stub->view('foo.bar');
 
@@ -79,7 +79,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -103,7 +103,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -126,7 +126,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $stub->with('foo', 'bar');
         $stub->with(array('foobar' => 'foo'));
@@ -150,7 +150,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Container(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
 
         $stub->status(500);
 
@@ -178,7 +178,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $env->template('foo', $template);
 
-        $stub = new Container($env, $template, array(), 'json');
+        $stub = new Facile($env, $template, array(), 'json');
 
         $stub->template('foo');
 
@@ -210,7 +210,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('format')->once()->with('jsonp')->andReturn('jsonp');
         $template->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
 
-        $stub = new Container(new Factory($request), $template, array(), null);
+        $stub = new Facile(new Factory($request), $template, array(), null);
 
         $this->assertEquals('jsonp', $stub->getFormat());
 
@@ -237,7 +237,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('compose')->once()->andReturn('foo')
             ->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
 
-        $stub = new Container(new Factory($request), $template, array());
+        $stub = new Facile(new Factory($request), $template, array());
 
         $this->assertEquals('foo', $stub->render());
     }
@@ -255,7 +255,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $template1->shouldReceive('compose')->once()
                 ->with('json', m::any())->andReturn(json_encode(array('foo' => 'foo is awesome')));
 
-        $stub1 = new Container(new Factory($request), $template1, array(), 'json');
+        $stub1 = new Facile(new Factory($request), $template1, array(), 'json');
 
         ob_start();
         echo $stub1;
@@ -270,7 +270,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $template2 = m::mock('\Orchestra\Facile\Template\Template');
         $template2->shouldReceive('compose')->once()->with('json', m::any())->andReturn($render);
 
-        $stub2 = new Container(new Factory($request), $template2, array(), 'json');
+        $stub2 = new Facile(new Factory($request), $template2, array(), 'json');
 
         ob_start();
         echo $stub2;

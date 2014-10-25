@@ -61,11 +61,11 @@ class Factory
      * @param  string   $name   Name of template
      * @param  array    $data
      * @param  string   $format
-     * @return Container
+     * @return Facile
      */
     public function make($name, array $data = array(), $format = null)
     {
-        return new Container($this, $name, $data, $format);
+        return new Facile($this, $name, $data, $format);
     }
 
     /**
@@ -85,11 +85,11 @@ class Factory
      *
      * @param  string   $view
      * @param  array    $data
-     * @return Container
+     * @return Facile
      */
     public function view($view, array $data = array())
     {
-        return with(new Container($this, 'default'))
+        return with(new Facile($this, 'default'))
             ->view($view)
             ->with($data);
     }
@@ -111,12 +111,12 @@ class Factory
      * </code>
      *
      * @param  mixed    $data
-     * @return Container
+     * @return Facile
      */
     public function with($data)
     {
         $data = func_get_args();
-        $container = new Container($this, 'default');
+        $container = new Facile($this, 'default');
 
         return call_user_func_array(array($container, 'with'), $data);
     }

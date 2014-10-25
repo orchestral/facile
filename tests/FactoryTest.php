@@ -66,7 +66,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
         $this->assertEquals('foo', $container->render());
     }
@@ -107,7 +107,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
         $this->assertEquals('foo', $container->render());
     }
@@ -149,7 +149,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertInstanceOf('\Orchestra\Facile\Container', $container);
+        $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
         $this->assertEquals('foo', $container->render());
     }
