@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Support\Contracts\CsvableInterface;
 use Illuminate\Http\Response as IlluminateResponse;
 
-class Base extends Driver
+class Simple extends Template
 {
     /**
      * List of supported format.

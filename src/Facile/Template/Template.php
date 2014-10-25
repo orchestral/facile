@@ -6,7 +6,7 @@ use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response as IlluminateResponse;
 
-abstract class Driver
+abstract class Template
 {
     /**
      * View instance.

@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Facile;
 
-use Orchestra\Facile\Template\Base;
+use Orchestra\Facile\Template\Simple;
 use Illuminate\Support\ServiceProvider;
 
 class FacileServiceProvider extends ServiceProvider
@@ -23,7 +23,7 @@ class FacileServiceProvider extends ServiceProvider
             $factory = new Factory($app['request']);
 
             $factory->template('default', function () use ($app) {
-                return new Base($app['view']);
+                return new Simple($app['view']);
             });
 
             return $factory;

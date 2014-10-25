@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
-use Orchestra\Facile\Template\Base;
 use Orchestra\Support\Collection;
+use Orchestra\Facile\Template\Simple;
 
-class BaseTest extends \PHPUnit_Framework_TestCase
+class SimpleTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -23,7 +23,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Base($view);
+        $stub = new Simple($view);
         $refl = new \ReflectionObject($stub);
 
         $formats       = $refl->getProperty('formats');
@@ -49,7 +49,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $view->shouldReceive('make')->once()->with('users.index')->andReturn($view)
             ->shouldReceive('with')->with($data)->andReturn('foo');
 
-        $stub = new Base($view);
+        $stub = new Simple($view);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
     }
@@ -65,7 +65,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = array('foo' => 'foobar is awesome');
 
-        with(new Base($view))->composeHtml(null, $data);
+        with(new Simple($view))->composeHtml(null, $data);
     }
 
     /**
@@ -78,7 +78,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = array('foo' => 'foobar is awesome');
 
-        $stub = with(new Base($view))->composeJson(null, $data);
+        $stub = with(new Simple($view))->composeJson(null, $data);
 
         $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
@@ -109,7 +109,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Base($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv(null, $data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());
@@ -139,7 +139,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Base($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv(null, $data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());

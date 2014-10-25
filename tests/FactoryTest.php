@@ -39,7 +39,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testMakeMethod()
     {
         $request  = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Driver');
+        $template = m::mock('\Orchestra\Facile\Template\Template');
 
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
@@ -79,7 +79,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testViewMethod()
     {
         $request  = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Driver');
+        $template = m::mock('\Orchestra\Facile\Template\Template');
 
         $request->shouldReceive('format')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
@@ -120,7 +120,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testWithMethod()
     {
         $request  = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Driver');
+        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
 
         $request->shouldReceive('format')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
@@ -171,13 +171,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($templates->getValue($stub)));
 
-        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Driver');
+        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Template');
         $stub->template('foo', $template);
     }
 
     /**
      * Test Orchestra\Facile\Factory::template() method throws exception
-     * when template is not instanceof \Orchestra\Facile\Template\Driver
+     * when template is not instanceof \Orchestra\Facile\Template\Template
      *
      * @expectedException \RuntimeException
      */

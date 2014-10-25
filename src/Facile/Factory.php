@@ -3,7 +3,7 @@
 use RuntimeException;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Orchestra\Facile\Template\Driver as Template;
+use Orchestra\Facile\Template\Template;
 
 class Factory
 {
@@ -54,7 +54,7 @@ class Factory
      *              'users' => $users,
      *          ))
      *          ->status(200)
-     *          ->template(new Orchestra\Facile\Template\Driver)
+     *          ->template(new Orchestra\Facile\Template\Template)
      *          ->format('html');
      * </code>
      *
@@ -79,7 +79,7 @@ class Factory
      *              'users' => $users,
      *          ))
      *          ->status(200)
-     *          ->template(new Orchestra\Facile\Template\Driver)
+     *          ->template(new Orchestra\Facile\Template\Template)
      *          ->format('html');
      * </code>
      *
@@ -106,7 +106,7 @@ class Factory
      *          ))
      *          ->view('home.index')
      *          ->status(200)
-     *          ->template(new Orchestra\Facile\Template\Driver)
+     *          ->template(new Orchestra\Facile\Template\Template)
      *          ->format('html');
      * </code>
      *
@@ -125,22 +125,22 @@ class Factory
      * Register a template.
      *
      * @param  string                                       $name
-     * @param  \Orchestra\Facile\Template\Driver|\Closure   $template
+     * @param  \Orchestra\Facile\Template\Template|\Closure   $template
      * @return void
      * @throws \RuntimeException if `$template` not instanceof
-     *                           `Orchestra\Facile\Template\Driver`.
+     *                           `Orchestra\Facile\Template\Template`.
      */
     public function template($name, $template)
     {
-        $resolve = value($template);
+        $instance = value($template);
 
-        if (! ($resolve instanceof Template)) {
+        if (! $instance instanceof Template) {
             throw new RuntimeException(
-                "Expected \$template to be instanceof Orchestra\Facile\Template\Driver."
+                "Expected \$template to be instanceof Orchestra\Facile\Template\Template."
             );
         }
 
-        $this->templates[$name] = $resolve;
+        $this->templates[$name] = $instance;
     }
 
     /**
@@ -160,7 +160,7 @@ class Factory
      * Get the template.
      *
      * @param  string   $name
-     * @return \Orchestra\Facile\Template\Driver
+     * @return \Orchestra\Facile\Template\Template
      * @throws \InvalidArgumentException if template is not defined.
      */
     public function getTemplate($name)

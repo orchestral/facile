@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Facile;
 
 use Orchestra\Support\Str;
+use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Support\Renderable;
-use Orchestra\Facile\Template\Driver as Template;
 
 class Container implements Renderable
 {
