@@ -19,7 +19,7 @@ class FacileServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('orchestra.facile', function ($app) {
+        $this->app->singleton('orchestra.facile', function ($app) {
             $factory = new Factory($app['request']);
 
             $factory->template('default', function () use ($app) {
@@ -37,6 +37,6 @@ class FacileServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('orchestra.facile');
+        return ['orchestra.facile'];
     }
 }
