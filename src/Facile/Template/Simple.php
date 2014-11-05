@@ -16,7 +16,7 @@ class Simple extends Template
      *
      * @var array
      */
-    protected $formats = array('html', 'json', 'csv');
+    protected $formats = ['html', 'json', 'csv'];
 
     /**
      * Default format.
@@ -35,7 +35,7 @@ class Simple extends Template
      * @return \Illuminate\Http\Response
      * @throws \InvalidArgumentException
      */
-    public function composeHtml($view = null, array $data = array(), $status = 200, array $config = array())
+    public function composeHtml($view = null, array $data = [], $status = 200, array $config = array())
     {
         if (! isset($view)) {
             throw new InvalidArgumentException("Missing [\$view].");

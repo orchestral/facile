@@ -32,16 +32,16 @@ class Facile implements Renderable
      *
      * @var array
      */
-    protected $data = array(
+    protected $data = [
         'view'   => null,
-        'data'   => array(),
-        'on'     => array(
-            'html' => array('only' => null, 'except' => null),
-            'json' => array('only' => null, 'except' => null),
-            'csv'  => array('uses' => 'data'),
-        ),
+        'data'   => [],
+        'on'     => [
+            'html' => ['only' => null, 'except' => null],
+            'json' => ['only' => null, 'except' => null],
+            'csv'  => ['uses' => 'data'],
+        ],
         'status' => 200,
-    );
+    ];
 
     /**
      * Construct a new Response instance.
@@ -82,7 +82,7 @@ class Facile implements Renderable
      */
     public function with($key, $value = null)
     {
-        $data = is_array($key) ? $key : array($key => $value);
+        $data = is_array($key) ? $key : [$key => $value];
 
         $this->data['data'] = array_merge($this->data['data'], $data);
 
@@ -96,10 +96,10 @@ class Facile implements Renderable
      * @param  array   $config
      * @return $this
      */
-    public function when($type, array $config = array())
+    public function when($type, array $config = [])
     {
         if (! isset($this->data['on'][$type])) {
-            $this->data['on'][$type] = array();
+            $this->data['on'][$type] = [];
         }
 
         $this->data['on'][$type] = array_merge($this->data['on'][$type], $config);
@@ -116,7 +116,7 @@ class Facile implements Renderable
      * @return $this
      * @see    self::when()
      */
-    public function on($type, array $config = array())
+    public function on($type, array $config = [])
     {
         return $this->when($type, $config);
     }
@@ -161,7 +161,7 @@ class Facile implements Renderable
      * @param  array    $config
      * @return $this
      */
-    public function format($format = null, array $config = array())
+    public function format($format = null, array $config = [])
     {
         if (! is_null($format) && ! empty($format)) {
             $this->setFormat($format);

@@ -19,7 +19,7 @@ class Factory
      *
      * @var array
      */
-    protected $templates = array();
+    protected $templates = [];
 
     /**
      * Construct a new Facile service.
@@ -29,7 +29,7 @@ class Factory
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->templates = array();
+        $this->templates = [];
     }
 
     /**
