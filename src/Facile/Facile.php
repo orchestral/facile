@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Facile;
 
-use Orchestra\Support\Str;
+use Illuminate\Support\Str;
 use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Support\Renderable;
 
