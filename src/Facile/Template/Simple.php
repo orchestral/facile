@@ -89,14 +89,14 @@ class Simple extends Template
                 $content = $content->toArray();
             }
 
-            $content = with(new Collection(array_map(array($this, 'transformToArray'), $content)));
+            $content = with(new Collection(array_map([$this, 'transformToArray'], $content)));
         }
 
-        return new IlluminateResponse($content->toCsv(), $status, array(
+        return new IlluminateResponse($content->toCsv(), $status, [
             'Content-Type'        => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
             'Cache-Control'       => 'private',
             'pragma'              => 'cache',
-        ));
+        ]);
     }
 }

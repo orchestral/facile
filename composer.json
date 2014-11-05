@@ -19,13 +19,14 @@
 	"require": {
 		"php": ">=5.4.0",
 		"illuminate/contracts": "5.0.*",
-		"orchestra/support": "3.0.*"
+		"orchestra/support-facades": "3.0.*"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
 		"illuminate/database": "5.0.*",
 		"illuminate/http": "5.0.*",
-		"illuminate/pagination": "5.0.*"
+		"illuminate/pagination": "5.0.*",
+		"orchestra/support": "3.0.*"
 	},
 	"suggest": {
 		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform",
