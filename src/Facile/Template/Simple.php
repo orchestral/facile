@@ -29,9 +29,9 @@ class Simple extends Template
      * Compose HTML.
      *
      * @param  mixed|null   $view
-     * @param  array        $data
-     * @param  integer      $status
-     * @param  array        $config
+     * @param  array   $data
+     * @param  int   $status
+     * @param  array   $config
      * @return \Illuminate\Http\Response
      * @throws \InvalidArgumentException
      */
@@ -51,10 +51,10 @@ class Simple extends Template
     /**
      * Compose JSON.
      *
-     * @param  mixed    $view
-     * @param  array    $data
-     * @param  integer  $status
-     * @param  array    $config
+     * @param  mixed   $view
+     * @param  array   $data
+     * @param  int     $status
+     * @param  array   $config
      * @return \Illuminate\Http\JsonResponse
      */
     public function composeJson($view, array $data = array(), $status = 200, array $config = array())
@@ -70,10 +70,10 @@ class Simple extends Template
     /**
      * Compose CSV.
      *
-     * @param  mixed    $view
-     * @param  array    $data
-     * @param  integer  $status
-     * @param  array    $config
+     * @param  mixed   $view
+     * @param  array   $data
+     * @param  int     $status
+     * @param  array   $config
      * @return \Illuminate\Http\Response
      */
     public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())

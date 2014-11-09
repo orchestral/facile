@@ -9,7 +9,7 @@ class Facile implements Renderable
     /**
      * Factory instance.
      *
-     * @var Factory
+     * @var \Orchestra\Facile\Factory
      */
     protected $factory;
 
@@ -46,10 +46,10 @@ class Facile implements Renderable
     /**
      * Construct a new Response instance.
      *
-     * @param  Factory $factory
-     * @param  string  $template
+     * @param  \Orchestra\Facile\Factory   $factory
+     * @param  string   $template
      * @param  array   $data
-     * @param  string  $format
+     * @param  string   $format
      */
     public function __construct(Factory $factory, $template, array $data = array(), $format = null)
     {
@@ -76,8 +76,8 @@ class Facile implements Renderable
     /**
      * Nest a data or data-set to Facile.
      *
-     * @param  mixed    $key
-     * @param  mixed    $value
+     * @param  mixed   $key
+     * @param  mixed   $value
      * @return $this
      */
     public function with($key, $value = null)
@@ -92,8 +92,8 @@ class Facile implements Renderable
     /**
      * Setup on format configuration.
      *
-     * @param  string  $type
-     * @param  array   $config
+     * @param  string   $type
+     * @param  array    $config
      * @return $this
      */
     public function when($type, array $config = [])
@@ -111,8 +111,8 @@ class Facile implements Renderable
      * Setup on format configuration.
      *
      * @deprecated
-     * @param  string  $type
-     * @param  array   $config
+     * @param  string   $type
+     * @param  array    $config
      * @return $this
      * @see    self::when()
      */
@@ -124,7 +124,7 @@ class Facile implements Renderable
     /**
      * Set HTTP status to Facile.
      *
-     * @param  integer  $status
+     * @param  int   $status
      * @return $this
      */
     public function status($status = 200)
@@ -137,7 +137,7 @@ class Facile implements Renderable
     /**
      * Set a template for Facile.
      *
-     * @param  mixed    $name
+     * @param  mixed   $name
      * @return $this
      */
     public function template($name)

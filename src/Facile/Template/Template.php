@@ -40,7 +40,7 @@ abstract class Template
      * Construct a new Facile service.
      *
      * @param  \Illuminate\Contracts\View\Factory   $view
-     * @param  \Orchestra\Facile\Transformable      $transformable
+     * @param  \Orchestra\Facile\Transformable   $transformable
      */
     public function __construct(Factory $view, Transformable $transformable = null)
     {
@@ -88,9 +88,9 @@ abstract class Template
     /**
      * Compose an error template.
      *
-     * @param  mixed    $view
-     * @param  array    $data
-     * @param  integer  $status
+     * @param  mixed   $view
+     * @param  array   $data
+     * @param  int     $status
      * @return \Illuminate\Http\Response
      */
     public function composeError($view, array $data = array(), $status = 404)
@@ -109,7 +109,7 @@ abstract class Template
     /**
      * Transform given data.
      *
-     * @param  mixed    $data
+     * @param  mixed   $data
      * @return array
      */
     public function transformToArray($data)
