@@ -3,11 +3,12 @@ Orchestra Platform Facile Component
 
 Facile Component simplify the need to create API based response in your Laravel application.
 
-[![Latest Stable Version](https://poser.pugx.org/orchestra/facile/v/stable.png)](https://packagist.org/packages/orchestra/facile)
-[![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads.png)](https://packagist.org/packages/orchestra/facile)
-[![Build Status](https://travis-ci.org/orchestral/facile.svg?branch=master)](https://travis-ci.org/orchestral/facile)
-[![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=master)](https://coveralls.io/r/orchestral/facile?branch=master)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/facile/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/orchestral/facile/)
+[![Latest Stable Version](https://img.shields.io/github/release/orchestral/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![Total Downloads](https://img.shields.io/packagist/dt/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![MIT License](https://img.shields.io/packagist/l/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![Build Status](https://img.shields.io/travis/orchestral/facile/master.svg?style=flat)](https://travis-ci.org/orchestral/facile)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/master.svg?style=flat)](https://coveralls.io/r/orchestral/facile?branch=master)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/facile/)
 
 ## Quick Installation
 
