@@ -6,9 +6,9 @@ Facile Component simplify the need to create API based response in your Laravel 
 [![Latest Stable Version](https://img.shields.io/github/release/orchestral/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
 [![Total Downloads](https://img.shields.io/packagist/dt/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
 [![MIT License](https://img.shields.io/packagist/l/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
-[![Build Status](https://img.shields.io/travis/orchestral/facile/master.svg?style=flat)](https://travis-ci.org/orchestral/facile)
-[![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/master.svg?style=flat)](https://coveralls.io/r/orchestral/facile?branch=master)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/facile/)
+[![Build Status](https://img.shields.io/travis/orchestral/facile/3.0.svg?style=flat)](https://travis-ci.org/orchestral/facile)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/3.0.svg?style=flat)](https://coveralls.io/r/orchestral/facile?branch=3.0)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/3.0.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/facile/)
 
 ## Quick Installation
 
@@ -25,23 +25,23 @@ To install through composer, simply put the following in your `composer.json` fi
 Next add the service provider in `app/config/app.php`.
 
 ```php
-'providers' => array(
+'providers' => [
 
 	// ...
 
 	'Orchestra\Facile\FacileServiceProvider',
-),
+],
 ```
 
 You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `app/config/app.php`:
 
 ```php
-'aliases' => array(
+'aliases' => [
 
 	// ...
 
 	'Facile' => 'Orchestra\Support\Facades\Facile',
-),
+],
 ```
 
 ## Resources
