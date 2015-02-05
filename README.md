@@ -1,4 +1,4 @@
-Orchestra Platform Facile Component
+Facile Component for Orchestra Platform
 ==============
 
 Facile Component simplify the need to create API based response in your Laravel application.
@@ -10,7 +10,22 @@ Facile Component simplify the need to create API based response in your Laravel 
 [![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/master.svg?style=flat)](https://coveralls.io/r/orchestral/facile?branch=master)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/master.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/facile/)
 
-## Quick Installation
+## Table of Content
+
+* [Version Compatibility](#version-compatibility)
+* [Installation](#installation)
+* [Configuration](#configuration)
+
+## Version Compatibility
+
+Laravel    | Facile
+:----------|:----------
+ 4.0.x     | 2.0.x
+ 4.1.x     | 2.1.x
+ 4.2.x     | 2.2.x
+ 5.0.x     | 3.0.x
+
+## Installation
 
 To install through composer, simply put the following in your `composer.json` file:
 
@@ -21,6 +36,16 @@ To install through composer, simply put the following in your `composer.json` fi
 	}
 }
 ```
+
+And then run `composer install` from the terminal.
+
+### Quick Installation
+
+Above installation can also be simplify by using the following command:
+
+    composer require "orchestra/facile=3.0.*"
+
+## Configuration
 
 Next add the service provider in `app/config/app.php`.
 
