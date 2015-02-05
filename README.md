@@ -1,15 +1,30 @@
-Orchestra Platform Facile Component
+Facile Component for Orchestra Platform
 ==============
 
-`Orchestra\Facile` simplify the need to create API based response in your Laravel 4 application.
+Facile Component simplify the need to create API based response in your Laravel application.
 
-[![Latest Stable Version](https://poser.pugx.org/orchestra/facile/v/stable.png)](https://packagist.org/packages/orchestra/facile) 
-[![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads.png)](https://packagist.org/packages/orchestra/facile) 
-[![Build Status](https://travis-ci.org/orchestral/facile.svg?branch=2.2)](https://travis-ci.org/orchestral/facile) 
-[![Coverage Status](https://coveralls.io/repos/orchestral/facile/badge.png?branch=2.2)](https://coveralls.io/r/orchestral/facile?branch=2.2) 
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/orchestral/facile/badges/quality-score.png?s=db660b406a7b1000f0431048d26f161793cb4b29)](https://scrutinizer-ci.com/g/orchestral/facile/) 
+[![Latest Stable Version](https://img.shields.io/github/release/orchestral/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![Total Downloads](https://img.shields.io/packagist/dt/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![MIT License](https://img.shields.io/packagist/l/orchestra/facile.svg?style=flat)](https://packagist.org/packages/orchestra/facile)
+[![Build Status](https://img.shields.io/travis/orchestral/facile/2.2.svg?style=flat)](https://travis-ci.org/orchestral/facile)
+[![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/2.2.svg?style=flat)](https://coveralls.io/r/orchestral/facile?branch=2.2)
+[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/2.2.svg?style=flat)](https://scrutinizer-ci.com/g/orchestral/facile/)
 
-## Quick Installation
+## Table of Content
+
+* [Version Compatibility](#version-compatibility)
+* [Installation](#installation)
+* [Configuration](#configuration)
+
+## Version Compatibility
+
+Laravel    | Facile
+:----------|:----------
+ 4.0.x     | 2.0.x
+ 4.1.x     | 2.1.x
+ 4.2.x     | 2.2.x
+
+## Installation
 
 To install through composer, simply put the following in your `composer.json` file:
 
@@ -21,7 +36,18 @@ To install through composer, simply put the following in your `composer.json` fi
 }
 ```
 
+And then run `composer install` from the terminal.
+
+### Quick Installation
+
+Above installation can also be simplify by using the following command:
+
+    composer require "orchestra/facile=2.2.*"
+
+## Configuration
+
 Next add the service provider in `app/config/app.php`.
+
 
 ```php
 'providers' => array(

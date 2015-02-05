@@ -1,6 +1,6 @@
 {
 	"name": "orchestra/facile",
-	"description": "Orchestra Platform 2 Facile Component",
+	"description": "Facile Component for Orchestra Platform",
 	"homepage": "http://orchestraplatform.com/docs/latest/components/facile/",
 	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"license": "MIT",
@@ -28,12 +28,12 @@
 		"illuminate/view": "4.2.*"
 	},
 	"suggest": {
-		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform 2",
-		"orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform 2"
+		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform",
+		"orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform"
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "2.3-dev"
+			"dev-master": "3.1-dev"
 		}
 	},
 	"minimum-stability": "dev"
