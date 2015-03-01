@@ -27,7 +27,7 @@ abstract class Template
      *
      * @var array
      */
-    protected $formats = array('html');
+    protected $formats = ['html'];
 
     /**
      * Default format.
@@ -66,18 +66,18 @@ abstract class Template
      * @return mixed
      * @throws \RuntimeException
      */
-    public function compose($format, array $compose = array())
+    public function compose($format, array $compose = [])
     {
         if (! in_array($format, $this->formats)) {
-            return $this->composeError(null, array(), 406);
+            return $this->composeError(null, [], 406);
         } elseif (! method_exists($this, 'compose'.ucwords($format))) {
             throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
         }
 
-        $config = Arr::get($compose, "on.{$format}", array());
+        $config = Arr::get($compose, "on.{$format}", []);
 
         return call_user_func(
-            array($this, 'compose'.ucwords($format)),
+            [$this, 'compose'.ucwords($format)],
             $compose['view'],
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],
@@ -93,7 +93,7 @@ abstract class Template
      * @param  int     $status
      * @return \Illuminate\Http\Response
      */
-    public function composeError($view, array $data = array(), $status = 404)
+    public function composeError($view, array $data = [], $status = 404)
     {
         $engine = $this->view;
 

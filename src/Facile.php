@@ -51,7 +51,7 @@ class Facile implements Renderable
      * @param  array   $data
      * @param  string   $format
      */
-    public function __construct(Factory $factory, $template, array $data = array(), $format = null)
+    public function __construct(Factory $factory, $template, array $data = [], $format = null)
     {
         $this->factory = $factory;
         $this->data    = array_merge($this->data, $data);

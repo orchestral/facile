@@ -63,7 +63,7 @@ class Factory
      * @param  string   $format
      * @return \Orchestra\Facile\Facile
      */
-    public function make($name, array $data = array(), $format = null)
+    public function make($name, array $data = [], $format = null)
     {
         return new Facile($this, $name, $data, $format);
     }
@@ -87,7 +87,7 @@ class Factory
      * @param  array    $data
      * @return \Orchestra\Facile\Facile
      */
-    public function view($view, array $data = array())
+    public function view($view, array $data = [])
     {
         return with(new Facile($this, 'default'))
             ->view($view)
@@ -118,7 +118,7 @@ class Factory
         $data = func_get_args();
         $container = new Facile($this, 'default');
 
-        return call_user_func_array(array($container, 'with'), $data);
+        return call_user_func_array([$container, 'with'], $data);
     }
 
     /**
