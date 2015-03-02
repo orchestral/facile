@@ -32,10 +32,12 @@ class Simple extends Template
      * @param  array   $data
      * @param  int   $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\Response
+     *
      * @throws \InvalidArgumentException
      */
-    public function composeHtml($view = null, array $data = [], $status = 200, array $config = array())
+    public function composeHtml($view = null, array $data = [], $status = 200, array $config = [])
     {
         if (! isset($view)) {
             throw new InvalidArgumentException("Missing [\$view].");
@@ -55,14 +57,15 @@ class Simple extends Template
      * @param  array   $data
      * @param  int     $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function composeJson($view, array $data = array(), $status = 200, array $config = array())
+    public function composeJson($view, array $data = [], $status = 200, array $config = [])
     {
         unset($view);
         unset($config);
 
-        $data = array_map(array($this, 'transformToArray'), $data);
+        $data = array_map([$this, 'transformToArray'], $data);
 
         return new JsonResponse($data, $status);
     }
@@ -74,15 +77,16 @@ class Simple extends Template
      * @param  array   $data
      * @param  int     $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\Response
      */
-    public function composeCsv($view = null, array $data = array(), $status = 200, array $config = array())
+    public function composeCsv($view = null, array $data = [], $status = 200, array $config = [])
     {
         unset($view);
 
         $filename = Arr::get($config, 'filename', 'export');
         $uses     = Arr::get($config, 'uses', 'data');
-        $content  = Arr::get($data, $uses, array());
+        $content  = Arr::get($data, $uses, []);
 
         if (! $content instanceof CsvableInterface) {
             if ($content instanceof Arrayable) {

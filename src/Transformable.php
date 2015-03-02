@@ -10,6 +10,7 @@ class Transformable
      * Run data transformation.
      *
      * @param  mixed    $data
+     *
      * @return array
      */
     public function run($data)
@@ -19,7 +20,7 @@ class Transformable
         } elseif ($data instanceof Renderable) {
             return e($data->render());
         } elseif (is_array($data)) {
-            return array_map(array($this, 'run'), $data);
+            return array_map([$this, 'run'], $data);
         }
 
         return $data;

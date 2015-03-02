@@ -51,7 +51,7 @@ class Facile implements Renderable
      * @param  array   $data
      * @param  string   $format
      */
-    public function __construct(Factory $factory, $template, array $data = array(), $format = null)
+    public function __construct(Factory $factory, $template, array $data = [], $format = null)
     {
         $this->factory = $factory;
         $this->data    = array_merge($this->data, $data);
@@ -64,6 +64,7 @@ class Facile implements Renderable
      * Nest a view to Facile.
      *
      * @param  string   $view
+     *
      * @return $this
      */
     public function view($view)
@@ -78,6 +79,7 @@ class Facile implements Renderable
      *
      * @param  mixed   $key
      * @param  mixed   $value
+     *
      * @return $this
      */
     public function with($key, $value = null)
@@ -94,6 +96,7 @@ class Facile implements Renderable
      *
      * @param  string   $type
      * @param  array    $config
+     *
      * @return $this
      */
     public function when($type, array $config = [])
@@ -111,9 +114,12 @@ class Facile implements Renderable
      * Setup on format configuration.
      *
      * @deprecated
+     *
      * @param  string   $type
      * @param  array    $config
+     *
      * @return $this
+     *
      * @see    self::when()
      */
     public function on($type, array $config = [])
@@ -125,6 +131,7 @@ class Facile implements Renderable
      * Set HTTP status to Facile.
      *
      * @param  int   $status
+     *
      * @return $this
      */
     public function status($status = 200)
@@ -138,13 +145,14 @@ class Facile implements Renderable
      * Set a template for Facile.
      *
      * @param  mixed   $name
+     *
      * @return $this
      */
     public function template($name)
     {
         if ($name instanceof Template) {
             $template = $name;
-            $name = sprintf('template-%d-%s', time(), Str::random());
+            $name     = sprintf('template-%d-%s', time(), Str::random());
 
             $this->factory->template($name, $template);
         }
@@ -159,6 +167,7 @@ class Facile implements Renderable
      *
      * @param  string   $format
      * @param  array    $config
+     *
      * @return $this
      */
     public function format($format = null, array $config = [])
@@ -176,6 +185,7 @@ class Facile implements Renderable
      * Set Output Format.
      *
      * @param  string   $format
+     *
      * @return $this
      */
     public function setFormat($format)
