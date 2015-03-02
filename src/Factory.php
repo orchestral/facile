@@ -28,7 +28,7 @@ class Factory
      */
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $this->request   = $request;
         $this->templates = [];
     }
 
@@ -61,6 +61,7 @@ class Factory
      * @param  string   $name   Name of template
      * @param  array    $data
      * @param  string   $format
+     *
      * @return \Orchestra\Facile\Facile
      */
     public function make($name, array $data = [], $format = null)
@@ -85,6 +86,7 @@ class Factory
      *
      * @param  string   $view
      * @param  array    $data
+     *
      * @return \Orchestra\Facile\Facile
      */
     public function view($view, array $data = [])
@@ -111,11 +113,12 @@ class Factory
      * </code>
      *
      * @param  mixed   $data
+     *
      * @return \Orchestra\Facile\Facile
      */
     public function with($data)
     {
-        $data = func_get_args();
+        $data      = func_get_args();
         $container = new Facile($this, 'default');
 
         return call_user_func_array([$container, 'with'], $data);
@@ -126,7 +129,9 @@ class Factory
      *
      * @param  string   $name
      * @param  \Orchestra\Facile\Template\Template|\Closure   $template
+     *
      * @return void
+     *
      * @throws \RuntimeException if `$template` not instanceof
      *                           `Orchestra\Facile\Template\Template`.
      */
@@ -147,6 +152,7 @@ class Factory
      * Get request format.
      *
      * @param  string   $name
+     *
      * @return string
      */
     public function getRequestFormat($name)
@@ -160,7 +166,9 @@ class Factory
      * Get the template.
      *
      * @param  string   $name
+     *
      * @return \Orchestra\Facile\Template\Template
+     *
      * @throws \InvalidArgumentException if template is not defined.
      */
     public function getTemplate($name)

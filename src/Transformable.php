@@ -10,6 +10,7 @@ class Transformable
      * Run data transformation.
      *
      * @param  mixed    $data
+     *
      * @return array
      */
     public function run($data)

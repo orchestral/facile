@@ -32,7 +32,9 @@ class Simple extends Template
      * @param  array   $data
      * @param  int   $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\Response
+     *
      * @throws \InvalidArgumentException
      */
     public function composeHtml($view = null, array $data = [], $status = 200, array $config = [])
@@ -55,6 +57,7 @@ class Simple extends Template
      * @param  array   $data
      * @param  int     $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function composeJson($view, array $data = [], $status = 200, array $config = [])
@@ -74,6 +77,7 @@ class Simple extends Template
      * @param  array   $data
      * @param  int     $status
      * @param  array   $config
+     *
      * @return \Illuminate\Http\Response
      */
     public function composeCsv($view = null, array $data = [], $status = 200, array $config = [])

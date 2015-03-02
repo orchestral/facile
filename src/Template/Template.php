@@ -44,8 +44,8 @@ abstract class Template
      */
     public function __construct(Factory $view, Transformable $transformable = null)
     {
-        $this->view = $view;
-        $this->transformable = $transformable ?: new Transformable;
+        $this->view          = $view;
+        $this->transformable = $transformable ?: new Transformable();
     }
 
     /**
@@ -63,7 +63,9 @@ abstract class Template
      *
      * @param  string   $format
      * @param  array    $compose
+     *
      * @return mixed
+     *
      * @throws \RuntimeException
      */
     public function compose($format, array $compose = [])
@@ -91,6 +93,7 @@ abstract class Template
      * @param  mixed   $view
      * @param  array   $data
      * @param  int     $status
+     *
      * @return \Illuminate\Http\Response
      */
     public function composeError($view, array $data = [], $status = 404)
@@ -110,6 +113,7 @@ abstract class Template
      * Transform given data.
      *
      * @param  mixed   $data
+     *
      * @return array
      */
     public function transformToArray($data)
@@ -122,6 +126,7 @@ abstract class Template
      *
      * @param  array   $config
      * @param  array   $data
+     *
      * @return mixed
      */
     protected function prepareDataValue(array $config, array $data)
