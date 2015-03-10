@@ -25,22 +25,22 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array(
+        $expected = [
             'view'   => null,
-            'data'   => array(),
+            'data'   => [],
             'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-            ),
-        );
+            'on'     => [
+                'html' => ['only' => null, 'except' => null],
+                'json' => ['only' => null, 'except' => null],
+                'csv'  => ['uses' => 'data'],
+            ],
+        ];
 
         $this->assertEquals($expected, $data->getValue($stub));
     }
@@ -55,7 +55,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $stub->view('foo.bar');
 
@@ -79,7 +79,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -87,7 +87,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($before, $data->getValue($stub));
 
-        $stub->when('foo', array('uses' => 'foobar'));
+        $stub->when('foo', ['uses' => 'foobar']);
 
         $this->assertEquals($after, $data->getValue($stub));
     }
@@ -103,7 +103,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -111,7 +111,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($before, $data->getValue($stub));
 
-        $stub->on('foo', array('uses' => 'foobar'));
+        $stub->on('foo', ['uses' => 'foobar']);
 
         $this->assertEquals($after, $data->getValue($stub));
     }
@@ -126,10 +126,10 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $stub->with('foo', 'bar');
-        $stub->with(array('foobar' => 'foo'));
+        $stub->with(['foobar' => 'foo']);
 
         $refl = new \ReflectionObject($stub);
         $data = $refl->getProperty('data');
@@ -137,7 +137,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
 
         $result = $data->getValue($stub);
 
-        $this->assertEquals(array('foo' => 'bar', 'foobar' => 'foo'), $result['data']);
+        $this->assertEquals(['foo' => 'bar', 'foobar' => 'foo'], $result['data']);
     }
 
     /**
@@ -150,7 +150,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request = m::mock('\Illuminate\Http\Request');
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new Facile(new Factory($request), new Simple($view), array(), 'json');
+        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
 
         $stub->status(500);
 
@@ -178,7 +178,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
 
         $env->template('foo', $template);
 
-        $stub = new Facile($env, $template, array(), 'json');
+        $stub = new Facile($env, $template, [], 'json');
 
         $stub->template('foo');
 
@@ -210,7 +210,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('format')->once()->with('jsonp')->andReturn('jsonp');
         $template->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
 
-        $stub = new Facile(new Factory($request), $template, array(), null);
+        $stub = new Facile(new Factory($request), $template, [], null);
 
         $this->assertEquals('jsonp', $stub->getFormat());
 
@@ -237,7 +237,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('compose')->once()->andReturn('foo')
             ->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
 
-        $stub = new Facile(new Factory($request), $template, array());
+        $stub = new Facile(new Factory($request), $template, []);
 
         $this->assertEquals('foo', $stub->render());
     }
@@ -253,9 +253,9 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $template1 = m::mock('\Orchestra\Facile\Template\Simple');
 
         $template1->shouldReceive('compose')->once()
-                ->with('json', m::any())->andReturn(json_encode(array('foo' => 'foo is awesome')));
+                ->with('json', m::any())->andReturn(json_encode(['foo' => 'foo is awesome']));
 
-        $stub1 = new Facile(new Factory($request), $template1, array(), 'json');
+        $stub1 = new Facile(new Factory($request), $template1, [], 'json');
 
         ob_start();
         echo $stub1;
@@ -270,7 +270,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $template2 = m::mock('\Orchestra\Facile\Template\Template');
         $template2->shouldReceive('compose')->once()->with('json', m::any())->andReturn($render);
 
-        $stub2 = new Facile(new Factory($request), $template2, array(), 'json');
+        $stub2 = new Facile(new Factory($request), $template2, [], 'json');
 
         ob_start();
         echo $stub2;
@@ -285,31 +285,30 @@ class FacileTest extends \PHPUnit_Framework_TestCase
      */
     public function dataProviderForWhenTest()
     {
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'view'   => null,
-                    'data'   => array(),
+                    'data'   => [],
                     'status' => 200,
-                    'on'     => array(
-                        'html' => array('only' => null, 'except' => null),
-                        'json' => array('only' => null, 'except' => null),
-                        'csv'  => array('uses' => 'data'),
-                    ),
-                ),
-                array(
+                    'on'     => [
+                        'html' => ['only' => null, 'except' => null],
+                        'json' => ['only' => null, 'except' => null],
+                        'csv'  => ['uses' => 'data'],
+                    ],
+                ],
+                [
                     'view'   => null,
-                    'data'   => array(),
+                    'data'   => [],
                     'status' => 200,
-                    'on'     => array(
-                        'html' => array('only' => null, 'except' => null),
-                        'json' => array('only' => null, 'except' => null),
-                        'csv'  => array('uses' => 'data'),
-                        'foo'  => array('uses' => 'foobar'),
-                    ),
-                ),
-            ),
-        );
-
+                    'on'     => [
+                        'html' => ['only' => null, 'except' => null],
+                        'json' => ['only' => null, 'except' => null],
+                        'csv'  => ['uses' => 'data'],
+                        'foo'  => ['uses' => 'foobar'],
+                    ],
+                ],
+            ],
+        ];
     }
 }

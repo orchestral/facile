@@ -15,7 +15,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test construct an instance of Orchestra\Facile\Template\Driver
+     * Test construct an instance of Orchestra\Facile\Template\Driver.
      *
      * @test
      */
@@ -32,12 +32,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $formats->setAccessible(true);
         $defaultFormat->setAccessible(true);
 
-        $this->assertEquals(array('html', 'json', 'foo'), $formats->getValue($stub));
+        $this->assertEquals(['html', 'json', 'foo'], $formats->getValue($stub));
         $this->assertEquals('html', $defaultFormat->getValue($stub));
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::getDefaultFormat() method
+     * Test Orchestra\Facile\Template\Driver::getDefaultFormat() method.
      *
      * @test
      */
@@ -60,11 +60,11 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateTemplateStub($view);
-        $data = array(
+        $data = [
             'view'   => null,
-            'data'   => array(),
+            'data'   => [],
             'status' => 200,
-        );
+        ];
 
         $this->assertEquals('foo', $stub->compose('foo', $data));
     }
@@ -80,14 +80,14 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $view->shouldReceive('exists')->once()->with('error.406')->andReturn(true)
-            ->shouldReceive('make')->once()->with('error.406', array())->andReturn('error-406');
+            ->shouldReceive('make')->once()->with('error.406', [])->andReturn('error-406');
 
         $stub = new TemplateTemplateStub($view);
-        $data = array(
+        $data = [
             'view'   => null,
-            'data'   => array(),
+            'data'   => [],
             'status' => 200,
-        );
+        ];
 
         $response = $stub->compose('foobar', $data);
         $this->assertInstanceOf("\Illuminate\Http\Response", $response);
@@ -105,11 +105,11 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new TemplateTemplateStub($view);
-        $data = array(
+        $data = [
             'view'   => null,
-            'data'   => array(),
+            'data'   => [],
             'status' => 200,
-        );
+        ];
 
         $stub->compose('html', $data);
     }
@@ -162,7 +162,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
         $stub = new TemplateTemplateStub($view);
-        $this->assertEquals(array('foobar'), $stub->transformToArray(array($mock)));
+        $this->assertEquals(['foobar'], $stub->transformToArray([$mock]));
     }
 
     /**
@@ -184,20 +184,20 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test Orchestra\Facile\Template\Driver::transformToArray() method
-     * when item is instance of Paginator
+     * when item is instance of Paginator.
      *
      * @test
      */
     public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
     {
         $view    = m::mock('\Illuminate\Contracts\View\Factory');
-        $results = array('foo' => 'foobar');
+        $results = ['foo' => 'foobar'];
 
         $paginator = new Paginator($results, 3, 1);
 
         $stub = new TemplateTemplateStub($view);
 
-        $expected = array(
+        $expected = [
             'per_page'      => 3,
             'current_page'  => 1,
             'from'          => 1,
@@ -205,7 +205,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
             'data'          => $results,
             'next_page_url' => null,
             'prev_page_url' => null,
-        );
+        ];
 
         $this->assertEquals($expected, $stub->transformToArray($paginator));
     }
@@ -231,38 +231,38 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
      */
     public function dataProviderForPrepareDataValue()
     {
-        $data = array('foo' => 'foobar', 'hello' => 'world', 'laravel' => 'awesome');
+        $data = ['foo' => 'foobar', 'hello' => 'world', 'laravel' => 'awesome'];
 
-        return array(
-            array(
-                array(
+        return [
+            [
+                [
                     'view'   => null,
                     'data'   => $data,
-                    'on'     => array(
-                        'json' => array('only' => array('foo')),
-                    ),
+                    'on'     => [
+                        'json' => ['only' => ['foo']],
+                    ],
                     'status' => 200,
-                ),
+                ],
                 '{"foo":"foobar"}',
-            ),
-            array(
-                array(
+            ],
+            [
+                [
                     'view'   => null,
                     'data'   => $data,
-                    'on'     => array(
-                        'json' => array('except' => array('foo')),
-                    ),
+                    'on'     => [
+                        'json' => ['except' => ['foo']],
+                    ],
                     'status' => 200,
-                ),
+                ],
                 '{"hello":"world","laravel":"awesome"}',
-            ),
-        );
+            ],
+        ];
     }
 }
 
 class TemplateTemplateStub extends \Orchestra\Facile\Template\Template
 {
-    protected $formats = array('html', 'json', 'foo');
+    protected $formats = ['html', 'json', 'foo'];
 
     public function composeFoo()
     {
