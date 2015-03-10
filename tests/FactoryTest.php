@@ -49,22 +49,22 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $container = $stub->make('mock', array('data' => array('foo' => 'foo is awesome')), 'json');
+        $container = $stub->make('mock', ['data' => ['foo' => 'foo is awesome']], 'json');
 
         $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array(
-            'view' => null,
-            'data' => array('foo' => 'foo is awesome'),
+        $expected = [
+            'view'   => null,
+            'data'   => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-            ),
-        );
+            'on'     => [
+                'html' => ['only' => null, 'except' => null],
+                'json' => ['only' => null, 'except' => null],
+                'csv'  => ['uses' => 'data'],
+            ],
+        ];
 
         $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
@@ -90,22 +90,22 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $container = $stub->view('foo.bar', array('foo' => 'foo is awesome'));
+        $container = $stub->view('foo.bar', ['foo' => 'foo is awesome']);
 
         $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array(
+        $expected = [
             'view'   => 'foo.bar',
-            'data'   => array('foo' => 'foo is awesome'),
+            'data'   => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-            ),
-        );
+            'on'     => [
+                'html' => ['only' => null, 'except' => null],
+                'json' => ['only' => null, 'except' => null],
+                'csv'  => ['uses' => 'data'],
+            ],
+        ];
 
         $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
@@ -132,22 +132,22 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             return $template;
         });
 
-        $container = $stub->with(array('foo' => 'foo is awesome'));
+        $container = $stub->with(['foo' => 'foo is awesome']);
 
         $refl = new \ReflectionObject($container);
         $data = $refl->getProperty('data');
         $data->setAccessible(true);
 
-        $expected = array(
-            'view' => null,
-            'data' => array('foo' => 'foo is awesome'),
+        $expected = [
+            'view'   => null,
+            'data'   => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => array(
-                'html' => array('only' => null, 'except' => null),
-                'json' => array('only' => null, 'except' => null),
-                'csv'  => array('uses' => 'data'),
-            ),
-        );
+            'on'     => [
+                'html' => ['only' => null, 'except' => null],
+                'json' => ['only' => null, 'except' => null],
+                'csv'  => ['uses' => 'data'],
+            ],
+        ];
 
         $this->assertInstanceOf('\Orchestra\Facile\Facile', $container);
         $this->assertEquals($expected, $data->getValue($container));
@@ -177,7 +177,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test Orchestra\Facile\Factory::template() method throws exception
-     * when template is not instanceof \Orchestra\Facile\Template\Template
+     * when template is not instanceof \Orchestra\Facile\Template\Template.
      *
      * @expectedException \RuntimeException
      */

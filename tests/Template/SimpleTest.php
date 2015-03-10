@@ -32,7 +32,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
         $formats->setAccessible(true);
         $defaultFormat->setAccessible(true);
 
-        $this->assertEquals(array('html', 'json', 'csv'), $formats->getValue($stub));
+        $this->assertEquals(['html', 'json', 'csv'], $formats->getValue($stub));
         $this->assertEquals('html', $defaultFormat->getValue($stub));
     }
 
@@ -44,7 +44,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
     public function testComposeHtmlMethod()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $data = array('foo' => 'foo is awesome');
+        $data = ['foo' => 'foo is awesome'];
 
         $view->shouldReceive('make')->once()->with('users.index')->andReturn($view)
             ->shouldReceive('with')->with($data)->andReturn('foo');
@@ -56,14 +56,14 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test Orchestra\Facile\Template::composeHtml() method throws exception
-     * when view is not defined
+     * when view is not defined.
      *
      * @expectedException \InvalidArgumentException
      */
     public function testComposeHtmlMethodThrowsException()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $data = array('foo' => 'foobar is awesome');
+        $data = ['foo' => 'foobar is awesome'];
 
         with(new Simple($view))->composeHtml(null, $data);
     }
@@ -76,7 +76,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
     public function testComposeJsonMethod()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $data = array('foo' => 'foobar is awesome');
+        $data = ['foo' => 'foobar is awesome'];
 
         $stub = with(new Simple($view))->composeJson(null, $data);
 
@@ -95,12 +95,12 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $data = array(
-            'data' => new \Illuminate\Support\Collection(array(
-                array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
-                array('id' => 2, 'name' => 'Taylor Otwell'),
-            )),
-        );
+        $data = [
+            'data' => new \Illuminate\Support\Collection([
+                ['id' => 1, 'name' => 'Mior Muhammad Zaki'],
+                ['id' => 2, 'name' => 'Taylor Otwell'],
+            ]),
+        ];
 
         $expected = <<<EXPECTED
 id,name
@@ -125,12 +125,12 @@ EXPECTED;
     public function testComposeCsvMethodAsCsvableInterface()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
-        $data = array(
-            'data' => new Collection(array(
-                    array('id' => 1, 'name' => 'Mior Muhammad Zaki'),
-                    array('id' => 2, 'name' => 'Taylor Otwell'),
-                )),
-        );
+        $data = [
+            'data' => new Collection([
+                    ['id' => 1, 'name' => 'Mior Muhammad Zaki'],
+                    ['id' => 2, 'name' => 'Taylor Otwell'],
+                ]),
+        ];
 
         $expected = <<<EXPECTED
 id,name
