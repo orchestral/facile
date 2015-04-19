@@ -73,7 +73,7 @@ abstract class Template
         if (! in_array($format, $this->formats)) {
             return $this->composeError(null, [], 406);
         } elseif (! method_exists($this, 'compose'.ucwords($format))) {
-            throw new RuntimeException("Call to undefine method [compose".ucwords($format)."].");
+            throw new RuntimeException('Call to undefine method [compose'.ucwords($format).'].');
         }
 
         $config = Arr::get($compose, "on.{$format}", []);
