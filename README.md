@@ -33,7 +33,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
 	"require": {
-		"orchestra/facile": "3.1.*"
+		"orchestra/facile": "~3.0"
 	}
 }
 ```
@@ -44,11 +44,11 @@ And then run `composer install` from the terminal.
 
 Above installation can also be simplify by using the following command:
 
-    composer require "orchestra/facile=3.1.*"
+    composer require "orchestra/facile=~3.0"
 
 ## Configuration
 
-Next add the service provider in `app/config/app.php`.
+Next add the service provider in `config/app.php`.
 
 ```php
 'providers' => [
@@ -59,7 +59,7 @@ Next add the service provider in `app/config/app.php`.
 ],
 ```
 
-You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `app/config/app.php`:
+You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `config/app.php`:
 
 ```php
 'aliases' => [
