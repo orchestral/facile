@@ -46,10 +46,10 @@ class Facile implements Renderable
     /**
      * Construct a new Response instance.
      *
-     * @param  \Orchestra\Facile\Factory   $factory
-     * @param  string   $template
-     * @param  array   $data
-     * @param  string   $format
+     * @param  \Orchestra\Facile\Factory  $factory
+     * @param  string  $template
+     * @param  array  $data
+     * @param  string  $format
      */
     public function __construct(Factory $factory, $template, array $data = [], $format = null)
     {
@@ -63,7 +63,7 @@ class Facile implements Renderable
     /**
      * Nest a view to Facile.
      *
-     * @param  string   $view
+     * @param  string  $view
      *
      * @return $this
      */
@@ -77,8 +77,8 @@ class Facile implements Renderable
     /**
      * Nest a data or data-set to Facile.
      *
-     * @param  mixed   $key
-     * @param  mixed   $value
+     * @param  mixed  $key
+     * @param  mixed  $value
      *
      * @return $this
      */
@@ -94,8 +94,8 @@ class Facile implements Renderable
     /**
      * Setup on format configuration.
      *
-     * @param  string   $type
-     * @param  array    $config
+     * @param  string  $type
+     * @param  array   $config
      *
      * @return $this
      */
@@ -115,8 +115,8 @@ class Facile implements Renderable
      *
      * @deprecated
      *
-     * @param  string   $type
-     * @param  array    $config
+     * @param  string  $type
+     * @param  array   $config
      *
      * @return $this
      *
@@ -130,7 +130,7 @@ class Facile implements Renderable
     /**
      * Set HTTP status to Facile.
      *
-     * @param  int   $status
+     * @param  int  $status
      *
      * @return $this
      */
@@ -144,7 +144,7 @@ class Facile implements Renderable
     /**
      * Set a template for Facile.
      *
-     * @param  mixed   $name
+     * @param  mixed  $name
      *
      * @return $this
      */
@@ -165,8 +165,8 @@ class Facile implements Renderable
     /**
      * Get or set facile format.
      *
-     * @param  string   $format
-     * @param  array    $config
+     * @param  string  $format
+     * @param  array   $config
      *
      * @return $this
      */
@@ -184,7 +184,7 @@ class Facile implements Renderable
     /**
      * Set Output Format.
      *
-     * @param  string   $format
+     * @param  string  $format
      *
      * @return $this
      */

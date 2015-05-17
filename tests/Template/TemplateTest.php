@@ -79,8 +79,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $view->shouldReceive('exists')->once()->with('error.406')->andReturn(true)
-            ->shouldReceive('make')->once()->with('error.406', [])->andReturn('error-406');
+        $view->shouldReceive('exists')->once()->with('errors.406')->andReturn(true)
+            ->shouldReceive('make')->once()->with('errors.406', [])->andReturn('error-406');
 
         $stub = new TemplateTemplateStub($view);
         $data = [
