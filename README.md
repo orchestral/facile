@@ -24,7 +24,7 @@ Laravel    | Facile
  4.1.x     | 2.1.x
  4.2.x     | 2.2.x
  5.0.x     | 3.0.x
- 5.1.x     | 3.1.x@dev
+ 5.1.x     | 3.1.x
 
 ## Installation
 
@@ -73,4 +73,4 @@ You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `ap
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest/components/facile)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/facile/changes#v3-0)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/facile/changes#v3-1)
