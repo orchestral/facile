@@ -47,7 +47,7 @@ Above installation can also be simplify by using the following command:
 
 ## Configuration
 
-Next add the service provider in `app/config/app.php`.
+Next add the service provider in `config/app.php`.
 
 ```php
 'providers' => [
@@ -58,7 +58,7 @@ Next add the service provider in `app/config/app.php`.
 ],
 ```
 
-You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `app/config/app.php`:
+You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `config/app.php`:
 
 ```php
 'aliases' => [
