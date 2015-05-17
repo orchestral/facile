@@ -39,8 +39,8 @@ abstract class Template
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\Contracts\View\Factory   $view
-     * @param  \Orchestra\Facile\Transformable   $transformable
+     * @param  \Illuminate\Contracts\View\Factory  $view
+     * @param  \Orchestra\Facile\Transformable  $transformable
      */
     public function __construct(Factory $view, Transformable $transformable = null)
     {
@@ -61,8 +61,8 @@ abstract class Template
     /**
      * Compose requested format.
      *
-     * @param  string   $format
-     * @param  array    $compose
+     * @param  string  $format
+     * @param  array   $compose
      *
      * @return mixed
      *
@@ -90,9 +90,9 @@ abstract class Template
     /**
      * Compose an error template.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
+     * @param  mixed  $view
+     * @param  array  $data
+     * @param  int    $status
      *
      * @return \Illuminate\Http\Response
      */
@@ -108,7 +108,7 @@ abstract class Template
     /**
      * Transform given data.
      *
-     * @param  mixed   $data
+     * @param  mixed  $data
      *
      * @return array
      */
@@ -120,8 +120,8 @@ abstract class Template
     /**
      * Prepare data to be seen to template.
      *
-     * @param  array   $config
-     * @param  array   $data
+     * @param  array  $config
+     * @param  array  $data
      *
      * @return mixed
      */

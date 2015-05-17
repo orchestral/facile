@@ -24,7 +24,7 @@ class Factory
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\Http\Request   $request
+     * @param  \Illuminate\Http\Request  $request
      */
     public function __construct(Request $request)
     {
@@ -58,9 +58,9 @@ class Factory
      *          ->format('html');
      * </code>
      *
-     * @param  string   $name   Name of template
-     * @param  array    $data
-     * @param  string   $format
+     * @param  string  $name   Name of template
+     * @param  array   $data
+     * @param  string  $format
      *
      * @return \Orchestra\Facile\Facile
      */
@@ -84,8 +84,8 @@ class Factory
      *          ->format('html');
      * </code>
      *
-     * @param  string   $view
-     * @param  array    $data
+     * @param  string  $view
+     * @param  array   $data
      *
      * @return \Orchestra\Facile\Facile
      */
@@ -112,7 +112,7 @@ class Factory
      *          ->format('html');
      * </code>
      *
-     * @param  mixed   $data
+     * @param  mixed  $data
      *
      * @return \Orchestra\Facile\Facile
      */
@@ -127,8 +127,8 @@ class Factory
     /**
      * Register a template.
      *
-     * @param  string   $name
-     * @param  \Orchestra\Facile\Template\Template|\Closure   $template
+     * @param  string  $name
+     * @param  \Orchestra\Facile\Template\Template|\Closure  $template
      *
      * @return void
      *
@@ -151,7 +151,7 @@ class Factory
     /**
      * Get request format.
      *
-     * @param  string   $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class Factory
     /**
      * Get the template.
      *
-     * @param  string   $name
+     * @param  string  $name
      *
      * @return \Orchestra\Facile\Template\Template
      *
