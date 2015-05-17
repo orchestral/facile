@@ -99,8 +99,8 @@ abstract class Template
     public function composeError($view, array $data = [], $status = 404)
     {
         $engine = $this->view;
-        $file = "errors.{$status}";
-        $view = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
+        $file   = "errors.{$status}";
+        $view   = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
 
         return new IlluminateResponse($view, $status);
     }
