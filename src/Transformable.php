@@ -9,7 +9,7 @@ class Transformable
     /**
      * Run data transformation.
      *
-     * @param  mixed    $data
+     * @param  mixed  $data
      *
      * @return array
      */
