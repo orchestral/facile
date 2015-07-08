@@ -30,14 +30,6 @@ abstract class Template
     protected $formats = ['html'];
 
     /**
-     * Default format.
-     *
-     * @var string
-     * @deprecated 3.1
-     */
-    protected $defaultFormat = 'html';
-
-    /**
      * Construct a new Facile service.
      *
      * @param  \Illuminate\Contracts\View\Factory  $view
@@ -47,17 +39,6 @@ abstract class Template
     {
         $this->view          = $view;
         $this->transformable = $transformable ?: new Transformable();
-    }
-
-    /**
-     * Get default format.
-     *
-     * @return string
-     * @deprecated 3.1
-     */
-    public function getDefaultFormat()
-    {
-        return $this->defaultFormat;
     }
 
     /**

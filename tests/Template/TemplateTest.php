@@ -26,28 +26,11 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $stub = new TemplateTemplateStub($view);
         $refl = new \ReflectionObject($stub);
 
-        $formats       = $refl->getProperty('formats');
-        $defaultFormat = $refl->getProperty('defaultFormat');
+        $formats = $refl->getProperty('formats');
 
         $formats->setAccessible(true);
-        $defaultFormat->setAccessible(true);
 
         $this->assertEquals(['html', 'json', 'foo'], $formats->getValue($stub));
-        $this->assertEquals('html', $defaultFormat->getValue($stub));
-    }
-
-    /**
-     * Test Orchestra\Facile\Template\Driver::getDefaultFormat() method.
-     *
-     * @test
-     */
-    public function testGetDefaultFormatMethod()
-    {
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
-
-        $stub = new TemplateTemplateStub($view);
-
-        $this->assertEquals('html', $stub->getDefaultFormat());
     }
 
     /**

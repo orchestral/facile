@@ -26,14 +26,11 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
         $stub = new Simple($view);
         $refl = new \ReflectionObject($stub);
 
-        $formats       = $refl->getProperty('formats');
-        $defaultFormat = $refl->getProperty('defaultFormat');
+        $formats = $refl->getProperty('formats');
 
         $formats->setAccessible(true);
-        $defaultFormat->setAccessible(true);
 
         $this->assertEquals(['html', 'json', 'csv'], $formats->getValue($stub));
-        $this->assertEquals('html', $defaultFormat->getValue($stub));
     }
 
     /**
