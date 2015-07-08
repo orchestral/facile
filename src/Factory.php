@@ -157,8 +157,8 @@ class Factory
      */
     public function getRequestFormat($name)
     {
-        return $this->request->format(
-            $this->getTemplate($name)->getDefaultFormat()
+        return $this->request->prefers(
+            $this->getTemplate($name)->getSupportedFormats()
         );
     }
 

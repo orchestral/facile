@@ -207,8 +207,8 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Simple');
 
-        $request->shouldReceive('format')->once()->with('jsonp')->andReturn('jsonp');
-        $template->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
+        $request->shouldReceive('prefers')->once()->with('jsonp')->andReturn('jsonp');
+        $template->shouldReceive('getSupportedFormats')->once()->andReturn('jsonp');
 
         $stub = new Facile(new Factory($request), $template, [], null);
 
@@ -233,9 +233,9 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Simple');
 
-        $request->shouldReceive('format')->once()->with('jsonp')->andReturn('jsonp');
+        $request->shouldReceive('prefers')->once()->with('jsonp')->andReturn('jsonp');
         $template->shouldReceive('compose')->once()->andReturn('foo')
-            ->shouldReceive('getDefaultFormat')->once()->andReturn('jsonp');
+            ->shouldReceive('getSupportedFormats')->once()->andReturn('jsonp');
 
         $stub = new Facile(new Factory($request), $template, []);
 
