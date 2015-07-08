@@ -2,6 +2,7 @@
 
 use Orchestra\Facile\Template\Simple;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 class FacileServiceProvider extends ServiceProvider
 {
@@ -19,10 +20,10 @@ class FacileServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('orchestra.facile', function ($app) {
+        $this->app->singleton('orchestra.facile', function (Application $app) {
             $factory = new Factory($app->make('request'));
 
-            $factory->template('default', function () use ($app) {
+            $factory->template('default', function () use (Application $app) {
                 return new Simple($app->make('view'));
             });
 
