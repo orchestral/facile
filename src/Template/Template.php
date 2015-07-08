@@ -106,6 +106,16 @@ abstract class Template
     }
 
     /**
+     * Get supported format.
+     *
+     * @return array
+     */
+    public function getSupportedFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
      * Transform given data.
      *
      * @param  mixed  $data
