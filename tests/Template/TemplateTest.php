@@ -210,6 +210,18 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $stub->transformToArray($paginator));
     }
 
+    public function testGetSupportedFormatsMethod()
+    {
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
+
+        $stub = new TemplateTemplateStub($view);
+
+        $this->assertContains('html', $stub->getSupportedFormats());
+        $this->assertContains('json', $stub->getSupportedFormats());
+        $this->assertContains('foo', $stub->getSupportedFormats());
+        $this->assertNotContains('foobar', $stub->getSupportedFormats());
+    }
+
     /**
      * Test Orchestra\Facile\Template\Driver::prepareDataValue() method.
      *
