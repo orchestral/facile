@@ -1,41 +1,41 @@
 {
-	"name": "orchestra/facile",
-	"description": "Facile Component for Orchestra Platform",
-	"homepage": "http://orchestraplatform.com/docs/latest/components/facile/",
-	"keywords": ["orchestra-platform", "orchestral", "laravel"],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Mior Muhammad Zaki",
-			"email": "crynobone@gmail.com",
-			"homepage": "https://github.com/crynobone"
-		}
-	],
-	"autoload": {
-		"psr-4": {
-			"Orchestra\\Facile\\" : "src/"
-		}
-	},
-	"require": {
-		"php": ">=5.5.0",
-		"illuminate/contracts": "~5.2.0",
-		"orchestra/support-facades": "~3.2.0"
-	},
-	"require-dev": {
-		"mockery/mockery": "0.9.*",
-		"illuminate/database": "~5.2.0",
-		"illuminate/http": "~5.2.0",
-		"illuminate/pagination": "~5.2.0",
-		"orchestra/support-core": "~3.2.0"
-	},
-	"suggest": {
-		"laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform (~5.2).",
-		"orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform (~3.2)."
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "3.2-dev"
-		}
-	},
-	"minimum-stability": "dev"
+    "name": "orchestra/facile",
+    "description": "Facile Component for Orchestra Platform",
+    "homepage": "http://orchestraplatform.com/docs/latest/components/facile/",
+    "keywords": ["orchestra-platform", "orchestral", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Orchestra\\Facile\\" : "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "illuminate/contracts": "~5.2.0",
+        "orchestra/support-facades": "~3.2.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.*",
+        "illuminate/database": "~5.2.0",
+        "illuminate/http": "~5.2.0",
+        "illuminate/pagination": "~5.2.0",
+        "orchestra/support-core": "~3.2.0"
+    },
+    "suggest": {
+        "laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform (~5.2).",
+        "orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform (~3.2)."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.2-dev"
+        }
+    },
+    "minimum-stability": "dev"
 }
