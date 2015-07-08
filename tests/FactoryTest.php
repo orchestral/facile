@@ -81,8 +81,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
-        $request->shouldReceive('format')->once()->with('html')->andReturn('html');
-        $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
+        $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
+        $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
         $stub = new Factory($request);
@@ -122,8 +122,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $request  = m::mock('\Illuminate\Http\Request');
         $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
 
-        $request->shouldReceive('format')->once()->with('html')->andReturn('html');
-        $template->shouldReceive('getDefaultFormat')->once()->with()->andReturn('html')
+        $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
+        $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
         $stub = new Factory($request);

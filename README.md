@@ -56,7 +56,7 @@ Next add the service provider in `config/app.php`.
 
 	// ...
 
-	'Orchestra\Facile\FacileServiceProvider',
+	Orchestra\Facile\FacileServiceProvider::class,
 ],
 ```
 
@@ -67,7 +67,7 @@ You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `co
 
 	// ...
 
-	'Facile' => 'Orchestra\Support\Facades\Facile',
+	'Facile' => Orchestra\Support\Facades\Facile::class,
 ],
 ```
 

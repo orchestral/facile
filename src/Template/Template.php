@@ -33,6 +33,7 @@ abstract class Template
      * Default format.
      *
      * @var string
+     * @deprecated 3.1
      */
     protected $defaultFormat = 'html';
 
@@ -52,6 +53,7 @@ abstract class Template
      * Get default format.
      *
      * @return string
+     * @deprecated 3.1
      */
     public function getDefaultFormat()
     {
@@ -103,6 +105,16 @@ abstract class Template
         $view   = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
 
         return new IlluminateResponse($view, $status);
+    }
+
+    /**
+     * Get supported format.
+     *
+     * @return array
+     */
+    public function getSupportedFormats()
+    {
+        return $this->formats;
     }
 
     /**

@@ -5,6 +5,11 @@ title: Facile Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.2 {#v3-1-2}
+
+* Allow to get proper response based on `Accept` header (via content-negotiation).
+* Deprecate `Orchestra\Facile\Template\Template::getDefaultFormat()`.
+
 ### v3.1.1 {#v3-1-1}
 
 * Improved performances by reducing call within `Illuminate\Container\Container`.
