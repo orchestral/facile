@@ -1,6 +1,8 @@
 Facile Component for Orchestra Platform
 ==============
 
+[![Join the chat at https://gitter.im/orchestral/platform/components](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/orchestral/platform/components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Facile Component simplify the need to create API based response in your Laravel application.
 
 [![Latest Stable Version](https://img.shields.io/github/release/orchestral/facile.svg?style=flat-square)](https://packagist.org/packages/orchestra/facile)
