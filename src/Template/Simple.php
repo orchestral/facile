@@ -4,6 +4,7 @@ use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Orchestra\Support\Collection;
+use Spatie\ArrayToXml\ArrayToXml;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Support\Contracts\CsvableInterface;
@@ -118,15 +119,14 @@ class Simple extends Template
     {
         unset($view);
 
-        $filename = Arr::get($config, 'root');
-        $uses     = Arr::get($config, 'uses', 'data');
+        $root = Arr::get($config, 'root');
 
-        $data = array_map([$this, 'transformToArray'], Arr::get($data, $uses, []));
+        $data = array_map([$this, 'transformToArray'], $data);
 
         $headers = [
-            'Content-Type' => 'application/xml',
+            'Content-Type' => 'text/xml',
         ];
 
-        return new IlluminateResponse($data, $status, $headers);
+        return new IlluminateResponse(ArrayToXml::convert($data, $root), $status, $headers);
     }
 }
