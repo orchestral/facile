@@ -19,7 +19,8 @@
     "require": {
         "php": ">=5.5.0",
         "illuminate/contracts": "~5.1.0",
-        "orchestra/support-facades": "~3.1.0"
+        "orchestra/support-facades": "~3.1.0",
+        "spatie/array-to-xml": "~1.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

@@ -16,7 +16,7 @@ class Simple extends Template
      *
      * @var array
      */
-    protected $formats = ['html', 'json', 'csv'];
+    protected $formats = ['csv', 'html', 'json', 'xml'];
 
     /**
      * Default format.
@@ -24,6 +24,40 @@ class Simple extends Template
      * @var string
      */
     protected $defaultFormat = 'html';
+
+    /**
+     * Compose CSV.
+     *
+     * @param  mixed   $view
+     * @param  array   $data
+     * @param  int     $status
+     * @param  array   $config
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function composeCsv($view = null, array $data = [], $status = 200, array $config = [])
+    {
+        unset($view);
+
+        $filename = Arr::get($config, 'filename', 'export');
+        $uses     = Arr::get($config, 'uses', 'data');
+        $content  = Arr::get($data, $uses, []);
+
+        if (! $content instanceof CsvableInterface) {
+            if ($content instanceof Arrayable) {
+                $content = $content->toArray();
+            }
+
+            $content = (new Collection(array_map([$this, 'transformToArray'], $content)));
+        }
+
+        return new IlluminateResponse($content->toCsv(), $status, [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
+            'Cache-Control'       => 'private',
+            'pragma'              => 'cache',
+        ]);
+    }
 
     /**
      * Compose HTML.
@@ -71,7 +105,7 @@ class Simple extends Template
     }
 
     /**
-     * Compose CSV.
+     * Compose XML.
      *
      * @param  mixed   $view
      * @param  array   $data
@@ -80,27 +114,19 @@ class Simple extends Template
      *
      * @return \Illuminate\Http\Response
      */
-    public function composeCsv($view = null, array $data = [], $status = 200, array $config = [])
+    public function composeXml($view, array $data = [], $status = 200, array $config = [])
     {
         unset($view);
 
-        $filename = Arr::get($config, 'filename', 'export');
+        $filename = Arr::get($config, 'root');
         $uses     = Arr::get($config, 'uses', 'data');
-        $content  = Arr::get($data, $uses, []);
 
-        if (! $content instanceof CsvableInterface) {
-            if ($content instanceof Arrayable) {
-                $content = $content->toArray();
-            }
+        $data = array_map([$this, 'transformToArray'], Arr::get($data, $uses, []));
 
-            $content = (new Collection(array_map([$this, 'transformToArray'], $content)));
-        }
+        $headers = [
+            'Content-Type' => 'application/xml',
+        ];
 
-        return new IlluminateResponse($content->toCsv(), $status, [
-            'Content-Type'        => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
-            'Cache-Control'       => 'private',
-            'pragma'              => 'cache',
-        ]);
+        return new IlluminateResponse($data, $status, $headers);
     }
 }
