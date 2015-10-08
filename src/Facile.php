@@ -36,9 +36,10 @@ class Facile implements Renderable
         'view'   => null,
         'data'   => [],
         'on'     => [
+            'csv'  => ['only' => null, 'except' => null, 'uses' => 'data'],
             'html' => ['only' => null, 'except' => null],
             'json' => ['only' => null, 'except' => null],
-            'csv'  => ['uses' => 'data'],
+            'xml'  => ['only' => null, 'except' => null, 'root' => null],
         ],
         'status' => 200,
     ];

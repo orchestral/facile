@@ -44,8 +44,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
         $stub = new TemplateTemplateStub($view);
         $data = [
-            'view'   => null,
-            'data'   => [],
+            'view' => null,
+            'data' => [],
             'status' => 200,
         ];
 
@@ -67,8 +67,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
         $stub = new TemplateTemplateStub($view);
         $data = [
-            'view'   => null,
-            'data'   => [],
+            'view' => null,
+            'data' => [],
             'status' => 200,
         ];
 
@@ -89,8 +89,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
         $stub = new TemplateTemplateStub($view);
         $data = [
-            'view'   => null,
-            'data'   => [],
+            'view' => null,
+            'data' => [],
             'status' => 200,
         ];
 
@@ -173,7 +173,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
     {
-        $view    = m::mock('\Illuminate\Contracts\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $results = ['foo' => 'foobar'];
 
         $paginator = new Paginator($results, 3, 1);
@@ -181,11 +181,11 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $stub = new TemplateTemplateStub($view);
 
         $expected = [
-            'per_page'      => 3,
-            'current_page'  => 1,
-            'from'          => 1,
-            'to'            => 1,
-            'data'          => $results,
+            'per_page' => 3,
+            'current_page' => 1,
+            'from' => 1,
+            'to' => 1,
+            'data' => $results,
             'next_page_url' => null,
             'prev_page_url' => null,
         ];
@@ -231,9 +231,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 [
-                    'view'   => null,
-                    'data'   => $data,
-                    'on'     => [
+                    'view' => null,
+                    'data' => $data,
+                    'on' => [
                         'json' => ['only' => ['foo']],
                     ],
                     'status' => 200,
@@ -242,9 +242,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'view'   => null,
-                    'data'   => $data,
-                    'on'     => [
+                    'view' => null,
+                    'data' => $data,
+                    'on' => [
                         'json' => ['except' => ['foo']],
                     ],
                     'status' => 200,

@@ -30,7 +30,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
 
         $formats->setAccessible(true);
 
-        $this->assertEquals(['html', 'json', 'csv'], $formats->getValue($stub));
+        $this->assertEquals(['csv', 'html', 'json', 'xml'], $formats->getValue($stub));
     }
 
     /**
