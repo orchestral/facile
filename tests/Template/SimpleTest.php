@@ -26,7 +26,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
         $stub = new Simple($view);
         $refl = new \ReflectionObject($stub);
 
-        $formats       = $refl->getProperty('formats');
+        $formats = $refl->getProperty('formats');
         $defaultFormat = $refl->getProperty('defaultFormat');
 
         $formats->setAccessible(true);

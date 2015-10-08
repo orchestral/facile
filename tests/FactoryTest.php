@@ -24,7 +24,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Factory($request);
 
-        $refl      = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
 
@@ -38,7 +38,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethod()
     {
-        $request  = m::mock('\Illuminate\Http\Request');
+        $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
@@ -56,13 +56,14 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $data->setAccessible(true);
 
         $expected = [
-            'view'   => null,
-            'data'   => ['foo' => 'foo is awesome'],
+            'view' => null,
+            'data' => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => [
+            'on' => [
+                'csv' => ['only' => null, 'except' => null, 'uses' => 'data'],
                 'html' => ['only' => null, 'except' => null],
                 'json' => ['only' => null, 'except' => null],
-                'csv'  => ['uses' => 'data'],
+                'xml' => ['only' => null, 'except' => null, 'root' => null],
             ],
         ];
 
@@ -78,7 +79,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewMethod()
     {
-        $request  = m::mock('\Illuminate\Http\Request');
+        $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
@@ -97,13 +98,14 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $data->setAccessible(true);
 
         $expected = [
-            'view'   => 'foo.bar',
-            'data'   => ['foo' => 'foo is awesome'],
+            'view' => 'foo.bar',
+            'data' => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => [
+            'on' => [
+                'csv' => ['only' => null, 'except' => null, 'uses' => 'data'],
                 'html' => ['only' => null, 'except' => null],
                 'json' => ['only' => null, 'except' => null],
-                'csv'  => ['uses' => 'data'],
+                'xml' => ['only' => null, 'except' => null, 'root' => null],
             ],
         ];
 
@@ -119,7 +121,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithMethod()
     {
-        $request  = m::mock('\Illuminate\Http\Request');
+        $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
@@ -139,13 +141,14 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $data->setAccessible(true);
 
         $expected = [
-            'view'   => null,
-            'data'   => ['foo' => 'foo is awesome'],
+            'view' => null,
+            'data' => ['foo' => 'foo is awesome'],
             'status' => 200,
-            'on'     => [
+            'on' => [
+                'csv' => ['only' => null, 'except' => null, 'uses' => 'data'],
                 'html' => ['only' => null, 'except' => null],
                 'json' => ['only' => null, 'except' => null],
-                'csv'  => ['uses' => 'data'],
+                'xml' => ['only' => null, 'except' => null, 'root' => null],
             ],
         ];
 
@@ -165,7 +168,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Factory($request);
 
-        $refl      = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $templates = $refl->getProperty('templates');
         $templates->setAccessible(true);
 
@@ -183,7 +186,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testTemplateMethodThrowsException()
     {
-        $request  = m::mock('\Illuminate\Http\Request');
+        $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('BadFooTemplateStub');
 
         $stub = new Factory($request);

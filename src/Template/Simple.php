@@ -75,7 +75,7 @@ class Simple extends Template
     public function composeHtml($view = null, array $data = [], $status = 200, array $config = [])
     {
         if (! isset($view)) {
-            throw new InvalidArgumentException("Missing [\$view].");
+            throw new InvalidArgumentException('Missing [$view].');
         }
 
         if (! $view instanceof View) {
