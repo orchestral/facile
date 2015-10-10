@@ -91,9 +91,7 @@ class Factory
      */
     public function view($view, array $data = [])
     {
-        return (new Facile($this, 'default'))
-            ->view($view)
-            ->with($data);
+        return (new Facile($this, 'default'))->view($view)->with($data);
     }
 
     /**
