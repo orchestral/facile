@@ -112,23 +112,6 @@ class Facile implements Renderable
     }
 
     /**
-     * Setup on format configuration.
-     *
-     * @deprecated
-     *
-     * @param  string  $type
-     * @param  array   $config
-     *
-     * @return $this
-     *
-     * @see    self::when()
-     */
-    public function on($type, array $config = [])
-    {
-        return $this->when($type, $config);
-    }
-
-    /**
      * Set HTTP status to Facile.
      *
      * @param  int  $status

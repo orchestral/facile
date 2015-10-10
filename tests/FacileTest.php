@@ -94,30 +94,6 @@ class FacileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Container::on() method.
-     *
-     * @test
-     * @dataProvider dataProviderForWhenTest
-     */
-    public function testOnMethod($before, $after)
-    {
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
-
-        $stub = new Facile(new Factory($request), new Simple($view), [], 'json');
-
-        $refl = new \ReflectionObject($stub);
-        $data = $refl->getProperty('data');
-        $data->setAccessible(true);
-
-        $this->assertEquals($before, $data->getValue($stub));
-
-        $stub->on('foo', ['uses' => 'foobar']);
-
-        $this->assertEquals($after, $data->getValue($stub));
-    }
-
-    /**
      * Test Orchestra\Facile\Container::with() method.
      *
      * @test
