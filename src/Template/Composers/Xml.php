@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Facile\Template\Composers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
 
