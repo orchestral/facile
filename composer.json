@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
+        "illuminate/container": "~5.1.0",
         "illuminate/database": "~5.1.0",
         "illuminate/http": "~5.1.4",
         "illuminate/pagination": "~5.1.0",

@@ -20,15 +20,16 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
+        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Factory($request);
+        $stub = new Factory($app, $request);
 
         $refl = new \ReflectionObject($stub);
-        $templates = $refl->getProperty('templates');
-        $templates->setAccessible(true);
+        $names = $refl->getProperty('names');
+        $names->setAccessible(true);
 
-        $this->assertTrue(is_array($templates->getValue($stub)));
+        $this->assertTrue(is_array($names->getValue($stub)));
     }
 
     /**
@@ -38,16 +39,15 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeMethod()
     {
+        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
         $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
 
-        $stub = new Factory($request);
+        $stub = new Factory($app, $request);
 
-        $stub->template('mock', function () use ($template) {
-            return $template;
-        });
+        $stub->name('mock', $template);
 
         $container = $stub->make('mock', ['data' => ['foo' => 'foo is awesome']], 'json');
 
@@ -79,6 +79,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewMethod()
     {
+        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
@@ -86,10 +87,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Factory($request);
-        $stub->template('default', function () use ($template) {
-            return $template;
-        });
+        $stub = new Factory($app, $request);
+        $stub->name('default', $template);
 
         $container = $stub->view('foo.bar', ['foo' => 'foo is awesome']);
 
@@ -121,6 +120,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithMethod()
     {
+        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
 
@@ -128,11 +128,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
-        $stub = new Factory($request);
+        $stub = new Factory($app, $request);
 
-        $stub->template('default', function () use ($template) {
-            return $template;
-        });
+        $stub->name('default', $template);
 
         $container = $stub->with(['foo' => 'foo is awesome']);
 
@@ -158,40 +156,25 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Factory::template() method.
+     * Test Orchestra\Facile\Factory::name() method.
      *
      * @test
      */
-    public function testTemplateMethod()
+    public function testNameMethod()
     {
+        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Factory($request);
+        $stub = new Factory($app, $request);
 
         $refl = new \ReflectionObject($stub);
-        $templates = $refl->getProperty('templates');
-        $templates->setAccessible(true);
+        $names = $refl->getProperty('names');
+        $names->setAccessible(true);
 
-        $this->assertTrue(is_array($templates->getValue($stub)));
+        $this->assertTrue(is_array($names->getValue($stub)));
 
         $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Template');
-        $stub->template('foo', $template);
-    }
-
-    /**
-     * Test Orchestra\Facile\Factory::template() method throws exception
-     * when template is not instanceof \Orchestra\Facile\Template\Template.
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testTemplateMethodThrowsException()
-    {
-        $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('BadFooTemplateStub');
-
-        $stub = new Factory($request);
-
-        $stub->template('badFoo', $template);
+        $stub->name('foo', $template);
     }
 
     /**
@@ -202,9 +185,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTemplateMethodThrowsExceptionWhenTempalteIsNotSet()
     {
+        $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
 
-        $stub = new Factory($request);
+        $stub = new Factory($app, $request);
 
         $stub->getTemplate('badFoo');
     }

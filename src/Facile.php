@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Facile;
 
 use Illuminate\Support\Str;
+use Orchestra\Facile\Template\Simple;
 use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -18,7 +19,7 @@ class Facile implements Renderable
      *
      * @var string
      */
-    protected $template = 'default';
+    protected $template = Simple::class;
 
     /**
      * View format.
@@ -151,13 +152,6 @@ class Facile implements Renderable
      */
     public function template($name)
     {
-        if ($name instanceof Template) {
-            $template = $name;
-            $name     = sprintf('template-%d-%s', time(), Str::random());
-
-            $this->factory->template($name, $template);
-        }
-
         $this->template = $name;
 
         return $this;

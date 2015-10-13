@@ -4,9 +4,17 @@ use RuntimeException;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Orchestra\Facile\Template\Template;
+use Illuminate\Contracts\Foundation\Application;
 
 class Factory
 {
+    /**
+     * The application instance.
+     *
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
     /**
      * Request instance.
      *
@@ -19,17 +27,19 @@ class Factory
      *
      * @var array
      */
-    protected $templates = [];
+    protected $names = [];
 
     /**
      * Construct a new Facile service.
      *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @param  \Illuminate\Http\Request  $request
      */
-    public function __construct(Request $request)
+    public function __construct(Application $app, Request $request)
     {
-        $this->request   = $request;
-        $this->templates = [];
+        $this->app = $app;
+        $this->request = $request;
+        $this->names   = [];
     }
 
     /**
@@ -123,27 +133,35 @@ class Factory
     }
 
     /**
-     * Register a template.
+     * Register a named template.
      *
      * @param  string  $name
-     * @param  \Orchestra\Facile\Template\Template|\Closure  $template
+     * @param  string|\Orchestra\Facile\Template\Template  $template
+     *
+     * @return void
+     */
+    public function name($name, $template)
+    {
+        $template = is_string($template) ? $this->app->make($template) : $template;
+
+        $this->names[$name] = $template;
+    }
+
+    /**
+     * Register a template.
+     *
+     * @deprecated 3.1.x
+     *
+     * @param  string  $name
+     * @param  string|\Orchestra\Facile\Template\Template|\Closure  $template
      *
      * @return void
      *
-     * @throws \RuntimeException if `$template` not instanceof
-     *                           `Orchestra\Facile\Template\Template`.
+     * @see $this->name()
      */
     public function template($name, $template)
     {
-        $instance = value($template);
-
-        if (! $instance instanceof Template) {
-            throw new RuntimeException(
-                "Expected \$template to be instanceof Orchestra\Facile\Template\Template."
-            );
-        }
-
-        $this->templates[$name] = $instance;
+        $this->name($name, value($template));
     }
 
     /**
@@ -163,7 +181,7 @@ class Factory
     /**
      * Get the template.
      *
-     * @param  string  $name
+     * @param  string|\Orchestra\Facile\Template\Template  $name
      *
      * @return \Orchestra\Facile\Template\Template
      *
@@ -171,10 +189,20 @@ class Factory
      */
     public function getTemplate($name)
     {
-        if (! isset($this->templates[$name])) {
-            throw new InvalidArgumentException("Template [{$name}] is not available.");
+        if ($name instanceof Template) {
+            return $name;
+        } elseif (! isset($this->names[$name]) && is_string($name)) {
+            $this->name($name, $name);
         }
 
-        return $this->templates[$name];
+        $template = isset($this->names[$name]) ? $this->names[$name] : $name;
+
+        if (! $template instanceof Template) {
+            throw new InvalidArgumentException(
+                "Expected \$template to be instanceof Orchestra\Facile\Template\Template."
+            );
+        }
+
+        return $template;
     }
 }
