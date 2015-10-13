@@ -160,7 +160,7 @@ class FacileTest extends \PHPUnit_Framework_TestCase
         $env = new Factory($app, $request);
         $template = new Simple($view);
 
-        $env->template('foo', $template);
+        $env->name('foo', $template);
 
         $stub = new Facile($env, $template, [], 'json');
 
