@@ -23,7 +23,7 @@
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
-        "mockery/mockery": "0.9.*",
+        "mockery/mockery": "^0.9.3",
         "illuminate/container": "~5.1.0",
         "illuminate/database": "~5.1.0",
         "illuminate/http": "~5.1.4",
