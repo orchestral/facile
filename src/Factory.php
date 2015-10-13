@@ -89,7 +89,7 @@ class Factory
      *              'users' => $users,
      *          ))
      *          ->status(200)
-     *          ->template(new Orchestra\Facile\Template\Template)
+     *          ->template(Orchestra\Facile\Template\Template::class)
      *          ->format('html');
      * </code>
      *
@@ -115,7 +115,7 @@ class Factory
      *          ))
      *          ->view('home.index')
      *          ->status(200)
-     *          ->template(new Orchestra\Facile\Template\Template)
+     *          ->template(Orchestra\Facile\Template\Template::class)
      *          ->format('html');
      * </code>
      *
