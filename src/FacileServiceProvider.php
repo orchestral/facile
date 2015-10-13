@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Facile;
 
-use Orchestra\Facile\Template\Api;
 use Orchestra\Facile\Template\Simple;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
@@ -22,12 +21,9 @@ class FacileServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('orchestra.facile', function (Application $app) {
-            $factory   = new Factory($app, $app->make('request'));
-            $view      = $app->make('view');
-            $transform = new Transformable();
+            $factory = new Factory($app, $app->make('request'));
 
-            $factory->name('api', new Api($view, $transform));
-            $factory->name('default', new Simple($view, $transform));
+            $factory->name('default', new Simple($app->make('view'), new Transformable()));
 
             return $factory;
         });

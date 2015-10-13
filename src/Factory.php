@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Facile;
 
-use RuntimeException;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Orchestra\Facile\Template\Template;
@@ -37,7 +36,7 @@ class Factory
      */
     public function __construct(Application $app, Request $request)
     {
-        $this->app = $app;
+        $this->app     = $app;
         $this->request = $request;
         $this->names   = [];
     }
