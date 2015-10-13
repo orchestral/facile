@@ -48,7 +48,7 @@ class Factory
      *      // Using provided facade for Facile.
      *
      *      $users  = User::paginate(30);
-     *      $facile = Facile::make('default', array(
+     *      $facile = Facile::make('simple', array(
      *          'view'   => 'home.index',
      *          'data'   => array(
      *              'users' => $users,
@@ -57,7 +57,7 @@ class Factory
      *      ));
      *
      *      // Alternatively
-     *      $facile = Facile::make('default')
+     *      $facile = Facile::make('simple')
      *          ->view('home.index')
      *          ->with(array(
      *              'users' => $users,
@@ -100,7 +100,7 @@ class Factory
      */
     public function view($view, array $data = [])
     {
-        return (new Facile($this, 'default'))->view($view)->with($data);
+        return (new Facile($this, 'simple'))->view($view)->with($data);
     }
 
     /**
@@ -126,7 +126,7 @@ class Factory
     public function with($data)
     {
         $data      = func_get_args();
-        $container = new Facile($this, 'default');
+        $container = new Facile($this, 'simple');
 
         return call_user_func_array([$container, 'with'], $data);
     }
