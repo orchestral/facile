@@ -79,7 +79,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewMethod()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
+        $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Template');
 
@@ -88,7 +88,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
 
         $stub = new Factory($app, $request);
-        $stub->name('default', $template);
+        $stub->name('simple', $template);
 
         $container = $stub->view('foo.bar', ['foo' => 'foo is awesome']);
 
@@ -130,7 +130,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Factory($app, $request);
 
-        $stub->name('default', $template);
+        $stub->name('simple', $template);
 
         $container = $stub->with(['foo' => 'foo is awesome']);
 
