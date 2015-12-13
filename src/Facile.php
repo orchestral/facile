@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Facile;
 
 use Orchestra\Facile\Template\Simple;
-use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Support\Renderable;
 
 class Facile implements Renderable
