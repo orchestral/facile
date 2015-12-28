@@ -17,6 +17,7 @@ Facile Component simplify the need to create API based response in your Laravel 
 * [Version Compatibility](#version-compatibility)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/facile/changes#v3-3)
 
 ## Version Compatibility
 
@@ -27,7 +28,7 @@ Laravel    | Facile
  4.2.x     | 2.2.x
  5.0.x     | 3.0.x
  5.1.x     | 3.1.x
- 5.2.x     | 3.2.x@dev
+ 5.2.x     | 3.2.x
  5.3.x     | 3.3.x@dev
 
 ## Installation
@@ -77,4 +78,3 @@ You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `co
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest/components/facile)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/facile/changes#v3-1)
