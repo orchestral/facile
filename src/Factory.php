@@ -127,7 +127,7 @@ class Factory
         $data      = func_get_args();
         $container = new Facile($this, 'simple');
 
-        return call_user_func_array([$container, 'with'], $data);
+        return call_user_func([$container, 'with'], ...$data);
     }
 
     /**
