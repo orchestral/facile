@@ -3,8 +3,8 @@
 use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Orchestra\Support\Collection;
+use Orchestra\Support\Contracts\Csvable;
 use Illuminate\Contracts\Support\Arrayable;
-use Orchestra\Support\Contracts\CsvableInterface;
 
 trait Csv
 {

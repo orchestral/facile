@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.5.0",
         "illuminate/contracts": "~5.2.0",
-        "orchestra/support": "~3.2.0",
+        "orchestra/support": "~3.2.3",
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
