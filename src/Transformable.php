@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Facile;
+<?php
+
+namespace Orchestra\Facile;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Facile\Template\Composers;
+<?php
+
+namespace Orchestra\Facile\Template\Composers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Response;

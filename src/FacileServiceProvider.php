@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Facile;
+<?php
+
+namespace Orchestra\Facile;
 
 use Orchestra\Facile\Template\Simple;
 use Illuminate\Support\ServiceProvider;

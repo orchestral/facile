@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Facile\Template;
+<?php
+
+namespace Orchestra\Facile\Template;
 
 use Orchestra\Facile\Template\Composers\Xml;
 use Orchestra\Facile\Template\Composers\Json;
