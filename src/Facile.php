@@ -153,7 +153,9 @@ class Facile implements Renderable
         if (! is_null($format) && ! empty($format)) {
             $this->setFormat($format);
 
-            ! empty($config) && $this->when($format, $config);
+            if (! empty($config)) {
+                $this->when($format, $config);
+            }
         }
 
         return $this;

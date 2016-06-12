@@ -126,10 +126,9 @@ class Factory
      */
     public function with($data)
     {
-        $data      = func_get_args();
         $container = new Facile($this, 'simple');
 
-        return call_user_func([$container, 'with'], ...$data);
+        return call_user_func([$container, 'with'], ...func_get_args());
     }
 
     /**
