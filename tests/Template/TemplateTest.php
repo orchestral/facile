@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Facile\Tests\Template;
+<?php
+
+namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
 use Illuminate\Pagination\Paginator;
