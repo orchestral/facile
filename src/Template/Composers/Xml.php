@@ -3,6 +3,7 @@
 use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
+use Illuminate\Contracts\Support\Arrayable;
 
 trait Xml
 {
@@ -21,6 +22,14 @@ trait Xml
         unset($view);
 
         $root = Arr::get($config, 'root');
+
+        if (! is_null($uses)) {
+            $data = Arr::get($data, $uses, []);
+        }
+
+        if ($data instanceof Arrayable) {
+            $data = $data->toArray();
+        }
 
         $data = array_map([$this, 'transformToArray'], $data);
 
