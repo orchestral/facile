@@ -5,6 +5,10 @@ title: Facile Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.1 {#v3-2-1}
+
+* Allow to retarget root data when responding with XML and JSON.
+
 ### v3.2.0 {#v3-2-0}
 
 * Update support to Laravel Framework v5.2.
