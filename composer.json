@@ -23,20 +23,19 @@
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
         "illuminate/container": "~5.4.0",
         "illuminate/database": "~5.4.0",
         "illuminate/http": "~5.4.0",
-        "illuminate/pagination": "~5.4.0"
-    },
-    "suggest": {
-        "laravel/framework": "Allow using orchestra/facile component outside of Orchestra Platform (~5.4).",
-        "orchestra/foundation": "Allow using orchestra/facile with Orchestra Platform (~3.4)."
+        "illuminate/pagination": "~5.4.0",
+        "mockery/mockery": "^0.9.4"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.4-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "dev"
 }
