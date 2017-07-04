@@ -61,7 +61,7 @@ abstract class Template
             throw new RuntimeException('Call to undefine method [compose'.ucwords($format).'].');
         }
 
-        $config = Arr::get($compose, "on.{$format}", []);
+        $config = $compose['on'][$format] ?? [];
 
         return call_user_func(
             [$this, 'compose'.ucwords($format)],
@@ -122,8 +122,8 @@ abstract class Template
      */
     protected function prepareDataValue(array $config, array $data)
     {
-        $only   = Arr::get($config, 'only');
-        $except = Arr::get($config, 'except');
+        $only   = $config['only'] ?? null;
+        $except = $config['except'] ?? null;
 
         if (! is_null($only)) {
             return Arr::only($data, $only);

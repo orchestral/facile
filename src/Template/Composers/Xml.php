@@ -23,10 +23,8 @@ trait Xml
     {
         unset($view);
 
-        $root = Arr::get($config, 'root');
-
-        if (! is_null($uses)) {
-            $data = Arr::get($data, $uses, []);
+        if (! is_null($uses = $config['root'] ?? null)) {
+            $data = $data[$uses] ?? [];
         }
 
         if ($data instanceof Arrayable) {

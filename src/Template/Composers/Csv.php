@@ -23,9 +23,9 @@ trait Csv
     {
         unset($view);
 
-        $filename = Arr::get($config, 'filename', 'export');
-        $uses     = Arr::get($config, 'uses', 'data');
-        $content  = Arr::get($data, $uses, []);
+        $filename = $config['filename'] ?? 'export';
+        $uses     = $config['uses'] ?? 'data';
+        $content  = $data[$uses] ?? [];
 
         if (! $content instanceof CsvableInterface) {
             if ($content instanceof Arrayable) {

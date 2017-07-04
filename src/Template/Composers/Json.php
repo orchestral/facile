@@ -22,10 +22,8 @@ trait Json
     {
         unset($view);
 
-        $uses = Arr::get($config, 'uses');
-
-        if (! is_null($uses)) {
-            $data = Arr::get($data, $uses, []);
+        if (! is_null($uses = $config['uses'] ?? null)) {
+            $data = $data[$uses] ?? [];
         }
 
         if ($data instanceof Arrayable) {
