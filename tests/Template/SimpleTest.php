@@ -3,10 +3,11 @@
 namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Support\Collection;
 use Orchestra\Facile\Template\Simple;
 
-class SimpleTest extends \PHPUnit_Framework_TestCase
+class SimpleTest extends TestCase
 {
     /**
      * Teardown the test environment.
