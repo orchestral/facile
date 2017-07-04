@@ -18,16 +18,17 @@
     },
     "require": {
         "php": ">=5.6.0",
-        "illuminate/contracts": "~5.4.0",
+        "illuminate/contracts": "~5.4.24",
         "orchestra/support": "~3.4.0",
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
-        "illuminate/container": "~5.4.0",
-        "illuminate/database": "~5.4.0",
-        "illuminate/http": "~5.4.0",
-        "illuminate/pagination": "~5.4.0",
-        "mockery/mockery": "^0.9.4"
+        "illuminate/container": "~5.4.24",
+        "illuminate/database": "~5.4.24",
+        "illuminate/http": "~5.4.24",
+        "illuminate/pagination": "~5.4.24",
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "~5.7"
     },
     "extra": {
         "branch-alias": {

@@ -3,10 +3,11 @@
 namespace Orchestra\Facile\Tests\Template;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Pagination\Paginator;
 use Orchestra\Facile\Template\Simple;
 
-class TemplateTest extends \PHPUnit_Framework_TestCase
+class TemplateTest extends TestCase
 {
     /**
      * Teardown the test environment.
@@ -190,6 +191,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
             'data' => $results,
             'next_page_url' => null,
             'prev_page_url' => null,
+            'path' => '/'
         ];
 
         $this->assertEquals($expected, $stub->transformToArray($paginator));
