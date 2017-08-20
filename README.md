@@ -3,18 +3,18 @@ Facile Component for Orchestra Platform
 
 Facile Component simplify the need to create API based response in your Laravel application.
 
-[![Latest Stable Version](https://img.shields.io/github/release/orchestral/facile.svg?style=flat-square)](https://packagist.org/packages/orchestra/facile)
-[![Total Downloads](https://img.shields.io/packagist/dt/orchestra/facile.svg?style=flat-square)](https://packagist.org/packages/orchestra/facile)
-[![MIT License](https://img.shields.io/packagist/l/orchestra/facile.svg?style=flat-square)](https://packagist.org/packages/orchestra/facile)
-[![Build Status](https://img.shields.io/travis/orchestral/facile/master.svg?style=flat-square)](https://travis-ci.org/orchestral/facile)
-[![Coverage Status](https://img.shields.io/coveralls/orchestral/facile/master.svg?style=flat-square)](https://coveralls.io/r/orchestral/facile?branch=master)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/orchestral/facile/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/orchestral/facile/)
+[![Build Status](https://travis-ci.org/orchestral/extension.svg?branch=master)](https://travis-ci.org/orchestral/extension)
+[![Latest Stable Version](https://poser.pugx.org/orchestra/facile/version)](https://packagist.org/packages/orchestra/facile)
+[![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads)](https://packagist.org/packages/orchestra/facile)
+[![Latest Unstable Version](https://poser.pugx.org/orchestra/facile/v/unstable)](//packagist.org/packages/orchestra/facile)
+[![License](https://poser.pugx.org/orchestra/facile/license)](https://packagist.org/packages/orchestra/facile)
 
 ## Table of Content
 
 * [Version Compatibility](#version-compatibility)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Changelog](https://github.com/orchestral/facile)
 
 ## Version Compatibility
 
