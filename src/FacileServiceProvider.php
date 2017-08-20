@@ -2,7 +2,6 @@
 
 namespace Orchestra\Facile;
 
-use Orchestra\Facile\Template\Simple;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 
@@ -24,7 +23,7 @@ class FacileServiceProvider extends ServiceProvider
     {
         $this->app->singleton('orchestra.facile', function (Application $app) {
             $factory  = new Factory($app, $app->make('request'));
-            $template = new Simple($app->make('view'), new Transformable());
+            $template = new Template\Simple($app->make('view'), new Transformable());
 
             $factory->name('default', $template);
             $factory->name('simple', $template);

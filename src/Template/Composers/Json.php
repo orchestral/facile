@@ -2,7 +2,6 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Support\Arrayable;
 

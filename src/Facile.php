@@ -2,7 +2,6 @@
 
 namespace Orchestra\Facile;
 
-use Orchestra\Facile\Template\Simple;
 use Illuminate\Contracts\Support\Renderable;
 
 class Facile implements Renderable
@@ -19,7 +18,7 @@ class Facile implements Renderable
      *
      * @var string
      */
-    protected $template = Simple::class;
+    protected $template = Template\Simple::class;
 
     /**
      * View format.

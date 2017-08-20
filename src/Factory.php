@@ -4,7 +4,6 @@ namespace Orchestra\Facile;
 
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Orchestra\Facile\Template\Template;
 use Illuminate\Contracts\Foundation\Application;
 
 class Factory
@@ -172,7 +171,7 @@ class Factory
      */
     public function getTemplate($name)
     {
-        if ($name instanceof Template) {
+        if ($name instanceof Template\Template) {
             return $name;
         } elseif (! isset($this->names[$name]) && is_string($name)) {
             $this->name($name, $name);
@@ -180,7 +179,7 @@ class Factory
 
         $template = $this->names[$name] ?? $name;
 
-        if (! $template instanceof Template) {
+        if (! $template instanceof Template\Template) {
             throw new InvalidArgumentException(
                 "Expected \$template to be instanceof Orchestra\Facile\Template\Template."
             );
