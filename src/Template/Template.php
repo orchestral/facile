@@ -63,8 +63,7 @@ abstract class Template
 
         $config = $compose['on'][$format] ?? [];
 
-        return call_user_func(
-            [$this, 'compose'.ucwords($format)],
+        return $this->{'compose'.ucwords($format)}(
             $compose['view'],
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],

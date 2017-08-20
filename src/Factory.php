@@ -101,7 +101,9 @@ class Factory
      */
     public function view($view, array $data = [])
     {
-        return (new Facile($this, 'simple'))->view($view)->with($data);
+        return (new Facile($this, 'simple'))
+                        ->view($view)
+                        ->with($data);
     }
 
     /**
@@ -126,7 +128,8 @@ class Factory
      */
     public function with($data)
     {
-        return (new Facile($this, 'simple'))->with(...func_get_args());
+        return (new Facile($this, 'simple'))
+                        ->with(...func_get_args());
     }
 
     /**
@@ -175,7 +178,7 @@ class Factory
             $this->name($name, $name);
         }
 
-        $template = isset($this->names[$name]) ? $this->names[$name] : $name;
+        $template = $this->names[$name] ?? $name;
 
         if (! $template instanceof Template) {
             throw new InvalidArgumentException(

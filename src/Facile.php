@@ -212,8 +212,7 @@ class Facile implements Renderable
      */
     public function render()
     {
-        $renderer = $this->factory->getTemplate($this->template);
-
-        return $renderer->compose($this->getFormat(), $this->data);
+        return $this->factory->getTemplate($this->template)
+                    ->compose($this->getFormat(), $this->data);
     }
 }

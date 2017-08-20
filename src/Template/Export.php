@@ -2,11 +2,9 @@
 
 namespace Orchestra\Facile\Template;
 
-use Orchestra\Facile\Template\Composers\Csv;
-
 class Export extends Api
 {
-    use Csv;
+    use Composers\Csv;
 
     /**
      * List of supported format.

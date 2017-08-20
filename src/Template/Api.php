@@ -2,12 +2,10 @@
 
 namespace Orchestra\Facile\Template;
 
-use Orchestra\Facile\Template\Composers\Xml;
-use Orchestra\Facile\Template\Composers\Json;
-
 class Api extends Template
 {
-    use Json, Xml;
+    use Composers\Json,
+        Composers\Xml;
 
     /**
      * List of supported format.

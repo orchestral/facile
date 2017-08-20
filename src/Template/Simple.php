@@ -2,11 +2,9 @@
 
 namespace Orchestra\Facile\Template;
 
-use Orchestra\Facile\Template\Composers\Html;
-
 class Simple extends Export
 {
-    use Html;
+    use Composers\Html;
 
     /**
      * List of supported format.
