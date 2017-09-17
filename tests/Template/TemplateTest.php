@@ -189,6 +189,7 @@ class TemplateTest extends TestCase
             'from' => 1,
             'to' => 1,
             'data' => $results,
+            'first_page_url' => '/?page=1',
             'next_page_url' => null,
             'prev_page_url' => null,
             'path' => '/'
