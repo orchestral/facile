@@ -39,7 +39,7 @@ abstract class Template
      */
     public function __construct(Factory $view, Transformable $transformable = null)
     {
-        $this->view          = $view;
+        $this->view = $view;
         $this->transformable = $transformable ?: new Transformable();
     }
 
@@ -49,9 +49,9 @@ abstract class Template
      * @param  string  $format
      * @param  array   $compose
      *
-     * @return mixed
-     *
      * @throws \RuntimeException
+     *
+     * @return mixed
      */
     public function compose($format, array $compose = [])
     {
@@ -83,8 +83,8 @@ abstract class Template
     public function composeError($view, array $data = [], $status = 404)
     {
         $engine = $this->view;
-        $file   = "errors.{$status}";
-        $view   = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
+        $file = "errors.{$status}";
+        $view = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
 
         return new IlluminateResponse($view, $status);
     }
@@ -121,7 +121,7 @@ abstract class Template
      */
     protected function prepareDataValue(array $config, array $data)
     {
-        $only   = $config['only'] ?? null;
+        $only = $config['only'] ?? null;
         $except = $config['except'] ?? null;
 
         if (! is_null($only)) {

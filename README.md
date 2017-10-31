@@ -20,9 +20,7 @@ Facile Component simplify the need to create API based response in your Laravel 
 
 Laravel    | Facile
 :----------|:----------
- 4.0.x     | 2.0.x
- 4.1.x     | 2.1.x
- 4.2.x     | 2.2.x
+ 4.x.x     | 2.x.x
  5.0.x     | 3.0.x
  5.1.x     | 3.1.x
  5.2.x     | 3.2.x
@@ -36,9 +34,9 @@ To install through composer, simply put the following in your `composer.json` fi
 
 ```json
 {
-	"require": {
-		"orchestra/facile": "~3.0"
-	}
+    "require": {
+        "orchestra/facile": "~3.0"
+    }
 }
 ```
 
@@ -57,9 +55,9 @@ Next add the service provider in `config/app.php`.
 ```php
 'providers' => [
 
-	// ...
+    // ...
 
-	Orchestra\Facile\FacileServiceProvider::class,
+    Orchestra\Facile\FacileServiceProvider::class,
 ],
 ```
 
@@ -68,9 +66,9 @@ You might want to add `Orchestra\Support\Facades\Facile` to class aliases in `co
 ```php
 'aliases' => [
 
-	// ...
+    // ...
 
-	'Facile' => Orchestra\Support\Facades\Facile::class,
+    'Facile' => Orchestra\Support\Facades\Facile::class,
 ],
 ```
 

@@ -22,7 +22,7 @@ class FacileServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('orchestra.facile', function (Application $app) {
-            $factory  = new Factory($app, $app->make('request'));
+            $factory = new Factory($app, $app->make('request'));
             $template = new Template\Simple($app->make('view'), new Transformable());
 
             $factory->name('default', $template);

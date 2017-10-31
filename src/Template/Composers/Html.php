@@ -16,9 +16,9 @@ trait Html
      * @param  int   $status
      * @param  array   $config
      *
-     * @return \Illuminate\Http\Response
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function composeHtml($view = null, array $data = [], $status = 200, array $config = [])
     {

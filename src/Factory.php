@@ -37,9 +37,9 @@ class Factory
      */
     public function __construct(Application $app, Request $request)
     {
-        $this->app     = $app;
+        $this->app = $app;
         $this->request = $request;
-        $this->names   = [];
+        $this->names = [];
     }
 
     /**
@@ -165,9 +165,9 @@ class Factory
      *
      * @param  string|\Orchestra\Facile\Template\Template  $name
      *
-     * @return \Orchestra\Facile\Template\Template
+     * @throws \InvalidArgumentException if template is not defined
      *
-     * @throws \InvalidArgumentException if template is not defined.
+     * @return \Orchestra\Facile\Template\Template
      */
     public function getTemplate($name)
     {

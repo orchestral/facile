@@ -23,8 +23,8 @@ trait Csv
         unset($view);
 
         $filename = $config['filename'] ?? 'export';
-        $uses     = $config['uses'] ?? 'data';
-        $content  = $data[$uses] ?? [];
+        $uses = $config['uses'] ?? 'data';
+        $content = $data[$uses] ?? [];
 
         if (! $content instanceof CsvableInterface) {
             if ($content instanceof Arrayable) {
@@ -35,10 +35,10 @@ trait Csv
         }
 
         return new Response($content->toCsv(), $status, [
-            'Content-Type'        => 'text/csv',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
-            'Cache-Control'       => 'private',
-            'pragma'              => 'cache',
+            'Cache-Control' => 'private',
+            'pragma' => 'cache',
         ]);
     }
 }

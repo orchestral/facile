@@ -192,7 +192,7 @@ class TemplateTest extends TestCase
             'first_page_url' => '/?page=1',
             'next_page_url' => null,
             'prev_page_url' => null,
-            'path' => '/'
+            'path' => '/',
         ];
 
         $this->assertEquals($expected, $stub->transformToArray($paginator));

@@ -33,13 +33,13 @@ class Facile implements Renderable
      * @var array
      */
     protected $data = [
-        'view'   => null,
-        'data'   => [],
-        'on'     => [
-            'csv'  => ['only' => null, 'except' => null, 'uses' => 'data'],
+        'view' => null,
+        'data' => [],
+        'on' => [
+            'csv' => ['only' => null, 'except' => null, 'uses' => 'data'],
             'html' => ['only' => null, 'except' => null],
             'json' => ['only' => null, 'except' => null],
-            'xml'  => ['only' => null, 'except' => null, 'root' => null],
+            'xml' => ['only' => null, 'except' => null, 'root' => null],
         ],
         'status' => 200,
     ];
@@ -55,8 +55,8 @@ class Facile implements Renderable
     public function __construct(Factory $factory, $template, array $data = [], $format = null)
     {
         $this->factory = $factory;
-        $this->data    = array_merge($this->data, $data);
-        $this->format  = $format;
+        $this->data = array_merge($this->data, $data);
+        $this->format = $format;
 
         $this->template($template);
     }
