@@ -68,7 +68,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function view($view)
+    public function view(string $view): self
     {
         $this->data['view'] = $view;
 
@@ -83,7 +83,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function with($key, $value = null)
+    public function with($key, $value = null): self
     {
         $data = is_array($key) ? $key : [$key => $value];
 
@@ -100,7 +100,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function when($type, array $config = [])
+    public function when(string $type, array $config = []): self
     {
         if (! isset($this->data['on'][$type])) {
             $this->data['on'][$type] = [];
@@ -118,7 +118,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function status($status = 200)
+    public function status(int $status = 200): self
     {
         $this->data['status'] = $status;
 
@@ -147,7 +147,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function format($format = null, array $config = [])
+    public function format(?string $format = null, array $config = []): self
     {
         if (! is_null($format) && ! empty($format)) {
             $this->setFormat($format);
@@ -167,7 +167,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function setFormat($format)
+    public function setFormat(string $format): self
     {
         $this->format = $format;
 
@@ -179,7 +179,7 @@ class Facile implements Renderable
      *
      * @return string
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         if (is_null($this->format)) {
             $this->format = $this->factory->getRequestFormat($this->template);

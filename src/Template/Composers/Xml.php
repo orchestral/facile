@@ -18,7 +18,7 @@ trait Xml
      *
      * @return \Illuminate\Http\Response
      */
-    public function composeXml($view, array $data = [], $status = 200, array $config = [])
+    public function composeXml($view, array $data = [], int $status = 200, array $config = []): Response
     {
         unset($view);
 

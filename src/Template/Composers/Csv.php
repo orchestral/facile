@@ -11,14 +11,14 @@ trait Csv
     /**
      * Compose CSV.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  mixed  $view
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Illuminate\Http\Response
      */
-    public function composeCsv($view = null, array $data = [], $status = 200, array $config = [])
+    public function composeCsv($view = null, array $data = [], int $status = 200, array $config = []): Response
     {
         unset($view);
 

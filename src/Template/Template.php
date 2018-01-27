@@ -4,9 +4,9 @@ namespace Orchestra\Facile\Template;
 
 use RuntimeException;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Response;
 use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response as IlluminateResponse;
 
 abstract class Template
 {
@@ -47,13 +47,13 @@ abstract class Template
      * Compose requested format.
      *
      * @param  string  $format
-     * @param  array   $compose
+     * @param  array  $compose
      *
      * @throws \RuntimeException
      *
      * @return mixed
      */
-    public function compose($format, array $compose = [])
+    public function compose(string $format, array $compose = [])
     {
         if (! in_array($format, $this->formats)) {
             return $this->composeError(null, [], 406);
@@ -76,17 +76,17 @@ abstract class Template
      *
      * @param  mixed  $view
      * @param  array  $data
-     * @param  int    $status
+     * @param  int  $status
      *
      * @return \Illuminate\Http\Response
      */
-    public function composeError($view, array $data = [], $status = 404)
+    public function composeError($view, array $data = [], int $status = 404): Response
     {
         $engine = $this->view;
         $file = "errors.{$status}";
         $view = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
 
-        return new IlluminateResponse($view, $status);
+        return new Response($view, $status);
     }
 
     /**
@@ -117,9 +117,9 @@ abstract class Template
      * @param  array  $config
      * @param  array  $data
      *
-     * @return mixed
+     * @return array
      */
-    protected function prepareDataValue(array $config, array $data)
+    protected function prepareDataValue(array $config, array $data): array
     {
         $only = $config['only'] ?? null;
         $except = $config['except'] ?? null;

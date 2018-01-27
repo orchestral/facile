@@ -20,7 +20,7 @@ trait Html
      *
      * @return \Illuminate\Http\Response
      */
-    public function composeHtml($view = null, array $data = [], $status = 200, array $config = [])
+    public function composeHtml($view = null, array $data = [], int $status = 200, array $config = []): Response
     {
         if (! isset($view)) {
             throw new InvalidArgumentException('Missing [$view].');

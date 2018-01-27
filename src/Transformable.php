@@ -13,7 +13,7 @@ class Transformable
      *
      * @param  mixed  $data
      *
-     * @return array
+     * @return array|mixed
      */
     public function run($data)
     {

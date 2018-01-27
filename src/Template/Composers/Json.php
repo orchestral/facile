@@ -10,14 +10,14 @@ trait Json
     /**
      * Compose JSON.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  mixed  $view
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function composeJson($view, array $data = [], $status = 200, array $config = [])
+    public function composeJson($view, array $data = [], int $status = 200, array $config = []): JsonResponse
     {
         unset($view);
 

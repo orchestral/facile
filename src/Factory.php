@@ -139,7 +139,7 @@ class Factory
      *
      * @return void
      */
-    public function name($name, $template)
+    public function name(string $name, $template): void
     {
         $template = is_string($template) ? $this->app->make($template) : $template;
 
@@ -169,7 +169,7 @@ class Factory
      *
      * @return \Orchestra\Facile\Template\Template
      */
-    public function getTemplate($name)
+    public function getTemplate($name): Template\Template
     {
         if ($name instanceof Template\Template) {
             return $name;
