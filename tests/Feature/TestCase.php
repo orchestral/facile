@@ -20,7 +20,6 @@ abstract class TestCase extends Testbench
         ];
     }
 
-
     /**
      * Get package providers.
      *

@@ -3,12 +3,10 @@
 namespace Orchestra\Facile\TestCase\Feature;
 
 use Mockery as m;
-use Orchestra\Facile\Template\Simple;
 use Orchestra\Support\Facades\Facile;
 
 class FactoryTest extends TestCase
 {
-
     /** @test */
     public function it_can_construct_facile_using_name()
     {
