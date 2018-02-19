@@ -141,7 +141,9 @@ class Factory
      */
     public function name(string $name, $template): void
     {
-        $template = is_string($template) ? $this->app->make($template) : $template;
+        if (is_string($template) && (class_exists($template, false) || $this->app->bound($template))) {
+            $template = $this->app->make($template);
+        }
 
         $this->names[$name] = $template;
     }
@@ -151,9 +153,9 @@ class Factory
      *
      * @param  string  $name
      *
-     * @return string
+     * @return string|null
      */
-    public function getRequestFormat($name)
+    public function getRequestFormat($name): ?string
     {
         return $this->request->prefers(
             $this->getTemplate($name)->getSupportedFormats()

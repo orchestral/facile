@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Facile\Tests\Template;
+namespace Orchestra\Facile\Tests\Unit\Template;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -12,17 +12,13 @@ class SimpleTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    /**
-     * Test constructing a new Orchestra\Facile\Template.
-     *
-     * @test
-     */
-    public function testConstructMethod()
+    /** @test */
+    public function it_can_be_constructed()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
@@ -36,12 +32,8 @@ class SimpleTest extends TestCase
         $this->assertEquals(['csv', 'html', 'json', 'xml'], $formats->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Template::composeHtml() method.
-     *
-     * @test
-     */
-    public function testComposeHtmlMethod()
+    /** @test */
+    public function it_can_compose_to_html()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foo is awesome'];
@@ -55,12 +47,10 @@ class SimpleTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template::composeHtml() method throws exception
-     * when view is not defined.
-     *
+     * @test
      * @expectedException \InvalidArgumentException
      */
-    public function testComposeHtmlMethodThrowsException()
+    public function it_throws_exception_when_composing_html_without_view()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
@@ -68,12 +58,8 @@ class SimpleTest extends TestCase
         with(new Simple($view))->composeHtml(null, $data);
     }
 
-    /**
-     * Test Orchestra\Facile\Template::composeJson() method.
-     *
-     * @test
-     */
-    public function testComposeJsonMethod()
+    /** @test */
+    public function it_can_compose_to_json()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
@@ -85,13 +71,8 @@ class SimpleTest extends TestCase
         $this->assertEquals('application/json', $stub->headers->get('content-type'));
     }
 
-    /**
-     * Test Orchestra\Facile\Template::composeCsv() method
-     * given as Illuminate\Contracts\Support\Arrayable.
-     *
-     * @test
-     */
-    public function testComposeCsvMethodAsArrayableInterface()
+    /** @test */
+    public function it_can_compose_to_csv_from_arrayable_interface()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
@@ -116,13 +97,8 @@ EXPECTED;
         $this->assertEquals('text/csv', $stub->headers->get('content-type'));
     }
 
-    /**
-     * Test Orchestra\Facile\Template::composeCsv() method
-     * given as Orchestra\Support\Contracts\CsvableInterface.
-     *
-     * @test
-     */
-    public function testComposeCsvMethodAsCsvableInterface()
+    /** @test */
+    public function it_can_compose_to_csv_from_csvable_interface()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = [

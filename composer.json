@@ -16,6 +16,11 @@
             "Orchestra\\Facile\\" : "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Orchestra\\Facile\\TestCase\\" : "tests/"
+        }
+    },
     "require": {
         "php": ">=7.1",
         "illuminate/contracts": "~5.7.0",
@@ -23,11 +28,8 @@
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
-        "illuminate/container": "~5.7.0",
-        "illuminate/database": "~5.7.0",
-        "illuminate/http": "~5.7.0",
-        "illuminate/pagination": "~5.7.0",
         "mockery/mockery": "~1.0",
+        "orchestra/testbench": "~3.7.0",
         "phpunit/phpunit": "~7.0"
     },
     "extra": {
