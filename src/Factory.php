@@ -151,9 +151,9 @@ class Factory
      *
      * @param  string  $name
      *
-     * @return string
+     * @return string|null
      */
-    public function getRequestFormat($name)
+    public function getRequestFormat($name): ?string
     {
         return $this->request->prefers(
             $this->getTemplate($name)->getSupportedFormats()
