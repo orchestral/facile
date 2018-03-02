@@ -11,14 +11,13 @@ trait Xml
     /**
      * Compose XML.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeXml($view, array $data = [], $status = 200, array $config = [])
+    public function composeXml(array $data = [], $status = 200, array $config = [])
     {
         return Response::make($this->createCallbackToXml($data, $config)(), $status, [
             'Content-Type' => 'text/xml',
@@ -28,14 +27,13 @@ trait Xml
     /**
      * Compose XML.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamXml($view, array $data = [], $status = 200, array $config = [])
+    public function streamXml(array $data = [], $status = 200, array $config = [])
     {
         return Response::stream($this->createCallbackToXml($data, $config), $status, [
             'Content-Type' => 'text/xml',

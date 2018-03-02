@@ -64,8 +64,9 @@ abstract class Parser
 
         $config = $compose['on'][$format] ?? [];
 
+        $config['view'] = $compose['view'];
+
         return $this->{$method.ucwords($format)}(
-            $compose['view'],
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],
             $config

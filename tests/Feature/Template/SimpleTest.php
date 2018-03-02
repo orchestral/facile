@@ -35,7 +35,7 @@ class SimpleTest extends TestCase
 
         $stub = new Simple($view);
 
-        $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml($data, 200, ['view' => 'users.index']));
     }
 
     /**
@@ -47,7 +47,7 @@ class SimpleTest extends TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
 
-        with(new Simple($view))->composeHtml(null, $data);
+        with(new Simple($view))->composeHtml($data, 200, ['view' => null]);
     }
 
     /** @test */
@@ -56,7 +56,7 @@ class SimpleTest extends TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
 
-        $stub = with(new Simple($view))->composeJson(null, $data);
+        $stub = with(new Simple($view))->composeJson($data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
@@ -82,7 +82,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Simple($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv($data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());
@@ -107,7 +107,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Simple($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv($data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());

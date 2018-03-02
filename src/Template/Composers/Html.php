@@ -11,7 +11,6 @@ trait Html
     /**
      * Compose HTML.
      *
-     * @param  \Illuminate\Contracts\View\View|string|null  $view
      * @param  array   $data
      * @param  int   $status
      * @param  array   $config
@@ -20,9 +19,9 @@ trait Html
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeHtml($view, array $data = [], $status = 200, array $config = [])
+    public function composeHtml(array $data = [], $status = 200, array $config = [])
     {
-        if (is_null($view)) {
+        if (is_null($view = $config['view'])) {
             throw new InvalidArgumentException('Missing [$view].');
         }
 
