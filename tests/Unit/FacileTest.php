@@ -201,7 +201,7 @@ class FacileTest extends TestCase
         $render = m::mock('\Illuminate\Contracts\Support\Renderable');
         $render->shouldReceive('render')->once()->andReturn('foo is awesome');
 
-        $template2 = m::mock('\Orchestra\Facile\Template\Template');
+        $template2 = m::mock('\Orchestra\Facile\Template\Parser');
         $template2->shouldReceive('compose')->once()
                     ->with('json', m::type('Array'), 'compose')
                     ->andReturn($render);

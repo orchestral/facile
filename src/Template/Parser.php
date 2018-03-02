@@ -8,7 +8,7 @@ use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response as IlluminateResponse;
 
-abstract class Template
+abstract class Parser
 {
     /**
      * View instance.

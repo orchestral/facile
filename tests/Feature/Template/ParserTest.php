@@ -7,14 +7,14 @@ use Illuminate\Pagination\Paginator;
 use Orchestra\Facile\Template\Simple;
 use Orchestra\Facile\TestCase\Feature\TestCase;
 
-class TemplateTest extends TestCase
+class ParserTest extends TestCase
 {
     /** @test */
     public function it_can_be_constructed()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $refl = new \ReflectionObject($stub);
 
         $formats = $refl->getProperty('formats');
@@ -29,7 +29,7 @@ class TemplateTest extends TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -52,7 +52,7 @@ class TemplateTest extends TestCase
         $view->shouldReceive('exists')->once()->with('errors.406')->andReturn(true)
             ->shouldReceive('make')->once()->with('errors.406', [])->andReturn('error-406');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -72,7 +72,7 @@ class TemplateTest extends TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -90,7 +90,7 @@ class TemplateTest extends TestCase
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
@@ -102,7 +102,7 @@ class TemplateTest extends TestCase
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
@@ -114,7 +114,7 @@ class TemplateTest extends TestCase
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $this->assertEquals(['foobar'], $stub->transformToArray([$mock]));
     }
 
@@ -126,7 +126,7 @@ class TemplateTest extends TestCase
 
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
         $this->assertEquals('&lt;foobar&gt;', $stub->transformToArray($mock));
     }
 
@@ -138,7 +138,7 @@ class TemplateTest extends TestCase
 
         $paginator = new Paginator($results, 3, 1);
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
 
         $expected = [
             'per_page' => 3,
@@ -160,7 +160,7 @@ class TemplateTest extends TestCase
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateStub($view);
+        $stub = new Parser($view);
 
         $this->assertContains('html', $stub->getSupportedFormats());
         $this->assertContains('json', $stub->getSupportedFormats());
@@ -216,7 +216,7 @@ class TemplateTest extends TestCase
     }
 }
 
-class TemplateStub extends \Orchestra\Facile\Template\Template
+class Parser extends \Orchestra\Facile\Template\Parser
 {
     protected $formats = ['html', 'json', 'foo'];
 

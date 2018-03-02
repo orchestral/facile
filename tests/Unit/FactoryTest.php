@@ -36,7 +36,7 @@ class FactoryTest extends TestCase
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Template');
+        $template = m::mock('\Orchestra\Facile\Template\Parser');
 
         $template->shouldReceive('compose')->once()->with('json', m::type('Array'), 'compose')->andReturn('foo');
 
@@ -72,7 +72,7 @@ class FactoryTest extends TestCase
     {
         $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Template');
+        $template = m::mock('\Orchestra\Facile\Template\Parser');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
@@ -109,7 +109,7 @@ class FactoryTest extends TestCase
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
+        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Parser');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
@@ -156,7 +156,7 @@ class FactoryTest extends TestCase
 
         $this->assertTrue(is_array($parsers->getValue($stub)));
 
-        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Template');
+        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Parser');
         $stub->name('foo', $template);
     }
 
@@ -171,6 +171,6 @@ class FactoryTest extends TestCase
 
         $stub = new Factory($app, $request);
 
-        $stub->parseUsing('badFoo');
+        $stub->parse('badFoo');
     }
 }

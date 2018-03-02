@@ -89,7 +89,7 @@ class Factory
      *              'users' => $users,
      *          ))
      *          ->status(200)
-     *          ->parser(Orchestra\Facile\Template\Template::class)
+     *          ->parser(Orchestra\Facile\Template\Parser::class)
      *          ->format('html');
      * </code>
      *
@@ -117,7 +117,7 @@ class Factory
      *          ))
      *          ->view('home.index')
      *          ->status(200)
-     *          ->parser(Orchestra\Facile\Template\Template::class)
+     *          ->parser(Orchestra\Facile\Template\Parser::class)
      *          ->format('html');
      * </code>
      *
@@ -135,7 +135,7 @@ class Factory
      * Register a named parser.
      *
      * @param  string  $name
-     * @param  string|\Orchestra\Facile\Template\Template  $parser
+     * @param  string|\Orchestra\Facile\Template\Parser  $parser
      *
      * @return void
      */
@@ -151,7 +151,7 @@ class Factory
     /**
      * Get request format.
      *
-     * @param  \Orchestra\Facile\Template\Template  $parser
+     * @param  \Orchestra\Facile\Template\Parser  $parser
      *
      * @return string
      */
@@ -165,11 +165,11 @@ class Factory
     /**
      * Resolve parser from factory.
      *
-     * @return \Orchestra\Facile\Template\Template
+     * @return \Orchestra\Facile\Template\Parser
      */
     public function resolve($name, $format, array $data, $method = 'compose')
     {
-        $parser = $this->parseUsing($name);
+        $parser = $this->parse($name);
         $format = $format ?? $this->getPrefersFrom($parser);
 
         return $parser->compose($format, $data, $method);
@@ -178,15 +178,15 @@ class Factory
     /**
      * Get the parser.
      *
-     * @param  string|\Orchestra\Facile\Template\Template  $name
+     * @param  string|\Orchestra\Facile\Template\Parser  $name
      *
      * @throws \InvalidArgumentException if parser is not defined
      *
-     * @return \Orchestra\Facile\Template\Template
+     * @return \Orchestra\Facile\Template\Parser
      */
-    public function parseUsing($name)
+    public function parse($name)
     {
-        if ($name instanceof Template\Template) {
+        if ($name instanceof Template\Parser) {
             return $name;
         } elseif (! isset($this->parsers[$name]) && is_string($name)) {
             $this->name($name, $name);
@@ -194,9 +194,9 @@ class Factory
 
         $parser = $this->parsers[$name] ?? $name;
 
-        if (! $parser instanceof Template\Template) {
+        if (! $parser instanceof Template\Parser) {
             throw new InvalidArgumentException(
-                "Expected \$parser to be instanceof Orchestra\Facile\Template\Template."
+                "Expected \$parser to be instanceof Orchestra\Facile\Template\Parser."
             );
         }
 
