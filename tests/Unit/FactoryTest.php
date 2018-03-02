@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Facile\TestCase;
+namespace Orchestra\Facile\TestCase\Unit;
 
 use Mockery as m;
 use Orchestra\Facile\Factory;
@@ -11,17 +11,13 @@ class FactoryTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         m::close();
     }
 
-    /**
-     * Test construct an instance of Orchestra\Facile\Factory.
-     *
-     * @test
-     */
-    public function testConstructMethod()
+    /** @test */
+    public function it_can_construct_the_factory()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -35,12 +31,8 @@ class FactoryTest extends TestCase
         $this->assertTrue(is_array($names->getValue($stub)));
     }
 
-    /**
-     * Test Orchestra\Facile\Factory::make() method.
-     *
-     * @test
-     */
-    public function testMakeMethod()
+    /** @test */
+    public function it_can_construct_facile_using_make()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -75,12 +67,8 @@ class FactoryTest extends TestCase
         $this->assertEquals('foo', $container->render());
     }
 
-    /**
-     * Test Orchestra\Facile\Factory::view() method.
-     *
-     * @test
-     */
-    public function testViewMethod()
+    /** @test */
+    public function it_can_construct_facile_using_view()
     {
         $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -116,12 +104,8 @@ class FactoryTest extends TestCase
         $this->assertEquals('foo', $container->render());
     }
 
-    /**
-     * Test Orchestra\Facile\Factory::with() method.
-     *
-     * @test
-     */
-    public function testWithMethod()
+    /** @test */
+    public function it_can_construct_facile_using_with()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -158,12 +142,8 @@ class FactoryTest extends TestCase
         $this->assertEquals('foo', $container->render());
     }
 
-    /**
-     * Test Orchestra\Facile\Factory::name() method.
-     *
-     * @test
-     */
-    public function testNameMethod()
+    /** @test */
+    public function it_can_construct_facile_using_name()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -181,12 +161,10 @@ class FactoryTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Factory::getTemplate() method throws exception
-     * when template is not set.
-     *
+     * @test
      * @expectedException \InvalidArgumentException
      */
-    public function testGetTemplateMethodThrowsExceptionWhenTempalteIsNotSet()
+    public function it_throws_exception_when_trying_to_get_template_without_defining_it_first()
     {
         $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');

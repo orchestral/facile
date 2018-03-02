@@ -1,32 +1,20 @@
 <?php
 
-namespace Orchestra\Facile\Tests\Template;
+namespace Orchestra\Facile\Tests\Feature\Template;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Illuminate\Pagination\Paginator;
 use Orchestra\Facile\Template\Simple;
+use Orchestra\Facile\TestCase\Feature\TestCase;
 
 class TemplateTest extends TestCase
 {
-    /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        m::close();
-    }
-
-    /**
-     * Test construct an instance of Orchestra\Facile\Template\Driver.
-     *
-     * @test
-     */
-    public function testConstructMethod()
+    /** @test */
+    public function it_can_be_constructed()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $refl = new \ReflectionObject($stub);
 
         $formats = $refl->getProperty('formats');
@@ -36,16 +24,12 @@ class TemplateTest extends TestCase
         $this->assertEquals(['html', 'json', 'foo'], $formats->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::compose() method.
-     *
-     * @test
-     */
-    public function testComposeMethod()
+    /** @test */
+    public function it_can_compose_data()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -61,14 +45,14 @@ class TemplateTest extends TestCase
      *
      * @test
      */
-    public function testComposeMethodReturnResponseError406WhenGivenInvalidFormat()
+    public function it_return_406_status_when_given_invalid_format()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $view->shouldReceive('exists')->once()->with('errors.406')->andReturn(true)
             ->shouldReceive('make')->once()->with('errors.406', [])->andReturn('error-406');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -81,16 +65,14 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::compose() method throws exception
-     * when given method isn't available.
-     *
+     * @test
      * @expectedException \RuntimeException
      */
-    public function testComposeMethodThrowsExceptionWhenMethodNotAvailable()
+    public function it_throws_exception_when_rendering_method_is_not_available()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $data = [
             'view' => null,
             'data' => [],
@@ -100,88 +82,63 @@ class TemplateTest extends TestCase
         $stub->compose('html', $data);
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
-     * item has toArray().
-     *
-     * @test
-     */
-    public function testTransformToArrayMethodWhenItemHasToArray()
+    /** @test */
+    public function it_can_transform_arrayable_instance_to_array()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\Arrayable');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
-     * item is instance of Illuminate\Database\Eloquent\Model.
-     *
-     * @test
-     */
-    public function testTransformToArrayMethodWhenItemIsInstanceOfEloquent()
+    /** @test */
+    public function it_can_transform_eloquent_instance_to_array()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Database\Eloquent\Model');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $this->assertEquals('foobar', $stub->transformToArray($mock));
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
-     * item is an array.
-     *
-     * @test
-     */
-    public function testTransformToArrayMethodWhenItemIsArray()
+    /** @test */
+    public function it_can_transform_array()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\Arrayable');
 
         $mock->shouldReceive('toArray')->once()->andReturn('foobar');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $this->assertEquals(['foobar'], $stub->transformToArray([$mock]));
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::transformToArray() method when
-     * item has renderable.
-     *
-     * @test
-     */
-    public function testTransformToArrayMethodWhenItemIsRenderable()
+    /** @test */
+    public function it_can_transform_renderable_to_array()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $mock = m::mock('\Illuminate\Contracts\Support\Renderable');
 
         $mock->shouldReceive('render')->once()->andReturn('<foobar>');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
         $this->assertEquals('&lt;foobar&gt;', $stub->transformToArray($mock));
     }
 
-    /**
-     * Test Orchestra\Facile\Template\Driver::transformToArray() method
-     * when item is instance of Paginator.
-     *
-     * @test
-     */
-    public function testTransformToArrayMethodWhenItemInstanceOfPaginator()
+    /** @test */
+    public function it_can_transform_paginator_instance_to_array()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $results = ['foo' => 'foobar'];
 
         $paginator = new Paginator($results, 3, 1);
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
 
         $expected = [
             'per_page' => 3,
@@ -198,11 +155,12 @@ class TemplateTest extends TestCase
         $this->assertEquals($expected, $stub->transformToArray($paginator));
     }
 
-    public function testGetSupportedFormatsMethod()
+    /** @test */
+    public function it_can_get_supported_formats()
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
-        $stub = new TemplateTemplateStub($view);
+        $stub = new TemplateStub($view);
 
         $this->assertContains('html', $stub->getSupportedFormats());
         $this->assertContains('json', $stub->getSupportedFormats());
@@ -211,12 +169,10 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Template\Driver::prepareDataValue() method.
-     *
      * @test
      * @dataProvider dataProviderForPrepareDataValue
      */
-    public function testPrepareDataValueMethod($data, $expected)
+    public function it_can_compose_from_prepared_data($data, $expected)
     {
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
@@ -260,7 +216,7 @@ class TemplateTest extends TestCase
     }
 }
 
-class TemplateTemplateStub extends \Orchestra\Facile\Template\Template
+class TemplateStub extends \Orchestra\Facile\Template\Template
 {
     protected $formats = ['html', 'json', 'foo'];
 

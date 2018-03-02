@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Facile\TestCase;
+namespace Orchestra\Facile\TestCase\Unit;
 
 use Mockery as m;
 use Orchestra\Facile\Facile;
@@ -13,17 +13,13 @@ class FacileTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         m::close();
     }
 
-    /**
-     * Test construct an instance of Orchestra\Facile\Container.
-     *
-     * @test
-     */
-    public function testConstructMethod()
+    /** @test */
+    public function it_can_construct_a_facile()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -50,12 +46,8 @@ class FacileTest extends TestCase
         $this->assertEquals($expected, $data->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Container::view() method.
-     *
-     * @test
-     */
-    public function testViewMethod()
+    /** @test */
+    public function it_able_to_use_view()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -76,12 +68,10 @@ class FacileTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Facile\Container::when() method.
-     *
      * @test
      * @dataProvider dataProviderForWhenTest
      */
-    public function testWhenMethod($before, $after)
+    public function it_can_utilize_when($before, $after)
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -100,12 +90,8 @@ class FacileTest extends TestCase
         $this->assertEquals($after, $data->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Container::with() method.
-     *
-     * @test
-     */
-    public function testWithMethod()
+    /** @test */
+    public function it_able_to_use_with()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -125,12 +111,8 @@ class FacileTest extends TestCase
         $this->assertEquals(['foo' => 'bar', 'foobar' => 'foo'], $result['data']);
     }
 
-    /**
-     * Test Orchestra\Facile\Container::status() method.
-     *
-     * @test
-     */
-    public function testStatusMethod()
+    /** @test */
+    public function it_can_set_custom_http_return_status()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -149,12 +131,8 @@ class FacileTest extends TestCase
         $this->assertEquals(500, $result['status']);
     }
 
-    /**
-     * Test Orchestra\Facile\Container::template() method.
-     *
-     * @test
-     */
-    public function testTemplateMethod()
+    /** @test */
+    public function it_can_interacts_with_template()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -184,12 +162,8 @@ class FacileTest extends TestCase
         $this->assertInstanceOf('\Orchestra\Facile\Template\Simple', $template->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Container::format() method.
-     *
-     * @test
-     */
-    public function testFormatMethod()
+    /** @test */
+    public function it_can_interacts_with_format()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -211,12 +185,8 @@ class FacileTest extends TestCase
         $this->assertEquals('md', $format->getValue($stub));
     }
 
-    /**
-     * Test Orchestra\Facile\Container::render() method.
-     *
-     * @test
-     */
-    public function testRenderMethod()
+    /** @test */
+    public function it_can_render_via_facile()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
@@ -231,12 +201,8 @@ class FacileTest extends TestCase
         $this->assertEquals('foo', $stub->render());
     }
 
-    /**
-     * Test Orchestra\Facile\Container::__toString() method.
-     *
-     * @test
-     */
-    public function testToStringMethod()
+    /** @test */
+    public function it_can_convert_as_string()
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');

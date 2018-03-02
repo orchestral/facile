@@ -211,7 +211,28 @@ class Facile implements Renderable
      */
     public function render()
     {
-        return $this->factory->getTemplate($this->template)
+        return $this->resolveTemplateFromFactory()
                     ->compose($this->getFormat(), $this->data);
+    }
+
+    /**
+     * Render facile by selected format.
+     *
+     * @return mixed
+     */
+    public function stream()
+    {
+        return $this->resolveTemplateFromFactory()
+                    ->compose($this->getFormat(), $this->data, 'stream');
+    }
+
+    /**
+     * Resolve template from factory.
+     *
+     * @return \Orchestra\Facile\Template\Template
+     */
+    protected function resolveTemplateFromFactory()
+    {
+        return $this->factory->getTemplate($this->template);
     }
 }

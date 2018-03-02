@@ -53,17 +53,17 @@ abstract class Template
      *
      * @return mixed
      */
-    public function compose($format, array $compose = [])
+    public function compose($format, array $compose = [], $method = 'compose')
     {
         if (! in_array($format, $this->formats)) {
             return $this->composeError(null, [], 406);
-        } elseif (! method_exists($this, 'compose'.ucwords($format))) {
-            throw new RuntimeException('Call to undefine method [compose'.ucwords($format).'].');
+        } elseif (! method_exists($this, $method.ucwords($format))) {
+            throw new RuntimeException('Call to undefine method ['.$method.ucwords($format).'].');
         }
 
         $config = $compose['on'][$format] ?? [];
 
-        return $this->{'compose'.ucwords($format)}(
+        return $this->{$method.ucwords($format)}(
             $compose['view'],
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],
