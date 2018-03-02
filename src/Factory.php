@@ -45,28 +45,6 @@ class Factory
     /**
      * Create a new Facile instance.
      *
-     * <code>
-     *      // Using provided facade for Facile.
-     *
-     *      $users  = User::paginate(30);
-     *      $facile = Facile::make('simple', array(
-     *          'view'   => 'home.index',
-     *          'data'   => array(
-     *              'users' => $users,
-     *          ),
-     *          'status' => 200,
-     *      ));
-     *
-     *      // Alternatively
-     *      $facile = Facile::make('simple')
-     *          ->view('home.index')
-     *          ->with(array(
-     *              'users' => $users,
-     *          ))
-     *          ->status(200)
-     *          ->format('html');
-     * </code>
-     *
      * @param  string  $name   Name of template
      * @param  array   $data
      * @param  string  $format
@@ -80,18 +58,6 @@ class Factory
 
     /**
      * Create a new Facile instance helper via view.
-     *
-     * <code>
-     *      // Using provided facade for Facile.
-     *
-     *      $users  = User::paginate(30);
-     *      $facile = Facile::view('home.index', array(
-     *              'users' => $users,
-     *          ))
-     *          ->status(200)
-     *          ->parser(Orchestra\Facile\Template\Parser::class)
-     *          ->format('html');
-     * </code>
      *
      * @param  string  $view
      * @param  array   $data
@@ -107,19 +73,6 @@ class Factory
 
     /**
      * Create a new Facile instance helper via with.
-     *
-     * <code>
-     *      // Using provided facade for Facile.
-     *
-     *      $users  = User::paginate(30);
-     *      $facile = Facile::with(array(
-     *              'users' => $users,
-     *          ))
-     *          ->view('home.index')
-     *          ->status(200)
-     *          ->parser(Orchestra\Facile\Template\Parser::class)
-     *          ->format('html');
-     * </code>
      *
      * @param  mixed  $data
      *
