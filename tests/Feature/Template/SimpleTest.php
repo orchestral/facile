@@ -12,16 +12,9 @@ class SimpleTest extends TestCase
     /** @test */
     public function it_can_be_constructed()
     {
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $stub = new Simple(m::mock('\Illuminate\Contracts\View\Factory'));
 
-        $stub = new Simple($view);
-        $refl = new \ReflectionObject($stub);
-
-        $formats = $refl->getProperty('formats');
-
-        $formats->setAccessible(true);
-
-        $this->assertEquals(['csv', 'html', 'json', 'xml'], $formats->getValue($stub));
+        $this->assertEquals(['csv', 'html', 'json', 'xml'], $stub->getSupportedFormats());
     }
 
     /** @test */
