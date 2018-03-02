@@ -4,9 +4,9 @@ namespace Orchestra\Facile\Template;
 
 use RuntimeException;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Response;
 use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response as IlluminateResponse;
 
 abstract class Parser
 {
@@ -47,7 +47,8 @@ abstract class Parser
      * Compose requested format.
      *
      * @param  string  $format
-     * @param  array   $compose
+     * @param  array  $compose
+     * @param  string  $method
      *
      * @throws \RuntimeException
      *
@@ -86,7 +87,7 @@ abstract class Parser
         $file = "errors.{$status}";
         $view = $engine->exists($file) ? $engine->make($file, $data) : "{$status} Error";
 
-        return new IlluminateResponse($view, $status);
+        return new Response($view, $status);
     }
 
     /**
@@ -117,7 +118,7 @@ abstract class Parser
      * @param  array  $config
      * @param  array  $data
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareDataValue(array $config, array $data)
     {

@@ -155,7 +155,7 @@ class Factory
      *
      * @return string
      */
-    protected function getPrefersFrom($parser)
+    protected function getPrefersFrom(Template\Parser $parser)
     {
         return $this->request->prefers(
             $parser->getSupportedFormats()
@@ -165,7 +165,12 @@ class Factory
     /**
      * Resolve parser from factory.
      *
-     * @return \Orchestra\Facile\Template\Parser
+     * @param  string  $name
+     * @param  string|null  $format
+     * @param  array  $data
+     * @param  string  $method
+     *
+     * @return mixed
      */
     public function resolve($name, $format, array $data, $method = 'compose')
     {

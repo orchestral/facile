@@ -182,7 +182,7 @@ class Facile implements Renderable
     /**
      * Set Output Format.
      *
-     * @param  string  $format
+     * @param  string|null  $format
      *
      * @return $this
      */

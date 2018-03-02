@@ -10,10 +10,10 @@ trait Json
     /**
      * Compose JSON.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  mixed  $view
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -27,10 +27,10 @@ trait Json
     /**
      * Stream JSON.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  mixed  $view
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

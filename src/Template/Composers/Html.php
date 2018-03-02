@@ -18,7 +18,7 @@ trait Html
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeHtml($view, array $data = [], $status = 200, array $config = [])
     {
