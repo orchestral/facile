@@ -13,14 +13,13 @@ trait Csv
     /**
      * Compose CSV.
      *
-     * @param  mixed  $view
      * @param  array  $data
      * @param  int  $status
      * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeCsv($view = null, array $data = [], int $status = 200, array $config = []): SymfonyResponse
+    public function composeCsv(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
         $filename = $config['filename'] ?? 'export';
 
@@ -35,14 +34,13 @@ trait Csv
     /**
      * Stream CSV.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamCsv($view = null, array $data = [], $status = 200, array $config = []): SymfonyResponse
+    public function streamCsv(array $data = [], $status = 200, array $config = []): SymfonyResponse
     {
         $filename = $config['filename'] ?? 'export';
 

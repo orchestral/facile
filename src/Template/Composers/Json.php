@@ -11,14 +11,13 @@ trait Json
     /**
      * Compose JSON.
      *
-     * @param  mixed  $view
      * @param  array  $data
      * @param  int  $status
      * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeJson($view, array $data = [], int $status = 200, array $config = []): SymfonyResponse
+    public function composeJson(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
         return Response::make($this->createCallbackToJson($data, $config)(), $status, [
             'Content-Type' => 'application/json',
@@ -28,14 +27,13 @@ trait Json
     /**
      * Stream JSON.
      *
-     * @param  mixed   $view
-     * @param  array   $data
-     * @param  int     $status
-     * @param  array   $config
+     * @param  array  $data
+     * @param  int  $status
+     * @param  array  $config
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamJson($view, array $data = [], $status = 200, array $config = [])
+    public function streamJson(array $data = [], $status = 200, array $config = []): SymfonyResponse
     {
         return Response::stream($this->createCallbackToJson($data, $config), $status, [
             'Content-Type' => 'application/json',
