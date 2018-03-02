@@ -2,9 +2,10 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\Support\Arrayable;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Xml
 {
@@ -16,14 +17,44 @@ trait Xml
      * @param  int     $status
      * @param  array   $config
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeXml($view, array $data = [], int $status = 200, array $config = []): Response
+    public function composeXml($view, array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
-        unset($view);
+        return Response::make($this->createCallbackToXml($data, $config)(), $status, [
+            'Content-Type' => 'text/xml',
+        ]);
+    }
 
-        if (! is_null($uses = $config['root'] ?? null)) {
-            $data = $data[$uses] ?? [];
+    /**
+     * Compose XML.
+     *
+     * @param  mixed   $view
+     * @param  array   $data
+     * @param  int     $status
+     * @param  array   $config
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function streamXml($view, array $data = [], $status = 200, array $config = []): SymfonyResponse
+    {
+        return Response::stream($this->createCallbackToXml($data, $config), $status, [
+            'Content-Type' => 'text/xml',
+        ]);
+    }
+
+    /**
+     * Convert content to XML.
+     *
+     * @param  array  $data
+     * @param  array  $config
+     *
+     * @return \Closure
+     */
+    protected function createCallbackToXml(array $data, array $config)
+    {
+        if (! is_null($root = $config['root'] ?? null)) {
+            $data = $data[$root] ?? [];
         }
 
         if ($data instanceof Arrayable) {
@@ -32,10 +63,8 @@ trait Xml
 
         $data = array_map([$this, 'transformToArray'], $data);
 
-        $headers = [
-            'Content-Type' => 'text/xml',
-        ];
-
-        return new Response(ArrayToXml::convert($data, $root), $status, $headers);
+        return function () use ($data, $config) {
+            return ArrayToXml::convert($data, $config['document-root'] ?? $root);
+        };
     }
 }

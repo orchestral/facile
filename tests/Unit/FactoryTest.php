@@ -25,10 +25,10 @@ class FactoryTest extends TestCase
         $stub = new Factory($app, $request);
 
         $refl = new \ReflectionObject($stub);
-        $names = $refl->getProperty('names');
-        $names->setAccessible(true);
+        $parsers = $refl->getProperty('parsers');
+        $parsers->setAccessible(true);
 
-        $this->assertTrue(is_array($names->getValue($stub)));
+        $this->assertTrue(is_array($parsers->getValue($stub)));
     }
 
     /** @test */
@@ -36,9 +36,9 @@ class FactoryTest extends TestCase
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Template');
+        $template = m::mock('\Orchestra\Facile\Template\Parser');
 
-        $template->shouldReceive('compose')->once()->with('json', m::any())->andReturn('foo');
+        $template->shouldReceive('compose')->once()->with('json', m::type('Array'), 'compose')->andReturn('foo');
 
         $stub = new Factory($app, $request);
 
@@ -72,11 +72,11 @@ class FactoryTest extends TestCase
     {
         $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Template');
+        $template = m::mock('\Orchestra\Facile\Template\Parser');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
-            ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
+            ->shouldReceive('compose')->once()->with('html', m::type('Array'), 'compose')->andReturn('foo');
 
         $stub = new Factory($app, $request);
         $stub->name('simple', $template);
@@ -109,11 +109,11 @@ class FactoryTest extends TestCase
     {
         $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Template');
+        $template = m::mock('TemplateDriver', '\Orchestra\Facile\Template\Parser');
 
         $request->shouldReceive('prefers')->once()->with('html')->andReturn('html');
         $template->shouldReceive('getSupportedFormats')->once()->with()->andReturn('html')
-            ->shouldReceive('compose')->once()->with('html', m::any())->andReturn('foo');
+            ->shouldReceive('compose')->once()->with('html', m::type('Array'), 'compose')->andReturn('foo');
 
         $stub = new Factory($app, $request);
 
@@ -151,12 +151,12 @@ class FactoryTest extends TestCase
         $stub = new Factory($app, $request);
 
         $refl = new \ReflectionObject($stub);
-        $names = $refl->getProperty('names');
-        $names->setAccessible(true);
+        $parsers = $refl->getProperty('parsers');
+        $parsers->setAccessible(true);
 
-        $this->assertTrue(is_array($names->getValue($stub)));
+        $this->assertTrue(is_array($parsers->getValue($stub)));
 
-        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Template');
+        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Parser');
         $stub->name('foo', $template);
     }
 
@@ -171,6 +171,6 @@ class FactoryTest extends TestCase
 
         $stub = new Factory($app, $request);
 
-        $stub->getTemplate('badFoo');
+        $stub->parse('badFoo');
     }
 }

@@ -1,22 +1,14 @@
 <?php
 
-namespace Orchestra\Facile\Tests\Unit\Template;
+namespace Orchestra\Facile\Tests\Feature\Template;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Support\Collection;
 use Orchestra\Facile\Template\Simple;
+use Orchestra\Facile\TestCase\Feature\TestCase;
 
 class SimpleTest extends TestCase
 {
-    /**
-     * Teardown the test environment.
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /** @test */
     public function it_can_be_constructed()
     {
@@ -66,7 +58,7 @@ class SimpleTest extends TestCase
 
         $stub = with(new Simple($view))->composeJson(null, $data);
 
-        $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
         $this->assertEquals('application/json', $stub->headers->get('content-type'));
     }

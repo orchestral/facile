@@ -2,7 +2,7 @@
 
 namespace Orchestra\Facile\Template;
 
-class Api extends Template
+class Api extends Parser
 {
     use Composers\Json,
         Composers\Xml;
