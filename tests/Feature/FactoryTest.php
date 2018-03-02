@@ -14,7 +14,7 @@ class FactoryTest extends TestCase
 
         Facile::name('foo', $template);
 
-        $this->assertSame($template, Facile::getTemplate('foo'));
+        $this->assertSame($template, Facile::parseUsing('foo'));
     }
 
     /**
@@ -25,6 +25,6 @@ class FactoryTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Facile::getTemplate('badFoo');
+        Facile::parseUsing('badFoo');
     }
 }

@@ -23,11 +23,11 @@ class Factory
     protected $request;
 
     /**
-     * List of templates.
+     * List of parsers.
      *
      * @var array
      */
-    protected $names = [];
+    protected $parsers = [];
 
     /**
      * Construct a new Facile service.
@@ -39,7 +39,7 @@ class Factory
     {
         $this->app = $app;
         $this->request = $request;
-        $this->names = [];
+        $this->parsers = [];
     }
 
     /**
@@ -89,7 +89,7 @@ class Factory
      *              'users' => $users,
      *          ))
      *          ->status(200)
-     *          ->template(Orchestra\Facile\Template\Template::class)
+     *          ->parser(Orchestra\Facile\Template\Template::class)
      *          ->format('html');
      * </code>
      *
@@ -117,7 +117,7 @@ class Factory
      *          ))
      *          ->view('home.index')
      *          ->status(200)
-     *          ->template(Orchestra\Facile\Template\Template::class)
+     *          ->parser(Orchestra\Facile\Template\Template::class)
      *          ->format('html');
      * </code>
      *
@@ -132,61 +132,84 @@ class Factory
     }
 
     /**
-     * Register a named template.
+     * Register a named parser.
      *
      * @param  string  $name
-     * @param  string|\Orchestra\Facile\Template\Template  $template
+     * @param  string|\Orchestra\Facile\Template\Template  $parser
      *
      * @return void
      */
-    public function name($name, $template)
+    public function name($name, $parser)
     {
-        if (is_string($template) && (class_exists($template, false) || $this->app->bound($template))) {
-            $template = $this->app->make($template);
+        if (is_string($parser) && (class_exists($parser, false) || $this->app->bound($parser))) {
+            $parser = $this->app->make($parser);
         }
 
-        $this->names[$name] = $template;
+        $this->parsers[$name] = $parser;
     }
 
     /**
      * Get request format.
      *
-     * @param  string  $name
+     * @param  \Orchestra\Facile\Template\Template  $parser
      *
      * @return string
      */
-    public function getRequestFormat($name)
+    protected function getPrefersFrom($parser)
     {
         return $this->request->prefers(
-            $this->getTemplate($name)->getSupportedFormats()
+            $parser->getSupportedFormats()
         );
     }
 
     /**
-     * Get the template.
-     *
-     * @param  string|\Orchestra\Facile\Template\Template  $name
-     *
-     * @throws \InvalidArgumentException if template is not defined
+     * Resolve parser from factory.
      *
      * @return \Orchestra\Facile\Template\Template
      */
-    public function getTemplate($name)
+    public function resolve($name, $format, array $data, $method = 'compose')
+    {
+        $parser = $this->parseUsing($name);
+        $format = $format ?? $this->getPrefersFrom($parser);
+
+        return $parser->compose($format, $data, $method);
+    }
+
+    /**
+     * Get the parser.
+     *
+     * @param  string|\Orchestra\Facile\Template\Template  $name
+     *
+     * @throws \InvalidArgumentException if parser is not defined
+     *
+     * @return \Orchestra\Facile\Template\Template
+     */
+    public function parseUsing($name)
     {
         if ($name instanceof Template\Template) {
             return $name;
-        } elseif (! isset($this->names[$name]) && is_string($name)) {
+        } elseif (! isset($this->parsers[$name]) && is_string($name)) {
             $this->name($name, $name);
         }
 
-        $template = $this->names[$name] ?? $name;
+        $parser = $this->parsers[$name] ?? $name;
 
-        if (! $template instanceof Template\Template) {
+        if (! $parser instanceof Template\Template) {
             throw new InvalidArgumentException(
-                "Expected \$template to be instanceof Orchestra\Facile\Template\Template."
+                "Expected \$parser to be instanceof Orchestra\Facile\Template\Template."
             );
         }
 
-        return $template;
+        return $parser;
+    }
+
+    /**
+     * Determine if the application is running unit tests.
+     *
+     * @return bool
+     */
+    protected function runningUnitTests()
+    {
+        return $this->app->runningInConsole() && $this->app->runningUnitTests();
     }
 }
