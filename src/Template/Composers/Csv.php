@@ -22,7 +22,7 @@ trait Csv
     {
         $filename = $config['filename'] ?? 'export';
 
-        return Response::make($this->createCallbackToCsv($data, $config)(), $status, [
+        return Response::make($this->convertToCsvable($data, $config)->toCsv(), $status, [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
             'Cache-Control' => 'private',
@@ -43,7 +43,11 @@ trait Csv
     {
         $filename = $config['filename'] ?? 'export';
 
-        return Response::stream($this->createCallbackToCsv($data, $config), $status, [
+        $collection = $this->convertToCsvable($data, $config);
+
+        return Response::stream(function () use ($collection) {
+            $collection->streamCsv();
+        }, $status, [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
         ]);
@@ -55,9 +59,9 @@ trait Csv
      * @param  array  $data
      * @param  array  $config
      *
-     * @return \Closure
+     * @return \Orchestra\Support\Collection
      */
-    protected function createCallbackToCsv(array $data, array $config)
+    protected function convertToCsvable(array $data, array $config): Collection
     {
         $uses = $config['uses'] ?? 'data';
         $content = $data[$uses] ?? [];
@@ -70,8 +74,6 @@ trait Csv
             $content = (new Collection(array_map([$this, 'transformToArray'], $content)));
         }
 
-        return function () use ($content) {
-            return $content->toCsv();
-        };
+        return $content;
     }
 }

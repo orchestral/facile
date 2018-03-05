@@ -24,7 +24,7 @@
     "require": {
         "php": ">=7.0",
         "illuminate/contracts": "~5.5.0",
-        "orchestra/support": "~3.5.0",
+        "orchestra/support": "~3.5.3",
         "spatie/array-to-xml": "~2.0"
     },
     "require-dev": {
