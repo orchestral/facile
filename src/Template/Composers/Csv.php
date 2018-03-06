@@ -22,7 +22,9 @@ trait Csv
     {
         $filename = $config['filename'] ?? 'export';
 
-        return Response::make($this->convertToCsvable($data, $config)->toCsv(), $status, [
+        $collection = $this->convertToCsvable($data, $config);
+
+        return Response::make($collection->toCsv(), $status, [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="'.$filename.'.csv"',
             'Cache-Control' => 'private',
