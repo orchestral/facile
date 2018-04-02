@@ -108,7 +108,7 @@ class Factory
      *
      * @return string
      */
-    protected function getPrefersFrom(Template\Parser $parser)
+    protected function getPrefersFor(Template\Parser $parser)
     {
         return $this->request->prefers(
             $parser->getSupportedFormats()
@@ -128,7 +128,7 @@ class Factory
     public function resolve($name, $format, array $data, $method = 'compose')
     {
         $parser = $this->parse($name);
-        $format = $format ?? $this->getPrefersFrom($parser);
+        $format = $format ?? $this->getPrefersFor($parser);
 
         return $parser->compose($format, $data, $method);
     }
