@@ -2,6 +2,18 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/facile`.
 
+## 3.5.1
+
+Released: 2018-04-02
+
+### Added
+
+* Allow certain data to be streamed instead of just rendered.
+
+### Changes
+
+* Revamp `Orchestra\Facile\Template\Template` to `Orchestra\Facile\Template\Parser`.
+
 ## 3.5.0
 
 Released: 2017-11-10
