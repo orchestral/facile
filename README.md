@@ -8,6 +8,7 @@ Facile Component simplify the need to create API based response in your Laravel 
 [![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads)](https://packagist.org/packages/orchestra/facile)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/facile/v/unstable)](//packagist.org/packages/orchestra/facile)
 [![License](https://poser.pugx.org/orchestra/facile/license)](https://packagist.org/packages/orchestra/facile)
+[![Coverage Status](https://coveralls.io/repos/github/orchestral/facile/badge.svg?branch=3.6)](https://coveralls.io/github/orchestral/facile?branch=3.6)
 
 ## Table of Content
 
