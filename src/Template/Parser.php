@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
 
-abstract class Template
+abstract class Parser
 {
     /**
      * View instance.
@@ -48,23 +48,25 @@ abstract class Template
      *
      * @param  string  $format
      * @param  array  $compose
+     * @param  string  $method
      *
      * @throws \RuntimeException
      *
      * @return mixed
      */
-    public function compose(string $format, array $compose = [])
+    public function compose(string $format, array $compose = [], string $method = 'compose')
     {
         if (! in_array($format, $this->formats)) {
             return $this->composeError(null, [], 406);
-        } elseif (! method_exists($this, 'compose'.ucwords($format))) {
-            throw new RuntimeException('Call to undefine method [compose'.ucwords($format).'].');
+        } elseif (! method_exists($this, $method.ucwords($format))) {
+            throw new RuntimeException('Call to undefine method ['.$method.ucwords($format).'].');
         }
 
         $config = $compose['on'][$format] ?? [];
 
-        return $this->{'compose'.ucwords($format)}(
-            $compose['view'],
+        $config['view'] = $compose['view'];
+
+        return $this->{$method.ucwords($format)}(
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],
             $config

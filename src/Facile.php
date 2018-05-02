@@ -7,6 +7,13 @@ use Illuminate\Contracts\Support\Renderable;
 class Facile implements Renderable
 {
     /**
+     * The application instance.
+     *
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * Factory instance.
      *
      * @var \Orchestra\Facile\Factory
@@ -18,7 +25,7 @@ class Facile implements Renderable
      *
      * @var string
      */
-    protected $template = Template\Simple::class;
+    protected $parser = Template\Simple::class;
 
     /**
      * View format.
@@ -48,17 +55,17 @@ class Facile implements Renderable
      * Construct a new Response instance.
      *
      * @param  \Orchestra\Facile\Factory  $factory
-     * @param  string  $template
+     * @param  string  $parser
      * @param  array  $data
      * @param  string  $format
      */
-    public function __construct(Factory $factory, $template, array $data = [], $format = null)
+    public function __construct(Factory $factory, $parser, array $data = [], $format = null)
     {
         $this->factory = $factory;
         $this->data = array_merge($this->data, $data);
-        $this->format = $format;
+        $this->setFormat($format);
 
-        $this->template($template);
+        $this->parser($parser);
     }
 
     /**
@@ -126,7 +133,21 @@ class Facile implements Renderable
     }
 
     /**
-     * Set a template for Facile.
+     * Set a parser for Facile.
+     *
+     * @param  mixed  $name
+     *
+     * @return $this
+     */
+    public function parser($name)
+    {
+        $this->parser = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set a parser for Facile.
      *
      * @param  mixed  $name
      *
@@ -134,9 +155,7 @@ class Facile implements Renderable
      */
     public function template($name)
     {
-        $this->template = $name;
-
-        return $this;
+        return $this->parser($name);
     }
 
     /**
@@ -163,11 +182,11 @@ class Facile implements Renderable
     /**
      * Set Output Format.
      *
-     * @param  string  $format
+     * @param  string|null  $format
      *
      * @return $this
      */
-    public function setFormat(string $format): self
+    public function setFormat(?string $format): self
     {
         $this->format = $format;
 
@@ -177,14 +196,10 @@ class Facile implements Renderable
     /**
      * Get Output Format.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFormat(): string
+    public function getFormat(): ?string
     {
-        if (is_null($this->format)) {
-            $this->format = $this->factory->getRequestFormat($this->template);
-        }
-
         return $this->format;
     }
 
@@ -197,11 +212,9 @@ class Facile implements Renderable
     {
         $content = $this->render();
 
-        if ($content instanceof Renderable) {
-            return $content->render();
-        }
-
-        return $content;
+        return $content instanceof Renderable
+                    ? $content->render()
+                    : $content;
     }
 
     /**
@@ -211,7 +224,26 @@ class Facile implements Renderable
      */
     public function render()
     {
-        return $this->factory->getTemplate($this->template)
-                    ->compose($this->getFormat(), $this->data);
+        return $this->factory->resolve(
+            $this->parser,
+            $this->getFormat(),
+            $this->data,
+            'compose'
+        );
+    }
+
+    /**
+     * Render facile by selected format.
+     *
+     * @return mixed
+     */
+    public function stream()
+    {
+        return $this->factory->resolve(
+            $this->parser,
+            $this->getFormat(),
+            $this->data,
+            'stream'
+        );
     }
 }

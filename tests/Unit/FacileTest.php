@@ -145,44 +145,21 @@ class FacileTest extends TestCase
 
         $stub = new Facile($env, $template, [], 'json');
 
-        $stub->template('foo');
+        $stub->parser('foo');
 
         $refl = new \ReflectionObject($stub);
-        $template = $refl->getProperty('template');
-        $template->setAccessible(true);
+        $parser = $refl->getProperty('parser');
+        $parser->setAccessible(true);
 
-        $this->assertEquals('foo', $template->getValue($stub));
+        $this->assertEquals('foo', $parser->getValue($stub));
 
-        $stub->template(new Simple($view));
-
-        $refl = new \ReflectionObject($stub);
-        $template = $refl->getProperty('template');
-        $template->setAccessible(true);
-
-        $this->assertInstanceOf('\Orchestra\Facile\Template\Simple', $template->getValue($stub));
-    }
-
-    /** @test */
-    public function it_can_interacts_with_format()
-    {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $template = m::mock('\Orchestra\Facile\Template\Simple');
-
-        $request->shouldReceive('prefers')->once()->with('jsonp')->andReturn('jsonp');
-        $template->shouldReceive('getSupportedFormats')->once()->andReturn('jsonp');
-
-        $stub = new Facile(new Factory($app, $request), $template, [], null);
-
-        $this->assertEquals('jsonp', $stub->getFormat());
-
-        $stub->format('md');
+        $stub->parser(new Simple($view));
 
         $refl = new \ReflectionObject($stub);
-        $format = $refl->getProperty('format');
-        $format->setAccessible(true);
+        $parser = $refl->getProperty('parser');
+        $parser->setAccessible(true);
 
-        $this->assertEquals('md', $format->getValue($stub));
+        $this->assertInstanceOf('\Orchestra\Facile\Template\Simple', $parser->getValue($stub));
     }
 
     /** @test */
@@ -209,7 +186,8 @@ class FacileTest extends TestCase
         $template1 = m::mock('\Orchestra\Facile\Template\Simple');
 
         $template1->shouldReceive('compose')->once()
-                ->with('json', m::any())->andReturn(json_encode(['foo' => 'foo is awesome']));
+                ->with('json', m::type('Array'), 'compose')
+                ->andReturn(json_encode(['foo' => 'foo is awesome']));
 
         $stub1 = new Facile(new Factory($app, $request), $template1, [], 'json');
 
@@ -223,8 +201,10 @@ class FacileTest extends TestCase
         $render = m::mock('\Illuminate\Contracts\Support\Renderable');
         $render->shouldReceive('render')->once()->andReturn('foo is awesome');
 
-        $template2 = m::mock('\Orchestra\Facile\Template\Template');
-        $template2->shouldReceive('compose')->once()->with('json', m::any())->andReturn($render);
+        $template2 = m::mock('\Orchestra\Facile\Template\Parser');
+        $template2->shouldReceive('compose')->once()
+                    ->with('json', m::type('Array'), 'compose')
+                    ->andReturn($render);
 
         $stub2 = new Facile(new Factory($app, $request), $template2, [], 'json');
 

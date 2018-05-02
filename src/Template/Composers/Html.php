@@ -2,34 +2,48 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Illuminate\Http\Response;
 use InvalidArgumentException;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Html
 {
     /**
      * Compose HTML.
      *
-     * @param  mixed|null   $view
      * @param  array   $data
      * @param  int   $status
      * @param  array   $config
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function composeHtml($view = null, array $data = [], int $status = 200, array $config = []): Response
+    public function composeHtml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
-        if (! isset($view)) {
+        if (is_null($view = $config['view'])) {
             throw new InvalidArgumentException('Missing [$view].');
         }
 
+        return Response::make($this->convertToHtml($view, $data, $config), $status);
+    }
+
+    /**
+     * Convert content to XML.
+     *
+     * @param  \Illuminate\Contracts\View\View|string  $view
+     * @param  array  $data
+     * @param  array  $config
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    protected function convertToHtml($view, array $data, array $config)
+    {
         if (! $view instanceof View) {
             $view = $this->view->make($view);
         }
 
-        return new Response($view->with($data), $status);
+        return $view->with($data);
     }
 }

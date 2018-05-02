@@ -10,11 +10,11 @@ class FactoryTest extends TestCase
     /** @test */
     public function it_can_construct_facile_using_name()
     {
-        $template = m::mock('FooTemplateStub', '\Orchestra\Facile\Template\Template');
+        $template = m::mock('FooParser', '\Orchestra\Facile\Template\Parser');
 
         Facile::name('foo', $template);
 
-        $this->assertSame($template, Facile::getTemplate('foo'));
+        $this->assertSame($template, Facile::parse('foo'));
     }
 
     /**
@@ -25,6 +25,6 @@ class FactoryTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Facile::getTemplate('badFoo');
+        Facile::parse('badFoo');
     }
 }

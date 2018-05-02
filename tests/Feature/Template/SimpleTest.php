@@ -1,35 +1,20 @@
 <?php
 
-namespace Orchestra\Facile\Tests\Unit\Template;
+namespace Orchestra\Facile\Tests\Feature\Template;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Support\Collection;
 use Orchestra\Facile\Template\Simple;
+use Orchestra\Facile\TestCase\Feature\TestCase;
 
 class SimpleTest extends TestCase
 {
-    /**
-     * Teardown the test environment.
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /** @test */
     public function it_can_be_constructed()
     {
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $stub = new Simple(m::mock('\Illuminate\Contracts\View\Factory'));
 
-        $stub = new Simple($view);
-        $refl = new \ReflectionObject($stub);
-
-        $formats = $refl->getProperty('formats');
-
-        $formats->setAccessible(true);
-
-        $this->assertEquals(['csv', 'html', 'json', 'xml'], $formats->getValue($stub));
+        $this->assertEquals(['csv', 'html', 'json', 'xml'], $stub->getSupportedFormats());
     }
 
     /** @test */
@@ -43,7 +28,7 @@ class SimpleTest extends TestCase
 
         $stub = new Simple($view);
 
-        $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml('users.index', $data));
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml($data, 200, ['view' => 'users.index']));
     }
 
     /**
@@ -55,7 +40,7 @@ class SimpleTest extends TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
 
-        with(new Simple($view))->composeHtml(null, $data);
+        with(new Simple($view))->composeHtml($data, 200, ['view' => null]);
     }
 
     /** @test */
@@ -64,9 +49,9 @@ class SimpleTest extends TestCase
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
 
-        $stub = with(new Simple($view))->composeJson(null, $data);
+        $stub = with(new Simple($view))->composeJson($data);
 
-        $this->assertInstanceOf('\Illuminate\Http\JsonResponse', $stub);
+        $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals('{"foo":"foobar is awesome"}', $stub->getContent());
         $this->assertEquals('application/json', $stub->headers->get('content-type'));
     }
@@ -90,7 +75,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Simple($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv($data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());
@@ -115,7 +100,7 @@ id,name
 
 EXPECTED;
 
-        $stub = with(new Simple($view))->composeCsv(null, $data);
+        $stub = with(new Simple($view))->composeCsv($data);
 
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub);
         $this->assertEquals($expected, $stub->getContent());
