@@ -23,17 +23,17 @@
     },
     "require": {
         "php": ">=7.1",
-        "illuminate/contracts": "~5.7.0",
-        "orchestra/support": "~3.7.0",
+        "illuminate/contracts": "dev-master",
+        "orchestra/support": "~3.8.0",
         "spatie/array-to-xml": "^2.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
-        "orchestra/testbench": "~3.7.0"
+        "orchestra/testbench": "~3.8.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.7-dev"
+            "dev-master": "3.8-dev"
         }
     },
     "config": {
