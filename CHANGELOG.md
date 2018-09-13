@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/facile`.
 
+## 3.7.0
+
+Released: 2018-09-13
+
+### Changes
+
+* Update support for Laravel Framework v5.7.
+
 ## 3.6.1
 
 Released: 2018-05-02
