@@ -20,7 +20,7 @@ trait Xml
      */
     public function composeXml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
-        return Response::make($this->createCallbackToXml($data, $config)(), $status, [
+        return Response::make($this->createXmlResponse($data, $config)(), $status, [
             'Content-Type' => 'text/xml',
         ]);
     }
@@ -36,7 +36,7 @@ trait Xml
      */
     public function streamXml(array $data = [], $status = 200, array $config = []): SymfonyResponse
     {
-        return Response::stream($this->createCallbackToXml($data, $config), $status, [
+        return Response::stream($this->createXmlResponse($data, $config), $status, [
             'Content-Type' => 'text/xml',
         ]);
     }
@@ -49,7 +49,7 @@ trait Xml
      *
      * @return \Closure
      */
-    protected function createCallbackToXml(array $data, array $config)
+    protected function createXmlResponse(array $data, array $config)
     {
         if (! is_null($root = $config['root'] ?? null)) {
             $data = $data[$root] ?? [];

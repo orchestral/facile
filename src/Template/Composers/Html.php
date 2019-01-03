@@ -26,7 +26,7 @@ trait Html
             throw new InvalidArgumentException('Missing [$view].');
         }
 
-        return Response::make($this->convertToHtml($view, $data, $config), $status);
+        return Response::make($this->convertToViewable($view, $data, $config), $status);
     }
 
     /**
@@ -38,7 +38,7 @@ trait Html
      *
      * @return \Illuminate\Contracts\View\View
      */
-    protected function convertToHtml($view, array $data, array $config)
+    protected function convertToViewable($view, array $data, array $config)
     {
         if (! $view instanceof View) {
             $view = $this->view->make($view);

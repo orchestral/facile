@@ -19,7 +19,7 @@ trait Json
      */
     public function composeJson(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
-        return Response::make($this->createCallbackToJson($data, $config)(), $status, [
+        return Response::make($this->createJsonResponse($data, $config)(), $status, [
             'Content-Type' => 'application/json',
         ]);
     }
@@ -35,7 +35,7 @@ trait Json
      */
     public function streamJson(array $data = [], $status = 200, array $config = []): SymfonyResponse
     {
-        return Response::stream($this->createCallbackToJson($data, $config), $status, [
+        return Response::stream($this->createJsonResponse($data, $config), $status, [
             'Content-Type' => 'application/json',
         ]);
     }
@@ -48,7 +48,7 @@ trait Json
      *
      * @return \Closure
      */
-    protected function createCallbackToJson(array $data, array $config)
+    protected function createJsonResponse(array $data, array $config)
     {
         if (! is_null($uses = $config['uses'] ?? null)) {
             $data = $data[$uses] ?? [];
