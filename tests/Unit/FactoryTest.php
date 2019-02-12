@@ -160,12 +160,11 @@ class FactoryTest extends TestCase
         $stub->name('foo', $template);
     }
 
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
+    /** @test */
     public function it_throws_exception_when_trying_to_get_template_without_defining_it_first()
     {
+        $this->expectException('InvalidArgumentException');
+
         $app = m::spy('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
         $request = m::mock('\Illuminate\Http\Request');
 

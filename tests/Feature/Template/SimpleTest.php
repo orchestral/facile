@@ -31,12 +31,11 @@ class SimpleTest extends TestCase
         $this->assertInstanceOf('\Illuminate\Http\Response', $stub->composeHtml($data, 200, ['view' => 'users.index']));
     }
 
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
+    /** @test */
     public function it_throws_exception_when_composing_html_without_view()
     {
+        $this->expectException('InvalidArgumentException');
+
         $view = m::mock('\Illuminate\Contracts\View\Factory');
         $data = ['foo' => 'foobar is awesome'];
 

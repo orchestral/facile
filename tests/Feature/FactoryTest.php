@@ -17,12 +17,11 @@ class FactoryTest extends TestCase
         $this->assertSame($template, Facile::parse('foo'));
     }
 
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
+    /** @test */
     public function it_throws_exception_when_trying_to_get_template_without_defining_it_first()
     {
+        $this->expectException('InvalidArgumentException');
+
         $this->withoutExceptionHandling();
 
         Facile::parse('badFoo');

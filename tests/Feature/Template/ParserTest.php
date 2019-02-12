@@ -64,12 +64,11 @@ class ParserTest extends TestCase
         $this->assertEquals('error-406', $response->getContent());
     }
 
-    /**
-     * @test
-     * @expectedException \RuntimeException
-     */
+    /** @test */
     public function it_throws_exception_when_rendering_method_is_not_available()
     {
+        $this->expectException('RuntimeException');
+
         $view = m::mock('\Illuminate\Contracts\View\Factory');
 
         $stub = new Parser($view);
