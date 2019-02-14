@@ -56,17 +56,17 @@ abstract class Parser
      */
     public function compose(string $format, array $compose = [], string $method = 'compose')
     {
-        if (! in_array($format, $this->formats)) {
+        if (! \in_array($format, $this->formats)) {
             return $this->composeError(null, [], 406);
-        } elseif (! method_exists($this, $method.ucwords($format))) {
-            throw new RuntimeException('Call to undefine method ['.$method.ucwords($format).'].');
+        } elseif (! \method_exists($this, $method.\ucwords($format))) {
+            throw new RuntimeException('Call to undefine method ['.$method.\ucwords($format).'].');
         }
 
         $config = $compose['on'][$format] ?? [];
 
         $config['view'] = $compose['view'];
 
-        return $this->{$method.ucwords($format)}(
+        return $this->{$method.\ucwords($format)}(
             $this->prepareDataValue($config, $compose['data']),
             $compose['status'],
             $config
@@ -126,9 +126,9 @@ abstract class Parser
         $only = $config['only'] ?? null;
         $except = $config['except'] ?? null;
 
-        if (! is_null($only)) {
+        if (! \is_null($only)) {
             return Arr::only($data, $only);
-        } elseif (! is_null($except)) {
+        } elseif (! \is_null($except)) {
             return Arr::except($data, $except);
         }
 
