@@ -62,7 +62,7 @@ class Facile implements Renderable
     public function __construct(Factory $factory, $parser, array $data = [], $format = null)
     {
         $this->factory = $factory;
-        $this->data = array_merge($this->data, $data);
+        $this->data = \array_merge($this->data, $data);
         $this->setFormat($format);
 
         $this->parser($parser);
@@ -92,9 +92,9 @@ class Facile implements Renderable
      */
     public function with($key, $value = null): self
     {
-        $data = is_array($key) ? $key : [$key => $value];
+        $data = \is_array($key) ? $key : [$key => $value];
 
-        $this->data['data'] = array_merge($this->data['data'], $data);
+        $this->data['data'] = \array_merge($this->data['data'], $data);
 
         return $this;
     }
@@ -113,7 +113,7 @@ class Facile implements Renderable
             $this->data['on'][$type] = [];
         }
 
-        $this->data['on'][$type] = array_merge($this->data['on'][$type], $config);
+        $this->data['on'][$type] = \array_merge($this->data['on'][$type], $config);
 
         return $this;
     }
@@ -168,7 +168,7 @@ class Facile implements Renderable
      */
     public function format(?string $format = null, array $config = []): self
     {
-        if (! is_null($format) && ! empty($format)) {
+        if (! \is_null($format) && ! empty($format)) {
             $this->setFormat($format);
 
             if (! empty($config)) {
@@ -225,10 +225,7 @@ class Facile implements Renderable
     public function render()
     {
         return $this->factory->resolve(
-            $this->parser,
-            $this->getFormat(),
-            $this->data,
-            'compose'
+            $this->parser, $this->getFormat(), $this->data,  'compose'
         );
     }
 
@@ -240,10 +237,7 @@ class Facile implements Renderable
     public function stream()
     {
         return $this->factory->resolve(
-            $this->parser,
-            $this->getFormat(),
-            $this->data,
-            'stream'
+            $this->parser, $this->getFormat(), $this->data, 'stream'
         );
     }
 }

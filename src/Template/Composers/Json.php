@@ -50,7 +50,7 @@ trait Json
      */
     protected function createCallbackToJson(array $data, array $config)
     {
-        if (! is_null($uses = $config['uses'] ?? null)) {
+        if (! \is_null($uses = $config['uses'] ?? null)) {
             $data = $data[$uses] ?? [];
         }
 
@@ -58,10 +58,10 @@ trait Json
             $data = $data->toArray();
         }
 
-        $data = array_map([$this, 'transformToArray'], $data);
+        $data = \array_map([$this, 'transformToArray'], $data);
 
         return function () use ($data, $config) {
-            return json_encode($data, $config['encoding'] ?? 0);
+            return \json_encode($data, $config['encoding'] ?? 0);
         };
     }
 }

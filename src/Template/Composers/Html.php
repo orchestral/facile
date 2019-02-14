@@ -22,7 +22,7 @@ trait Html
      */
     public function composeHtml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
-        if (is_null($view = $config['view'])) {
+        if (\is_null($view = $config['view'])) {
             throw new InvalidArgumentException('Missing [$view].');
         }
 

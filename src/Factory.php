@@ -66,9 +66,7 @@ class Factory
      */
     public function view($view, array $data = [])
     {
-        return (new Facile($this, 'simple'))
-                        ->view($view)
-                        ->with($data);
+        return (new Facile($this, 'simple'))->view($view)->with($data);
     }
 
     /**
@@ -80,8 +78,7 @@ class Factory
      */
     public function with($data)
     {
-        return (new Facile($this, 'simple'))
-                        ->with(...func_get_args());
+        return (new Facile($this, 'simple'))->with(...\func_get_args());
     }
 
     /**
@@ -94,7 +91,7 @@ class Factory
      */
     public function name(string $name, $parser): void
     {
-        if (is_string($parser) && (class_exists($parser, false) || $this->app->bound($parser))) {
+        if (\is_string($parser) && (\class_exists($parser, false) || $this->app->bound($parser))) {
             $parser = $this->app->make($parser);
         }
 
@@ -146,7 +143,7 @@ class Factory
     {
         if ($name instanceof Template\Parser) {
             return $name;
-        } elseif (! isset($this->parsers[$name]) && is_string($name)) {
+        } elseif (! isset($this->parsers[$name]) && \is_string($name)) {
             $this->name($name, $name);
         }
 

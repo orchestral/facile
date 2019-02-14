@@ -51,7 +51,7 @@ trait Xml
      */
     protected function createCallbackToXml(array $data, array $config)
     {
-        if (! is_null($root = $config['root'] ?? null)) {
+        if (! \is_null($root = $config['root'] ?? null)) {
             $data = $data[$root] ?? [];
         }
 
@@ -59,7 +59,7 @@ trait Xml
             $data = $data->toArray();
         }
 
-        $data = array_map([$this, 'transformToArray'], $data);
+        $data = \array_map([$this, 'transformToArray'], $data);
 
         return function () use ($data, $config) {
             return ArrayToXml::convert($data, $config['document-root'] ?? $root);

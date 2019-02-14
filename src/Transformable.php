@@ -20,9 +20,9 @@ class Transformable
         if (($data instanceof Eloquent) || ($data instanceof Arrayable)) {
             return $data->toArray();
         } elseif ($data instanceof Renderable) {
-            return e($data->render());
-        } elseif (is_array($data)) {
-            return array_map([$this, 'run'], $data);
+            return \e($data->render());
+        } elseif (\is_array($data)) {
+            return \array_map([$this, 'run'], $data);
         }
 
         return $data;

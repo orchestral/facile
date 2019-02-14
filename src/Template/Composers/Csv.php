@@ -74,7 +74,7 @@ trait Csv
                 $content = $content->toArray();
             }
 
-            $content = (new Collection(array_map([$this, 'transformToArray'], $content)));
+            $content = Collection::make(\array_map([$this, 'transformToArray'], $content));
         }
 
         return $content;
