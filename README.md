@@ -3,12 +3,12 @@ Facile Component for Orchestra Platform
 
 Facile Component simplify the need to create API based response in your Laravel application.
 
-[![Build Status](https://travis-ci.org/orchestral/facile.svg?branch=master)](https://travis-ci.org/orchestral/facile)
+[![Build Status](https://travis-ci.org/orchestral/facile.svg?branch=3.8)](https://travis-ci.org/orchestral/facile)
 [![Latest Stable Version](https://poser.pugx.org/orchestra/facile/version)](https://packagist.org/packages/orchestra/facile)
 [![Total Downloads](https://poser.pugx.org/orchestra/facile/downloads)](https://packagist.org/packages/orchestra/facile)
 [![Latest Unstable Version](https://poser.pugx.org/orchestra/facile/v/unstable)](//packagist.org/packages/orchestra/facile)
 [![License](https://poser.pugx.org/orchestra/facile/license)](https://packagist.org/packages/orchestra/facile)
-[![Coverage Status](https://coveralls.io/repos/github/orchestral/facile/badge.svg?branch=master)](https://coveralls.io/github/orchestral/facile?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/orchestral/facile/badge.svg?branch=3.8)](https://coveralls.io/github/orchestral/facile?branch=3.8)
 
 ## Table of Content
 
@@ -24,6 +24,7 @@ Laravel    | Facile
  5.5.x     | 3.5.x
  5.6.x     | 3.6.x
  5.7.x     | 3.7.x
+ 5.8.x     | 3.8.x@dev
 
 ## Installation
 
