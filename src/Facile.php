@@ -225,7 +225,7 @@ class Facile implements Renderable
     public function render()
     {
         return $this->factory->resolve(
-            $this->parser, $this->getFormat(), $this->data,  'compose'
+            $this->parser, $this->getFormat(), $this->data, 'compose'
         );
     }
 
