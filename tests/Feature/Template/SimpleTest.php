@@ -14,7 +14,7 @@ class SimpleTest extends TestCase
     {
         $stub = new Simple(m::mock('\Illuminate\Contracts\View\Factory'));
 
-        $this->assertEquals(['csv', 'html', 'json', 'xml'], $stub->getSupportedFormats());
+        $this->assertEquals(['csv', 'html', 'json', 'xls', 'xlsx', 'xml'], $stub->getSupportedFormats());
     }
 
     /** @test */
