@@ -11,5 +11,5 @@ class Simple extends Export
      *
      * @var array
      */
-    protected $formats = ['csv', 'html', 'json', 'xml'];
+    protected $formats = ['csv', 'html', 'json', 'xls', 'xlsx', 'xml'];
 }
