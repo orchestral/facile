@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/facile`.
 
+## 3.8.1
+
+Released: 2019-03-08
+
+### Added
+
+* Added support to export `xls` and `xlsx` using `maatwebsite/excel`.
+
 ## 3.8.0
 
 Released: 2019-03-02
@@ -9,6 +17,14 @@ Released: 2019-03-02
 ### Changes
 
 * Update support for Laravel Framework v5.8.
+
+## 3.7.2
+
+Released: 2019-03-08
+
+### Added
+
+* Added support to export `xls` and `xlsx` using `maatwebsite/excel`.
 
 ## 3.7.1
 
