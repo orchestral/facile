@@ -25,6 +25,7 @@ Laravel    | Facile
  5.6.x     | 3.6.x
  5.7.x     | 3.7.x
  5.8.x     | 3.8.x
+ 6.x       | 4.x@dev
 
 ## Installation
 
@@ -33,7 +34,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
     "require": {
-        "orchestra/facile": "^3.5"
+        "orchestra/facile": "^4.0"
     }
 }
 ```
@@ -44,7 +45,7 @@ And then run `composer install` from the terminal.
 
 Above installation can also be simplify by using the following command:
 
-    composer require "orchestra/facile=^3.5"
+    composer require "orchestra/facile=^4.0"
 
 ## Configuration
 
