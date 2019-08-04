@@ -15,14 +15,13 @@ class FacileServiceProvider extends ServiceProvider implements DeferrableProvide
      */
     public function register()
     {
-        $this->app->singleton('orchestra.facile', function (Application $app) {
-            $factory = new Factory($app, $app->make('request'));
-            $template = new Template\Simple($app->make('view'), new Transformable());
+        $this->app->singleton('orchestra.facile', static function (Application $app) {
+            return \tap(new Factory($app, $app->make('request')), function ($factory) use ($app) {
+                $template = new Template\Simple($app->make('view'), new Transformable());
 
-            $factory->name('default', $template);
-            $factory->name('simple', $template);
-
-            return $factory;
+                $factory->name('default', $template);
+                $factory->name('simple', $template);
+            });
         });
     }
 

@@ -48,7 +48,7 @@ trait Csv
 
         $collection = $this->convertToCsvable($data, $config);
 
-        return Response::stream(function () use ($collection) {
+        return Response::stream(static function () use ($collection) {
             $collection->streamCsv();
         }, $status, [
             'Content-Type' => 'text/csv',
