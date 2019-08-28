@@ -7,13 +7,6 @@ use Illuminate\Contracts\Support\Renderable;
 class Facile implements Renderable
 {
     /**
-     * The application instance.
-     *
-     * @var \Illuminate\Contracts\Foundation\Application
-     */
-    protected $app;
-
-    /**
      * Factory instance.
      *
      * @var \Orchestra\Facile\Factory
