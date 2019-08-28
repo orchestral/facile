@@ -23,14 +23,14 @@
     },
     "require": {
         "php": ">=7.2",
-        "illuminate/contracts": "^6.0",
-        "orchestra/support": "^4.0",
+        "illuminate/contracts": "^7.0",
+        "orchestra/support": "^5.0",
         "spatie/array-to-xml": "^2.0"
     },
     "require-dev": {
         "maatwebsite/excel": "^3.0",
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0"
+        "orchestra/testbench": "^5.0"
     },
     "suggest": {
         "maatwebsite/excel": "Allow to export XLS and XLSX (^3.0)."
