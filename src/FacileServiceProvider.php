@@ -3,7 +3,7 @@
 namespace Orchestra\Facile;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
 class FacileServiceProvider extends ServiceProvider implements DeferrableProvider
@@ -15,7 +15,7 @@ class FacileServiceProvider extends ServiceProvider implements DeferrableProvide
      */
     public function register()
     {
-        $this->app->singleton('orchestra.facile', static function (Application $app) {
+        $this->app->singleton('orchestra.facile', static function (Container $app) {
             return \tap(new Factory($app, $app->make('request')), static function ($factory) use ($app) {
                 $template = new Template\Simple($app->make('view'), new Transformable());
 

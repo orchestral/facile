@@ -4,7 +4,7 @@ namespace Orchestra\Facile;
 
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 
 class Factory
 {
@@ -13,7 +13,7 @@ class Factory
      *
      * @var \Illuminate\Contracts\Foundation\Application
      */
-    protected $app;
+    protected $container;
 
     /**
      * Request instance.
@@ -32,12 +32,12 @@ class Factory
     /**
      * Construct a new Facile service.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Container\Container  $container
      * @param  \Illuminate\Http\Request  $request
      */
-    public function __construct(Application $app, Request $request)
+    public function __construct(Container $container, Request $request)
     {
-        $this->app = $app;
+        $this->container = $container;
         $this->request = $request;
         $this->parsers = [];
     }
@@ -91,8 +91,8 @@ class Factory
      */
     public function name(string $name, $parser): void
     {
-        if (\is_string($parser) && (\class_exists($parser, false) || $this->app->bound($parser))) {
-            $parser = $this->app->make($parser);
+        if (\is_string($parser) && (\class_exists($parser, false) || $this->container->bound($parser))) {
+            $parser = $this->container->make($parser);
         }
 
         $this->parsers[$name] = $parser;
@@ -156,15 +156,5 @@ class Factory
         }
 
         return $parser;
-    }
-
-    /**
-     * Determine if the application is running unit tests.
-     *
-     * @return bool
-     */
-    protected function runningUnitTests()
-    {
-        return $this->app->runningInConsole() && $this->app->runningUnitTests();
     }
 }
