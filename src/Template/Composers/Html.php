@@ -2,9 +2,9 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use InvalidArgumentException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Response;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Html

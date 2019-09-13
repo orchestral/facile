@@ -2,8 +2,8 @@
 
 namespace Orchestra\Facile\Tests\Feature\Template;
 
-use Mockery as m;
 use Illuminate\Pagination\Paginator;
+use Mockery as m;
 use Orchestra\Facile\Template\Simple;
 use Orchestra\Facile\TestCase\Feature\TestCase;
 

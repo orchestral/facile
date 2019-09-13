@@ -2,9 +2,9 @@
 
 namespace Orchestra\Facile;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class FacileServiceProvider extends ServiceProvider implements DeferrableProvider
 {

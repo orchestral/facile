@@ -2,10 +2,10 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Orchestra\Support\Collection;
-use Illuminate\Support\Facades\Response;
-use Orchestra\Support\Contracts\Csvable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Facades\Response;
+use Orchestra\Support\Collection;
+use Orchestra\Support\Contracts\Csvable;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Csv

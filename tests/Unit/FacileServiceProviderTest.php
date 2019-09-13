@@ -2,8 +2,8 @@
 
 namespace Orchestra\Facile\TestCase\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Orchestra\Facile\FacileServiceProvider;
+use PHPUnit\Framework\TestCase;
 
 class FacileServiceProviderTest extends TestCase
 {

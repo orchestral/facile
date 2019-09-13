@@ -2,9 +2,9 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Excel as Exporter;
-use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Excel

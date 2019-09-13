@@ -2,8 +2,8 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Json

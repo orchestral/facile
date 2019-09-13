@@ -2,9 +2,9 @@
 
 namespace Orchestra\Facile\Template\Composers;
 
-use Spatie\ArrayToXml\ArrayToXml;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Facades\Response;
+use Spatie\ArrayToXml\ArrayToXml;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait Xml

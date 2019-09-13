@@ -2,11 +2,11 @@
 
 namespace Orchestra\Facile\Template;
 
-use RuntimeException;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Response;
-use Orchestra\Facile\Transformable;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
+use Orchestra\Facile\Transformable;
+use RuntimeException;
 
 abstract class Parser
 {
