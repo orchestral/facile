@@ -2,9 +2,9 @@
 
 namespace Orchestra\Facile;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Illuminate\Contracts\Container\Container;
 
 class Factory
 {

@@ -3,9 +3,9 @@
 namespace Orchestra\Facile\Tests\Feature\Template;
 
 use Mockery as m;
-use Orchestra\Support\Collection;
 use Orchestra\Facile\Template\Simple;
 use Orchestra\Facile\TestCase\Feature\TestCase;
+use Orchestra\Support\Collection;
 
 class SimpleTest extends TestCase
 {

@@ -5,8 +5,8 @@ namespace Orchestra\Facile\TestCase\Unit;
 use Mockery as m;
 use Orchestra\Facile\Facile;
 use Orchestra\Facile\Factory;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Facile\Template\Simple;
+use PHPUnit\Framework\TestCase;
 
 class FacileTest extends TestCase
 {
