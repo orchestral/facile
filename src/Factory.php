@@ -150,9 +150,7 @@ class Factory
         $parser = $this->parsers[$name] ?? $name;
 
         if (! $parser instanceof Template\Parser) {
-            throw new InvalidArgumentException(
-                "Expected \$parser to be instanceof Orchestra\Facile\Template\Parser."
-            );
+            throw new InvalidArgumentException("Expected \$parser to be instanceof Orchestra\Facile\Template\Parser.");
         }
 
         return $parser;
