@@ -29,8 +29,8 @@
     },
     "require-dev": {
         "maatwebsite/excel": "^3.1.17",
-        "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0"
+        "mockery/mockery": "^1.3",
+        "orchestra/testbench": "^4.0.1"
     },
     "suggest": {
         "maatwebsite/excel": "Allow to export XLS and XLSX (^3.0)."
