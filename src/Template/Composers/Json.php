@@ -10,12 +10,6 @@ trait Json
 {
     /**
      * Compose JSON.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeJson(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -26,14 +20,8 @@ trait Json
 
     /**
      * Stream JSON.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamJson(array $data = [], $status = 200, array $config = []): SymfonyResponse
+    public function streamJson(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
         return Response::stream($this->createJsonResponse($data, $config), $status, [
             'Content-Type' => 'application/json',
@@ -42,9 +30,6 @@ trait Json
 
     /**
      * Convert content to JSON.
-     *
-     * @param  array  $data
-     * @param  array  $config
      *
      * @return \Closure
      */
@@ -60,7 +45,7 @@ trait Json
 
         $data = \array_map([$this, 'transformToArray'], $data);
 
-        return function () use ($data, $config) {
+        return static function () use ($data, $config) {
             return \json_encode($data, $config['encoding'] ?? 0);
         };
     }

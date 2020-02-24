@@ -33,11 +33,8 @@ abstract class Parser
 
     /**
      * Construct a new Facile service.
-     *
-     * @param  \Illuminate\Contracts\View\Factory  $view
-     * @param  \Orchestra\Facile\Transformable  $transformable
      */
-    public function __construct(Factory $view, Transformable $transformable = null)
+    public function __construct(Factory $view, ?Transformable $transformable = null)
     {
         $this->view = $view;
         $this->transformable = $transformable ?: new Transformable();
@@ -45,10 +42,6 @@ abstract class Parser
 
     /**
      * Compose requested format.
-     *
-     * @param  string  $format
-     * @param  array  $compose
-     * @param  string  $method
      *
      * @throws \RuntimeException
      *
@@ -77,10 +70,6 @@ abstract class Parser
      * Compose an error template.
      *
      * @param  mixed  $view
-     * @param  array  $data
-     * @param  int  $status
-     *
-     * @return \Illuminate\Http\Response
      */
     public function composeError($view, array $data = [], int $status = 404): Response
     {
@@ -106,7 +95,7 @@ abstract class Parser
      *
      * @param  mixed  $data
      *
-     * @return array
+     * @return array|mixed
      */
     public function transformToArray($data)
     {
@@ -115,11 +104,6 @@ abstract class Parser
 
     /**
      * Prepare data to be seen to template.
-     *
-     * @param  array  $config
-     * @param  array  $data
-     *
-     * @return array
      */
     protected function prepareDataValue(array $config, array $data): array
     {

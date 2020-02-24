@@ -49,12 +49,9 @@ class Facile implements Renderable
     /**
      * Construct a new Response instance.
      *
-     * @param  \Orchestra\Facile\Factory  $factory
-     * @param  string  $parser
-     * @param  array  $data
-     * @param  string  $format
+     * @param  string|\Orchestra\Facile\Template\Parser  $parser
      */
-    public function __construct(Factory $factory, $parser, array $data = [], $format = null)
+    public function __construct(Factory $factory, $parser, array $data = [], string $format = null)
     {
         $this->factory = $factory;
         $this->data = \array_merge($this->data, $data);
@@ -66,11 +63,9 @@ class Facile implements Renderable
     /**
      * Nest a view to Facile.
      *
-     * @param  string  $view
-     *
      * @return $this
      */
-    public function view(string $view): self
+    public function view(string $view)
     {
         $this->data['view'] = $view;
 
@@ -85,7 +80,7 @@ class Facile implements Renderable
      *
      * @return $this
      */
-    public function with($key, $value = null): self
+    public function with($key, $value = null)
     {
         $data = \is_array($key) ? $key : [$key => $value];
 
@@ -97,12 +92,9 @@ class Facile implements Renderable
     /**
      * Setup on format configuration.
      *
-     * @param  string  $type
-     * @param  array   $config
-     *
      * @return $this
      */
-    public function when(string $type, array $config = []): self
+    public function when(string $type, array $config = [])
     {
         if (! isset($this->data['on'][$type])) {
             $this->data['on'][$type] = [];
@@ -116,11 +108,9 @@ class Facile implements Renderable
     /**
      * Set HTTP status to Facile.
      *
-     * @param  int  $status
-     *
      * @return $this
      */
-    public function status(int $status = 200): self
+    public function status(int $status = 200)
     {
         $this->data['status'] = $status;
 
@@ -130,7 +120,7 @@ class Facile implements Renderable
     /**
      * Set a parser for Facile.
      *
-     * @param  mixed  $name
+     * @param  string|\Orchestra\Facile\Template\Parser  $name
      *
      * @return $this
      */
@@ -144,7 +134,7 @@ class Facile implements Renderable
     /**
      * Set a parser for Facile.
      *
-     * @param  mixed  $name
+     * @param  string|\Orchestra\Facile\Template\Parser  $name
      *
      * @return $this
      */
@@ -156,12 +146,9 @@ class Facile implements Renderable
     /**
      * Get or set facile format.
      *
-     * @param  string  $format
-     * @param  array   $config
-     *
      * @return $this
      */
-    public function format(?string $format = null, array $config = []): self
+    public function format(?string $format = null, array $config = [])
     {
         if (! \is_null($format) && ! empty($format)) {
             $this->setFormat($format);
@@ -177,11 +164,9 @@ class Facile implements Renderable
     /**
      * Set Output Format.
      *
-     * @param  string|null  $format
-     *
      * @return $this
      */
-    public function setFormat(?string $format): self
+    public function setFormat(?string $format)
     {
         $this->format = $format;
 
@@ -190,8 +175,6 @@ class Facile implements Renderable
 
     /**
      * Get Output Format.
-     *
-     * @return string|null
      */
     public function getFormat(): ?string
     {

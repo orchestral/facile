@@ -31,9 +31,6 @@ class Factory
 
     /**
      * Construct a new Facile service.
-     *
-     * @param  \Illuminate\Contracts\Container\Container  $container
-     * @param  \Illuminate\Http\Request  $request
      */
     public function __construct(Container $container, Request $request)
     {
@@ -46,25 +43,16 @@ class Factory
      * Create a new Facile instance.
      *
      * @param  string  $name   Name of template
-     * @param  array   $data
-     * @param  string  $format
-     *
-     * @return \Orchestra\Facile\Facile
      */
-    public function make($name, array $data = [], $format = null)
+    public function make(string $name, array $data = [], ?string $format = null): Facile
     {
         return new Facile($this, $name, $data, $format);
     }
 
     /**
      * Create a new Facile instance helper via view.
-     *
-     * @param  string  $view
-     * @param  array   $data
-     *
-     * @return \Orchestra\Facile\Facile
      */
-    public function view($view, array $data = [])
+    public function view(string $view, array $data = []): Facile
     {
         return (new Facile($this, 'simple'))->view($view)->with($data);
     }
@@ -73,10 +61,8 @@ class Factory
      * Create a new Facile instance helper via with.
      *
      * @param  mixed  $data
-     *
-     * @return \Orchestra\Facile\Facile
      */
-    public function with($data)
+    public function with($data): Facile
     {
         return (new Facile($this, 'simple'))->with(...\func_get_args());
     }
@@ -84,10 +70,7 @@ class Factory
     /**
      * Register a named parser.
      *
-     * @param  string  $name
      * @param  string|\Orchestra\Facile\Template\Parser  $parser
-     *
-     * @return void
      */
     public function name(string $name, $parser): void
     {
@@ -100,10 +83,6 @@ class Factory
 
     /**
      * Get request format.
-     *
-     * @param  \Orchestra\Facile\Template\Parser  $parser
-     *
-     * @return string|null
      */
     protected function getPrefersFor(Template\Parser $parser): ?string
     {
@@ -115,14 +94,11 @@ class Factory
     /**
      * Resolve parser from factory.
      *
-     * @param  string  $name
-     * @param  string|null  $format
-     * @param  array  $data
-     * @param  string  $method
+     * @param  string|\Orchestra\Facile\Template\Parser  $name
      *
      * @return mixed
      */
-    public function resolve($name, $format, array $data, $method = 'compose')
+    public function resolve($name, ?string $format, array $data, string $method = 'compose')
     {
         $parser = $this->parse($name);
         $format = $format ?? $this->getPrefersFor($parser);
@@ -136,8 +112,6 @@ class Factory
      * @param  string|\Orchestra\Facile\Template\Parser  $name
      *
      * @throws \InvalidArgumentException if parser is not defined
-     *
-     * @return \Orchestra\Facile\Template\Parser
      */
     public function parse($name): Template\Parser
     {

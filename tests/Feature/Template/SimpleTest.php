@@ -24,7 +24,9 @@ class SimpleTest extends TestCase
         $data = ['foo' => 'foo is awesome'];
 
         $view->shouldReceive('make')->once()->with('users.index')->andReturn($view)
-            ->shouldReceive('with')->with($data)->andReturn('foo');
+            ->shouldReceive('with')->with($data)->andReturn($viewer = m::mock('Illuminate\Contracts\View\View'));
+
+        $viewer->shouldReceive('render')->andReturn('foo');
 
         $stub = new Simple($view);
 

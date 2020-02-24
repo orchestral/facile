@@ -12,12 +12,6 @@ trait Csv
 {
     /**
      * Compose CSV.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeCsv(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -35,14 +29,8 @@ trait Csv
 
     /**
      * Stream CSV.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamCsv(array $data = [], $status = 200, array $config = []): SymfonyResponse
+    public function streamCsv(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
         $filename = $config['filename'] ?? 'export';
 
@@ -58,11 +46,6 @@ trait Csv
 
     /**
      * Convert content to CSV.
-     *
-     * @param  array  $data
-     * @param  array  $config
-     *
-     * @return \Orchestra\Support\Collection
      */
     protected function convertToCsvable(array $data, array $config): Collection
     {

@@ -11,12 +11,6 @@ trait Excel
 {
     /**
      * Compose XLS.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeXls(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -25,12 +19,6 @@ trait Excel
 
     /**
      * Compose XLSX.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeXlsx(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -39,12 +27,6 @@ trait Excel
 
     /**
      * Compose excel.
-     *
-     * @param  array  $data
-     * @param  array  $config
-     * @param  string  $writerType
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function composeExcel(array $data, array $config, string $writerType): SymfonyResponse
     {
@@ -55,9 +37,6 @@ trait Excel
 
     /**
      * Convert content to CSV.
-     *
-     * @param  array  $data
-     * @param  array  $config
      *
      * @return \Orchestra\Support\Collection
      */

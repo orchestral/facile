@@ -11,12 +11,6 @@ trait Xml
 {
     /**
      * Compose XML.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeXml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -27,14 +21,8 @@ trait Xml
 
     /**
      * Compose XML.
-     *
-     * @param  array  $data
-     * @param  int  $status
-     * @param  array  $config
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function streamXml(array $data = [], $status = 200, array $config = []): SymfonyResponse
+    public function streamXml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
         return Response::stream($this->createXmlResponse($data, $config), $status, [
             'Content-Type' => 'text/xml',
@@ -43,9 +31,6 @@ trait Xml
 
     /**
      * Convert content to XML.
-     *
-     * @param  array  $data
-     * @param  array  $config
      *
      * @return \Closure
      */
@@ -61,7 +46,7 @@ trait Xml
 
         $data = \array_map([$this, 'transformToArray'], $data);
 
-        return function () use ($data, $config) {
+        return static function () use ($data, $config) {
             return ArrayToXml::convert($data, $config['document-root'] ?? $root);
         };
     }

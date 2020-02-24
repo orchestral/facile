@@ -12,13 +12,7 @@ trait Html
     /**
      * Compose HTML.
      *
-     * @param  array   $data
-     * @param  int   $status
-     * @param  array   $config
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function composeHtml(array $data = [], int $status = 200, array $config = []): SymfonyResponse
     {
@@ -33,12 +27,8 @@ trait Html
      * Convert content to XML.
      *
      * @param  \Illuminate\Contracts\View\View|string  $view
-     * @param  array  $data
-     * @param  array  $config
-     *
-     * @return \Illuminate\Contracts\View\View
      */
-    protected function convertToViewable($view, array $data, array $config)
+    protected function convertToViewable($view, array $data, array $config): View
     {
         if (! $view instanceof View) {
             $view = $this->view->make($view);
