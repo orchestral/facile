@@ -1,29 +1,20 @@
 <?php
 
-namespace Orchestra\Facile\TestCase\Unit;
+namespace Orchestra\Facile\TestCase\Feature;
 
 use Mockery as m;
 use Orchestra\Facile\Facile;
 use Orchestra\Facile\Factory;
 use Orchestra\Facile\Template\Simple;
-use PHPUnit\Framework\TestCase;
 
 class FacileTest extends TestCase
 {
-    /**
-     * Teardown the test environment.
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /** @test */
     public function it_can_construct_a_facile()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $stub = new Facile(new Factory($app, $request), new Simple($view), [], 'json');
 
@@ -51,10 +42,9 @@ class FacileTest extends TestCase
     /** @test */
     public function it_able_to_use_view()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $stub = new Facile(new Factory($app, $request), new Simple($view), [], 'json');
 
@@ -75,9 +65,9 @@ class FacileTest extends TestCase
      */
     public function it_can_utilize_when($before, $after)
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $stub = new Facile(new Factory($app, $request), new Simple($view), [], 'json');
 
@@ -95,9 +85,9 @@ class FacileTest extends TestCase
     /** @test */
     public function it_able_to_use_with()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $stub = new Facile(new Factory($app, $request), new Simple($view), [], 'json');
 
@@ -116,9 +106,9 @@ class FacileTest extends TestCase
     /** @test */
     public function it_can_set_custom_http_return_status()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $stub = new Facile(new Factory($app, $request), new Simple($view), [], 'json');
 
@@ -136,9 +126,9 @@ class FacileTest extends TestCase
     /** @test */
     public function it_can_interacts_with_template()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $app = $this->app;
+        $request = $this->app['request'];
+        $view = $this->app['view'];
 
         $env = new Factory($app, $request);
         $template = new Simple($view);
@@ -167,7 +157,7 @@ class FacileTest extends TestCase
     /** @test */
     public function it_can_render_via_facile()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
+        $app = $this->app;
         $request = m::mock('\Illuminate\Http\Request');
         $template = m::mock('\Orchestra\Facile\Template\Simple');
 
@@ -183,8 +173,8 @@ class FacileTest extends TestCase
     /** @test */
     public function it_can_convert_as_string()
     {
-        $app = m::mock('\Illuminate\Container\Container, \Illuminate\Contracts\Foundation\Application');
-        $request = m::mock('\Illuminate\Http\Request');
+        $app = $this->app;
+        $request = $this->app['request'];
         $template1 = m::mock('\Orchestra\Facile\Template\Simple');
 
         $template1->shouldReceive('compose')->once()
